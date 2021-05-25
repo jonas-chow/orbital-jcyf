@@ -53,7 +53,7 @@ public class HealthBar : MonoBehaviour
         StopCoroutine("TemporaryVisible");
         StartCoroutine("TemporaryVisible");
 
-        if (hp < 0) {
+        if (hp <= 0) {
             hp = 0;
             return true;
         } else if (hp > maxHp) {
