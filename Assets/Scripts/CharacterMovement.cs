@@ -12,10 +12,10 @@ public class CharacterMovement : MonoBehaviour
     void Start()
     {
         hp = GetComponentInChildren<HealthBar>();
-        hp.SetVisible(false);
+        hp.SetVisible(isActive);
 
         selection = GetComponentInChildren<SelectionAura>();
-        selection.SetSelect(false);
+        selection.SetSelect(isActive);
     }
 
     // Update is called once per frame
@@ -24,16 +24,44 @@ public class CharacterMovement : MonoBehaviour
         if (isActive) {
             if (Input.GetButtonDown("Horizontal")) {
                 if (Input.GetAxis("Horizontal") > 0) {
-                    transform.position += Vector3.right;
+                    if (!Input.GetButton("Stay Still")) {
+                        transform.position += Vector3.right;
+                    }
+                    // face right
+                    transform.up = Vector3.right;
+                    // hp bar stays on top
+                    hp.transform.up = Vector3.up;
+                    hp.transform.localPosition = new Vector3(-0.55f, 0, 0);
                 } else {
-                    transform.position += Vector3.left;
+                    if (!Input.GetButton("Stay Still")) {
+                        transform.position += Vector3.left;
+                    }
+                    // face left
+                    transform.up = Vector3.left;
+                    // hp bar stays on top
+                    hp.transform.up = Vector3.up;
+                    hp.transform.localPosition = new Vector3(0.55f, 0, 0);
                 }
             }
             if (Input.GetButtonDown("Vertical")) {
                 if (Input.GetAxis("Vertical") > 0) {
-                    transform.position += Vector3.up;
+                    if (!Input.GetButton("Stay Still")) {
+                        transform.position += Vector3.up;
+                    }
+                    // face up
+                    transform.up = Vector3.up;
+                    // hp bar stays on top
+                    hp.transform.up = Vector3.up;
+                    hp.transform.localPosition = new Vector3(0, 0.55f, 0);
                 } else {
-                    transform.position += Vector3.down;
+                    if (!Input.GetButton("Stay Still")) {
+                        transform.position += Vector3.down;
+                    }
+                    // face down
+                    transform.up = Vector3.down;
+                    // hp bar stays on top
+                    hp.transform.up = Vector3.up;
+                    hp.transform.localPosition = new Vector3(0, -0.55f, 0);
                 }
             }
         }
@@ -53,6 +81,7 @@ public class CharacterMovement : MonoBehaviour
         selection.SetSelect(false);
     }
 
+    // For Game Manager to call, to ensure that this initial state happens regardless of order of start() being called
     public void init()
     {
         hp = GetComponentInChildren<HealthBar>();
