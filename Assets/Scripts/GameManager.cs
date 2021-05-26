@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour
         numChars = characters.Length;
         if (numChars > 0) {
             characters[currentChar].init();
-            ActivateCurrent();
         }
     }
 
