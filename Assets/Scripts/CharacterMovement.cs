@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
-    private static GridManager grid;
-    private static GameManager gm;
+    public static GridManager grid;
+    private static ActionQueue queue;
 
     private bool isActive = false;
-    private HealthBar hp;
+    public HealthBar hp;
     private SelectionAura selection;
 
     // Start is called before the first frame update
@@ -23,11 +23,11 @@ public class CharacterMovement : MonoBehaviour
         if (grid == null) {
             grid = GameObject.FindObjectOfType<GridManager>();
         }
-        if (gm == null) {
-            gm = gameObject.GetComponentInParent<GameManager>();
+        if (queue == null) {
+            queue = gameObject.GetComponentInParent<ActionQueue>();
         }
 
-        grid.InsertObject(gameObject, getX(), getY());
+        grid.InsertObject(gameObject, (int) transform.localPosition.x, (int) transform.localPosition.y);
     }
 
     // Update is called once per frame
@@ -36,44 +36,32 @@ public class CharacterMovement : MonoBehaviour
         if (isActive) {
             if (Input.GetButtonDown("Horizontal")) {
                 if (Input.GetAxis("Horizontal") > 0) {
-                    if (!Input.GetButton("Stay Still") && grid.MoveObject(getX(), getY(), getX() + 1, getY())) {
-                        transform.position += Vector3.right;
+                    if (Input.GetButton("Stay Still")) {
+                        queue.EnqueueAction(new FaceRight(this));
+                    } else {
+                        queue.EnqueueAction(new MoveRight(this));
                     }
-                    // face right
-                    transform.up = Vector3.right;
-                    // hp bar stays on top
-                    hp.transform.up = Vector3.up;
-                    hp.transform.localPosition = new Vector3(-0.55f, 0, 0);
                 } else {
-                    if (!Input.GetButton("Stay Still") && grid.MoveObject(getX(), getY(), getX() - 1, getY())) {
-                        transform.position += Vector3.left;
+                    if (Input.GetButton("Stay Still")) {
+                        queue.EnqueueAction(new FaceLeft(this));
+                    } else {
+                        queue.EnqueueAction(new MoveLeft(this));
                     }
-                    // face left
-                    transform.up = Vector3.left;
-                    // hp bar stays on top
-                    hp.transform.up = Vector3.up;
-                    hp.transform.localPosition = new Vector3(0.55f, 0, 0);
                 }
             }
             if (Input.GetButtonDown("Vertical")) {
                 if (Input.GetAxis("Vertical") > 0) {
-                    if (!Input.GetButton("Stay Still") && grid.MoveObject(getX(), getY(), getX(), getY() + 1)) {
-                        transform.position += Vector3.up;
+                    if (Input.GetButton("Stay Still")) {
+                        queue.EnqueueAction(new FaceUp(this));
+                    } else {
+                        queue.EnqueueAction(new MoveUp(this));
                     }
-                    // face up
-                    transform.up = Vector3.up;
-                    // hp bar stays on top
-                    hp.transform.up = Vector3.up;
-                    hp.transform.localPosition = new Vector3(0, 0.55f, 0);
                 } else {
-                    if (!Input.GetButton("Stay Still") && grid.MoveObject(getX(), getY(), getX(), getY() - 1)) {
-                        transform.position += Vector3.down;
+                    if (Input.GetButton("Stay Still")) {
+                        queue.EnqueueAction(new FaceDown(this));
+                    } else {
+                        queue.EnqueueAction(new MoveDown(this));
                     }
-                    // face down
-                    transform.up = Vector3.down;
-                    // hp bar stays on top
-                    hp.transform.up = Vector3.up;
-                    hp.transform.localPosition = new Vector3(0, -0.55f, 0);
                 }
             }
         }
@@ -103,16 +91,5 @@ public class CharacterMovement : MonoBehaviour
 
         selection = GetComponentInChildren<SelectionAura>();
         selection.SetSelect(true);
-    }
-
-    private int getX()
-    {
-        return (int) transform.localPosition.x;
-    }
-
-    // unity Y axis is 
-    private int getY()
-    {
-        return (int) transform.localPosition.y;
     }
 }
