@@ -12,8 +12,9 @@ public class FaceLeft : Action
 
     public override void Execute()
     {
-        // face right
+        // face left
         character.transform.up = Vector3.left;
+        character.faceDirection = "left";
         // hp bar stays on top
         character.hp.transform.up = Vector3.up;
         character.hp.transform.localPosition = new Vector3(0.55f, 0, 0);

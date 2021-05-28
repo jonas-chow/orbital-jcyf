@@ -58,4 +58,14 @@ public class GridManager : MonoBehaviour
             return false;
         }
     }
+
+    // get object if there is an object at position, returns null if empty
+    public GameObject GetObject(int x, int y)
+    {
+        if (x < 0 || x >= length || y < 0 || y >= height) {
+            return null;
+        }
+        GameObject obj = grid[x, y];
+        return obj;
+    }
 }

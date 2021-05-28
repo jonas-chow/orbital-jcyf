@@ -17,6 +17,7 @@ public class MoveRight : Action
         }
         // face right
         character.transform.up = Vector3.right;
+        character.faceDirection = "right";
         // hp bar stays on top
         character.hp.transform.up = Vector3.up;
         character.hp.transform.localPosition = new Vector3(-0.55f, 0, 0);

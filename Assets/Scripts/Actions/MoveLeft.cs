@@ -15,8 +15,9 @@ public class MoveLeft : Action
         if (CharacterMovement.grid.MoveObject(getX(), getY(), getX() - 1, getY())) {
             character.transform.position += Vector3.left;
         }
-        // face right
+        // face left
         character.transform.up = Vector3.left;
+        character.faceDirection = "left";
         // hp bar stays on top
         character.hp.transform.up = Vector3.up;
         character.hp.transform.localPosition = new Vector3(0.55f, 0, 0);
