@@ -7,6 +7,7 @@ public class FaceLeft : Action
     public FaceLeft(CharacterMovement character)
     {
         this.character = character;
+        this.name = "FaceLeft";
     }
 
     public override void Execute()

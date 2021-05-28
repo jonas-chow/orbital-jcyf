@@ -7,6 +7,7 @@ public class FaceUp : Action
     public FaceUp(CharacterMovement character)
     {
         this.character = character;
+        this.name = "FaceUp";
     }
 
     public override void Execute()

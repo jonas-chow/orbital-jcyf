@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class Action
 {
     protected CharacterMovement character;
+    public string name;
     
     public abstract void Execute();
 

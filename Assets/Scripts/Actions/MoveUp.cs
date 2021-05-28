@@ -7,6 +7,7 @@ public class MoveUp : Action
     public MoveUp(CharacterMovement character)
     {
         this.character = character;
+        this.name = "MoveUp";
     }
 
     public override void Execute()
