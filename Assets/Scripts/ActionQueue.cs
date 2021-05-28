@@ -26,11 +26,13 @@ public class ActionQueue : MonoBehaviour
         // queueRenderer.render(action)
     }
 
-    public void ExecuteAll()
+    public void ExecuteNext()
     {
-        // animationPhase = true;
-        while (actions.Count > 0) {
-            actions.Dequeue().Execute();
-        }
+        actions.Dequeue().Execute();
+    }
+
+    public bool hasActions()
+    {
+        return actions.Count > 0;
     }
 }

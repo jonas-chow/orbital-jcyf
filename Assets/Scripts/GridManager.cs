@@ -8,8 +8,7 @@ public class GridManager : MonoBehaviour
     private int length = 16, height = 16;
     private GameObject[,] grid;
 
-    // Start is called before the first frame update
-    void Start()
+    public void init()
     {
         grid = new GameObject[length, height];
         for (int i = 0; i < length; i++)
@@ -19,12 +18,6 @@ public class GridManager : MonoBehaviour
                 grid[i, j] = null;
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     // returns false if there is something in that space and you can't insert it

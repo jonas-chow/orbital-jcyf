@@ -10,9 +10,12 @@ public class GameManager : MonoBehaviour
     private ActionQueue actionQueue;
 
     // TODO: add a timer bar
+    private bool animationPhase = false;
+    private bool animating = false;
     private bool isTurn = false;
     private bool readyForTurn = true;
     private float turnTimer = 3f;
+    private float animationGap = .3f;
 
     // TODO: account for chars that died
 
@@ -49,7 +52,13 @@ public class GameManager : MonoBehaviour
                 ActivateCurrent();
             }
         }
+
+        if (animationPhase && !animating) {
+            animating = true;
+            StartCoroutine(AnimateActions());
+        }
     }
+
 
     void DeactivateCurrent()
     {
@@ -68,11 +77,29 @@ public class GameManager : MonoBehaviour
         isTurn = true;
         yield return new WaitForSeconds(turnTimer);
         DeactivateCurrent();
-        actionQueue.ExecuteAll();
+        animationPhase = true;
+
+        while (true) {
+            if (!animationPhase) {
+                break;
+            } else {
+                yield return new WaitForSeconds(.1f);
+            }
+        }
 
         // artificially wait for animations
         Debug.Log("Your turn in one second");
         yield return new WaitForSeconds(1f);
         readyForTurn = true;
+    }
+
+    IEnumerator AnimateActions()
+    {
+        while (actionQueue.hasActions()) {
+            actionQueue.ExecuteNext();
+            yield return new WaitForSeconds(animationGap);
+        }
+        animationPhase = false;
+        animating = false;
     }
 }

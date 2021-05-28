@@ -22,7 +22,9 @@ public class CharacterMovement : MonoBehaviour
 
         if (grid == null) {
             grid = GameObject.FindObjectOfType<GridManager>();
+            grid.init();
         }
+
         if (queue == null) {
             queue = gameObject.GetComponentInParent<ActionQueue>();
         }
