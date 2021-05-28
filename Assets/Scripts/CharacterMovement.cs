@@ -9,15 +9,12 @@ public class CharacterMovement : MonoBehaviour
 
     private bool isActive = false;
     public HealthBar hp;
-    private SelectionAura selection;
+    public SelectionAura selection;
 
     // Start is called before the first frame update
     void Start()
     {
-        hp = GetComponentInChildren<HealthBar>();
         hp.SetVisible(isActive);
-
-        selection = GetComponentInChildren<SelectionAura>();
         selection.SetSelect(isActive);
 
         if (grid == null) {
@@ -88,10 +85,7 @@ public class CharacterMovement : MonoBehaviour
     {
         isActive = true;
 
-        hp = GetComponentInChildren<HealthBar>();
         hp.SetVisible(true);
-
-        selection = GetComponentInChildren<SelectionAura>();
         selection.SetSelect(true);
     }
 }

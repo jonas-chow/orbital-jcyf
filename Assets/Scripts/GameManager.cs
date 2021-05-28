@@ -7,9 +7,11 @@ public class GameManager : MonoBehaviour
     private CharacterMovement[] characters;
     private int numChars;
     private int currentChar = 0;
+    [SerializeField]
     private ActionQueue actionQueue;
-
-    // TODO: add a timer bar
+    [SerializeField]
+    private TimeBar timeBar;
+    
     private bool animationPhase = false;
     private bool animating = false;
     private bool isTurn = false;
@@ -21,9 +23,7 @@ public class GameManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
-        actionQueue = gameObject.GetComponent<ActionQueue>();
-        
+    {   
         characters = GetComponentsInChildren<CharacterMovement>();
         numChars = characters.Length;
         if (numChars > 0) {
@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Turn start");
         ActivateCurrent();
         isTurn = true;
+        timeBar.Reset(turnTimer);
         yield return new WaitForSeconds(turnTimer);
         DeactivateCurrent();
         animationPhase = true;
