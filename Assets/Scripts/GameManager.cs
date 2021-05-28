@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private TimeBar timeBar;
     
-    private bool animationPhase = false;
+    private bool animationPhase = true;
     private bool animating = false;
     private bool isTurn = false;
     private bool readyForTurn = true;
@@ -25,6 +26,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {   
         characters = GetComponentsInChildren<CharacterMovement>();
+        characters = Array.FindAll(characters, c => c.isControllable);
+
         numChars = characters.Length;
         if (numChars > 0) {
             characters[currentChar].init();
@@ -75,10 +78,11 @@ public class GameManager : MonoBehaviour
         Debug.Log("Turn start");
         ActivateCurrent();
         isTurn = true;
+        animationPhase = true;
         timeBar.Reset(turnTimer);
         yield return new WaitForSeconds(turnTimer);
+        isTurn = false;
         DeactivateCurrent();
-        animationPhase = true;
 
         while (true) {
             if (!animationPhase) {
@@ -96,10 +100,13 @@ public class GameManager : MonoBehaviour
 
     IEnumerator AnimateActions()
     {
-        while (actionQueue.hasActions()) {
-            actionQueue.ExecuteNext();
+        while (isTurn || actionQueue.hasActions()) {
+            if (actionQueue.hasActions()) {
+                actionQueue.ExecuteNext();
+            }
             yield return new WaitForSeconds(animationGap);
         }
+        actionQueue.ResetQueue();
         animationPhase = false;
         animating = false;
     }

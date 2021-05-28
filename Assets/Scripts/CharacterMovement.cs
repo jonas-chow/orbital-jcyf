@@ -6,6 +6,8 @@ public class CharacterMovement : MonoBehaviour
 {
     public static GridManager grid;
     private static ActionQueue queue;
+    public bool isControllable;
+    public int meleeDamage = 10;
 
     private bool isActive = false;
     public HealthBar hp;
@@ -16,7 +18,9 @@ public class CharacterMovement : MonoBehaviour
     void Start()
     {
         hp.SetVisible(isActive);
-        selection.SetSelect(isActive);
+        if (isControllable) {
+            selection.SetSelect(isActive);
+        }
 
         if (grid == null) {
             grid = GameObject.FindObjectOfType<GridManager>();
@@ -27,7 +31,7 @@ public class CharacterMovement : MonoBehaviour
             queue = gameObject.GetComponentInParent<ActionQueue>();
         }
 
-        grid.InsertObject(gameObject, (int) transform.localPosition.x, (int) transform.localPosition.y);
+        grid.InsertObject(gameObject, getX(), getY());
     }
 
     // Update is called once per frame
@@ -65,7 +69,7 @@ public class CharacterMovement : MonoBehaviour
                 }
             }
             if (Input.GetButtonDown("MeleeAttack")) {
-                queue.EnqueueAction(new MeleeAttack(this));
+                queue.EnqueueAction(new MeleeAttack(this, meleeDamage));
             }
         }
     }
@@ -91,5 +95,22 @@ public class CharacterMovement : MonoBehaviour
 
         hp.SetVisible(true);
         selection.SetSelect(true);
+    }
+    private int getX()
+    {
+        return (int) transform.localPosition.x;
+    }
+
+    private int getY()
+    {
+        return (int) transform.localPosition.y;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (hp.TakeDamage(damage)) {
+            grid.RemoveObject(getX(), getY());
+            GameObject.Destroy(gameObject);
+        }
     }
 }

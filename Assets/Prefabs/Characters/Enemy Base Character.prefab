@@ -256,6 +256,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2474377763636121102}
   - component: {fileID: 1718499127430642772}
+  - component: {fileID: 2880709423919562295}
   m_Layer: 0
   m_Name: Enemy Base Character
   m_TagString: Character
@@ -330,6 +331,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2880709423919562295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4995406174918475152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc837274ecb364a93989a34fa3e2bd8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isControllable: 0
+  hp: {fileID: 9136340724331206590}
+  selection: {fileID: 0}
+  faceDirection: up
 --- !u!1 &6904687775821701329
 GameObject:
   m_ObjectHideFlags: 0

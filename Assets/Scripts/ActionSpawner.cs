@@ -12,7 +12,7 @@ public class ActionSpawner : MonoBehaviour
     [SerializeField]
     private GameObject MoveDown, MoveUp, MoveLeft, MoveRight;
     [SerializeField]
-    private GameObject Attack;
+    private GameObject MeleeAttack;
 
 
     public void AddAction(Action action)
@@ -31,7 +31,11 @@ public class ActionSpawner : MonoBehaviour
         GameObject.Destroy(queue.Dequeue());
         // the arrow
         GameObject.Destroy(queue.Dequeue());
-        count--;
+    }
+
+    public void ResetCount()
+    {
+        count = 0;
     }
 
     private Vector3 GetNextPosition()
@@ -60,8 +64,8 @@ public class ActionSpawner : MonoBehaviour
                 return MoveLeft;
             case "MoveRight":
                 return MoveRight;
-            case "Attack":
-                return Attack;
+            case "MeleeAttack":
+                return MeleeAttack;
             default:
                 return null;
         }

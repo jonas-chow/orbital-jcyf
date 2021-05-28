@@ -34,6 +34,11 @@ public class ActionQueue : MonoBehaviour
         actionSpawner.RemoveAction();
     }
 
+    public void ResetQueue()
+    {
+        actionSpawner.ResetCount();
+    }
+
     public bool hasActions()
     {
         return actions.Count > 0;
