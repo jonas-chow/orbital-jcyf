@@ -10,6 +10,8 @@ public class CharacterMovement : MonoBehaviour
     private bool isActive = false;
     public HealthBar hp;
     private SelectionAura selection;
+    // Face direction (not sure if public)
+    public string faceDirection = "up";
 
     // Start is called before the first frame update
     void Start()
@@ -65,6 +67,9 @@ public class CharacterMovement : MonoBehaviour
                         queue.EnqueueAction(new MoveDown(this));
                     }
                 }
+            }
+            if (Input.GetButtonDown("MeleeAttack")) {
+                queue.EnqueueAction(new MeleeAttack(this));
             }
         }
     }

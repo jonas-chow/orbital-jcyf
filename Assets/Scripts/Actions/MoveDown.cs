@@ -16,6 +16,7 @@ public class MoveDown : Action
         }
         // face up
         character.transform.up = Vector3.down;
+        character.faceDirection = "down";
         // hp bar stays on top
         character.hp.transform.up = Vector3.up;
         character.hp.transform.localPosition = new Vector3(0, -0.55f, 0);
