@@ -40,7 +40,7 @@ public class ActionSpawner : MonoBehaviour
 
     private Vector3 GetNextPosition()
     {
-        return transform.position + new Vector3(count % 5, -count / 5, 0) * 2;
+        return transform.position + new Vector3(count % 4, -count / 4, 0) * 2;
     }
 
     // This is terrible practice but until I figure another way out...
