@@ -8,6 +8,7 @@ public class ActionQueue : MonoBehaviour
     // private bool animationPhase = false;
     private GameManager gameManager;
     private ActionSpawner actionSpawner;
+    private bool isEnabled = true;
 
     // Start is called before the first frame update
     void Start()
@@ -30,8 +31,10 @@ public class ActionQueue : MonoBehaviour
 
     public void ExecuteNext()
     {
-        actions.Dequeue().Execute();
-        actionSpawner.RemoveAction();
+        if (isEnabled) {
+            actions.Dequeue().Execute();
+            actionSpawner.RemoveAction();
+        }
     }
 
     public void ResetQueue()
@@ -43,4 +46,15 @@ public class ActionQueue : MonoBehaviour
     {
         return actions.Count > 0;
     }
+
+    public void Disable()
+    {
+        this.isEnabled = false;
+    }
+
+    public void Enable()
+    {
+        this.isEnabled = true;
+    }
 }
+

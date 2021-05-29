@@ -68,4 +68,59 @@ public class GridManager : MonoBehaviour
         GameObject obj = grid[x, y];
         return obj;
     }
+
+    public CharacterMovement GetCharacter(int x, int y)
+    {
+        GameObject obj = GetObject(x, y);
+        CharacterMovement cm = null;
+        if (obj != null && obj.tag == "Character") {
+            cm = obj.GetComponent<CharacterMovement>();
+        }
+        return cm;
+    }
+
+    // finds the first character in a line from a given point, excluding the point
+    public CharacterMovement GetFirstCharacterInLine(int x, int y, int range, string direction)
+    {
+        CharacterMovement cm = null;
+        int currentX = x;
+        int currentY = y;
+        int i = 0;
+        while (cm == null && i < range)
+        {
+            switch (direction)
+            {
+                case "up":
+                    currentY++;
+                    break;
+                case "down":
+                    currentY--;
+                    break;
+                case "left":
+                    currentX--;
+                    break;
+                case "right":
+                    currentX++;
+                    break;
+            }
+
+            cm = GetCharacter(currentX, currentY);
+            i++;
+        }
+        return cm;
+    }
+
+    public List<CharacterMovement> GetAllCharactersInAOE(int x, int y)
+    {
+        List<CharacterMovement> cms = new List<CharacterMovement>();
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                CharacterMovement cm = GetCharacter(x + i, y + j);
+                if (cm != null) {
+                    cms.Add(cm);
+                }
+            }
+        }
+        return cms;
+    }
 }

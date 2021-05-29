@@ -137,6 +137,58 @@ PrefabInstance:
       propertyPath: m_Name
       value: Archer
       objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: attack1Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: attack2Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: attack3Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: attack4Type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: attack1Range
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: attack2Range
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: attack3Range
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: attack4Range
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: attack1Damage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: attack2Damage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: attack3Damage
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: attack4Damage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4336103327491258978, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a446b43e30b804575ba2966619114272, type: 3}
 --- !u!4 &1956248704052452391 stripped
