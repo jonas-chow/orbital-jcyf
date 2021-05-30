@@ -5,8 +5,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    public GameObject gameEndUI;
     private CharacterMovement[] characters;
-    private int numChars;
+    private CharacterMovement[] friendly;
+    private HealthBar hp;
+    private static int numEnemy;
+    private int numChar;
+    private int numFriendly;
     private int currentChar = 0;
     [SerializeField]
     private ActionQueue actionQueue;
@@ -26,10 +32,13 @@ public class GameManager : MonoBehaviour
     void Start()
     {   
         characters = GetComponentsInChildren<CharacterMovement>();
-        characters = Array.FindAll(characters, c => c.isControllable);
+        friendly = Array.FindAll(characters, c => c.isControllable);
+        numChar = characters.Length;
+        numFriendly = friendly.Length;
+        numEnemy =  numChar - numFriendly;
 
-        numChars = characters.Length;
-        if (numChars > 0) {
+        
+        if (numFriendly > 0) {
             characters[currentChar].init();
         }
     }
@@ -45,13 +54,13 @@ public class GameManager : MonoBehaviour
         if (isTurn) {
             if (Input.GetButtonDown("Next Character")) {
                 DeactivateCurrent();
-                currentChar = (currentChar + 1) % numChars;
+                currentChar = (currentChar + 1) % numFriendly;
                 ActivateCurrent();
             }
 
             if (Input.GetButtonDown("Previous Character")) {
                 DeactivateCurrent();
-                currentChar = (currentChar + numChars - 1) % numChars;
+                currentChar = (currentChar + numFriendly - 1) % numFriendly;
                 ActivateCurrent();
             }
         }
@@ -60,8 +69,26 @@ public class GameManager : MonoBehaviour
             animating = true;
             StartCoroutine(AnimateActions());
         }
+
+        GameEnded();
+    }
+    
+    // do I want this to be static idk?
+    public static void RemoveEnemy() {
+        numEnemy -= 1;
+    }
+    
+    public void RemoveFriendly() {
+        numFriendly -=1;
     }
 
+    // currently only taking case where all enemies die
+    public void GameEnded() {
+        if (numEnemy <= 0) {
+            gameEndUI.SetActive(true);
+        }
+    }
+    
 
     void DeactivateCurrent()
     {

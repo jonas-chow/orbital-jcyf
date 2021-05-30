@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
+    private GameManager game;
+
     public static GridManager grid;
     private static ActionQueue queue;
     public bool isControllable;
@@ -216,6 +218,7 @@ public class CharacterMovement : MonoBehaviour
         hp.SetVisible(true);
         selection.SetSelect(true);
     }
+
     private int getX()
     {
         return (int) transform.localPosition.x;
@@ -231,6 +234,9 @@ public class CharacterMovement : MonoBehaviour
         if (hp.TakeDamage(damage)) {
             grid.RemoveObject(getX(), getY());
             GameObject.Destroy(gameObject);
+            // how to see if its enemy or friendly
+            GameManager.RemoveEnemy();
+            Debug.Log("Enemy defeated.");
         }
     }
 }
