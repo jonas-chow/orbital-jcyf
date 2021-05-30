@@ -11,22 +11,23 @@ public class RangedAOEAttack : Attack
     public RangedAOEAttack(CharacterMovement character, int damage, int range) 
     {
         this.character = character;
+        this.grid = CharacterMovement.grid;
+        this.rangeSpawner = grid.GetComponent<RangeSpawner>();
         this.damage = damage;
         this.range = range;
         this.name = "MeleeAttack";
-        // generate Range Indicator
+        this.rangeIndicators = rangeSpawner.AOEIndicator(character, offsetX, offsetY);
+        this.rangeLimits = rangeSpawner.RangeLimit(character, range);
     }
 
     public override void Execute()
     {
         ChangeDirection();
-        List<CharacterMovement> enemies = CharacterMovement.grid
+        List<CharacterMovement> enemies = grid
             .GetAllCharactersInAOE(getX() + offsetX, getY() + offsetY)
             .FindAll(cm => !cm.isControllable);
 
         enemies.ForEach(enemy => enemy.TakeDamage(damage));
-
-        // Destory range indicators
     }
 
     public override void AimUp() 
@@ -34,6 +35,8 @@ public class RangedAOEAttack : Attack
         this.direction = "up";
         if (IsWithinRange(offsetX, offsetY + 1)) {
             offsetY++;
+            ClearIndicators();
+            this.rangeIndicators = rangeSpawner.AOEIndicator(character, offsetX, offsetY);
         }
         // change indicator
     }
@@ -43,6 +46,8 @@ public class RangedAOEAttack : Attack
         this.direction = "down";
         if (IsWithinRange(offsetX, offsetY - 1)) {
             offsetY--;
+            ClearIndicators();
+            this.rangeIndicators = rangeSpawner.AOEIndicator(character, offsetX, offsetY);
         }
         // change indicator
     }
@@ -52,6 +57,8 @@ public class RangedAOEAttack : Attack
         this.direction = "left";
         if (IsWithinRange(offsetX - 1, offsetY)) {
             offsetX--;
+            ClearIndicators();
+            this.rangeIndicators = rangeSpawner.AOEIndicator(character, offsetX, offsetY);
         }
         // change indicator
     }
@@ -61,6 +68,8 @@ public class RangedAOEAttack : Attack
         this.direction = "right";
         if (IsWithinRange(offsetX + 1, offsetY)) {
             offsetX++;
+            ClearIndicators();
+            this.rangeIndicators = rangeSpawner.AOEIndicator(character, offsetX, offsetY);
         }
         // change indicator
     }

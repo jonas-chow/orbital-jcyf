@@ -7,10 +7,12 @@ public class MeleeAttack : Attack
     public MeleeAttack(CharacterMovement character, int damage) 
     {
         this.character = character;
+        this.grid = CharacterMovement.grid;
+        this.rangeSpawner = grid.GetComponent<RangeSpawner>();
         this.damage = damage;
         this.range = 1;
         this.name = "MeleeAttack";
-        // this.indicator = GameObject.Instantiate(Indicator);
+        this.rangeIndicators = rangeSpawner.LinearIndicator(character, range, character.faceDirection);
     }
 
     public override void Execute()
@@ -18,24 +20,25 @@ public class MeleeAttack : Attack
         ChangeDirection();
 
         CharacterMovement enemy = null;
+        // If user did not input a direction, the final direction used will be where the player faces on executing the attack
         if (direction == "none") {
             direction = character.faceDirection;
         }
         if (direction == "up")
         {
-            enemy = CharacterMovement.grid.GetCharacter(getX(), getY() + 1);
+            enemy = grid.GetCharacter(getX(), getY() + 1);
         }
         if (direction == "down")
         {
-            enemy = CharacterMovement.grid.GetCharacter(getX(), getY() - 1);
+            enemy = grid.GetCharacter(getX(), getY() - 1);
         }
         if (direction == "left")
         {
-            enemy = CharacterMovement.grid.GetCharacter(getX() - 1, getY());
+            enemy = grid.GetCharacter(getX() - 1, getY());
         }
         if (direction == "right")
         {
-            enemy = CharacterMovement.grid.GetCharacter(getX() + 1, getY());
+            enemy = grid.GetCharacter(getX() + 1, getY());
         }
         if (enemy != null && !enemy.isControllable)
         {
@@ -45,25 +48,37 @@ public class MeleeAttack : Attack
 
     public override void AimUp() 
     {
-        this.direction = "up";
-        // change indicator
+        if (this.direction != "up") {
+            this.direction = "up";
+            ClearIndicators();
+            this.rangeIndicators = rangeSpawner.LinearIndicator(character, range, "up");
+        }
     }
 
     public override void AimDown()
     {
-        this.direction = "down";
-        // change indicator
+        if (this.direction != "down") {
+            this.direction = "down";
+            ClearIndicators();
+            this.rangeIndicators = rangeSpawner.LinearIndicator(character, range, "down");
+        }
     }
 
     public override void AimLeft()
     {
-        this.direction = "left";
-        // change indicator
+        if (this.direction != "left") {
+            this.direction = "left";
+            ClearIndicators();
+            this.rangeIndicators = rangeSpawner.LinearIndicator(character, range, "left");
+        }
     }
 
     public override void AimRight()
     {
-        this.direction = "right";
-        // change indicator
+        if (this.direction != "right") {
+            this.direction = "right";
+            ClearIndicators();
+            this.rangeIndicators = rangeSpawner.LinearIndicator(character, range, "right");
+        }
     }
 }

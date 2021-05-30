@@ -119,7 +119,7 @@ public class CharacterMovement : MonoBehaviour
                     (attackNum == 2 && Input.GetButtonUp("Attack2")) ||
                     (attackNum == 3 && Input.GetButtonUp("Attack3")) ||
                     (attackNum == 4 && Input.GetButtonUp("Attack4")) ) {
-                    aiming = false;
+                    DisableAiming();
                     queue.EnqueueAction(attack);
                     queue.Enable();
                 }
@@ -164,6 +164,15 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
+    private void DisableAiming()
+    {
+        aiming = false;
+        if (attack != null) {
+            attack.ClearIndicators();
+            attack.ClearLimits();
+        }
+    }
+
     private Attack NewAttack(AttackTypes type, int damage, int range)
     {
         switch (type)
@@ -195,7 +204,7 @@ public class CharacterMovement : MonoBehaviour
         selection.SetSelect(false);
 
         // in case turn ends and player was in the middle of aiming
-        aiming = false;
+        DisableAiming();
         queue.Enable();
     }
 

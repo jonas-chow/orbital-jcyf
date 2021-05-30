@@ -7,6 +7,28 @@ public abstract class Attack : Action
   protected int damage;
   protected int range;
   protected string direction = "none";
+  protected GridManager grid;
+  protected RangeSpawner rangeSpawner;
+  protected GameObject[] rangeIndicators = new GameObject[0] {};
+  protected GameObject[] rangeLimits = new GameObject[0] {};
+
+  public void ClearIndicators()
+  {
+    foreach (GameObject indicator in this.rangeIndicators)
+    {
+        GameObject.Destroy(indicator);
+    }
+    this.rangeIndicators = new GameObject[0] {};
+  }
+
+  public void ClearLimits()
+  {
+    foreach (GameObject indicator in this.rangeLimits)
+    {
+        GameObject.Destroy(indicator);
+    }
+    this.rangeLimits = new GameObject[0] {};
+  }
 
   public virtual void AimUp() 
   {

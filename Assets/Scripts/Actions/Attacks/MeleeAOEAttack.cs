@@ -7,10 +7,12 @@ public class MeleeAOEAttack : Attack
     public MeleeAOEAttack(CharacterMovement character, int damage) 
     {
         this.character = character;
+        this.grid = CharacterMovement.grid;
+        this.rangeSpawner = grid.GetComponent<RangeSpawner>();
         this.damage = damage;
         this.range = 1;
         this.name = "MeleeAttack";
-        // this.indicator = GameObject.Instantiate(Indicator);
+        this.rangeIndicators = rangeSpawner.AOEIndicator(character, 0, 0);
     }
 
     public override void Execute()
@@ -18,7 +20,7 @@ public class MeleeAOEAttack : Attack
         ChangeDirection();
 
         // Get all enemy characters in the AOE centred at character
-        List<CharacterMovement> enemies = CharacterMovement.grid
+        List<CharacterMovement> enemies = grid
             .GetAllCharactersInAOE(getX(), getY())
             .FindAll(cm => !cm.isControllable);
         

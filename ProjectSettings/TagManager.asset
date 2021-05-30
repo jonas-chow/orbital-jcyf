@@ -43,6 +43,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Indicators
+    uniqueID: 3638281795
+    locked: 0
   - name: Character
     uniqueID: 2605212413
     locked: 0
