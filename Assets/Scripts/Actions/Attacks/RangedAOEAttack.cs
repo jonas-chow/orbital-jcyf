@@ -33,8 +33,10 @@ public class RangedAOEAttack : Attack
     public override void AimUp() 
     {
         this.direction = "up";
-        if (IsWithinRange(offsetX, offsetY + 1)) {
-            offsetY++;
+        int nextOffset = offsetY + 1;
+        if (IsWithinRange(offsetX, nextOffset) && 
+            grid.IsValidCoords(getX() + offsetX, getY() + nextOffset)) {
+            offsetY = nextOffset;
             ClearIndicators();
             this.rangeIndicators = rangeSpawner.AOEIndicator(character, offsetX, offsetY);
         }
@@ -44,8 +46,10 @@ public class RangedAOEAttack : Attack
     public override void AimDown()
     {
         this.direction = "down";
-        if (IsWithinRange(offsetX, offsetY - 1)) {
-            offsetY--;
+        int nextOffset = offsetY - 1;
+        if (IsWithinRange(offsetX, nextOffset) && 
+            grid.IsValidCoords(getX() + offsetX, getY() + nextOffset)) {
+            offsetY = nextOffset;
             ClearIndicators();
             this.rangeIndicators = rangeSpawner.AOEIndicator(character, offsetX, offsetY);
         }
@@ -55,8 +59,10 @@ public class RangedAOEAttack : Attack
     public override void AimLeft()
     {
         this.direction = "left";
-        if (IsWithinRange(offsetX - 1, offsetY)) {
-            offsetX--;
+        int nextOffset = offsetX - 1;
+        if (IsWithinRange(nextOffset, offsetY) && 
+            grid.IsValidCoords(getX() + nextOffset, getY() + offsetY)) {
+            offsetX = nextOffset;
             ClearIndicators();
             this.rangeIndicators = rangeSpawner.AOEIndicator(character, offsetX, offsetY);
         }
@@ -66,8 +72,10 @@ public class RangedAOEAttack : Attack
     public override void AimRight()
     {
         this.direction = "right";
-        if (IsWithinRange(offsetX + 1, offsetY)) {
-            offsetX++;
+        int nextOffset = offsetX + 1;
+        if (IsWithinRange(nextOffset, offsetY) && 
+            grid.IsValidCoords(getX() + nextOffset, getY() + offsetY)) {
+            offsetX = nextOffset;
             ClearIndicators();
             this.rangeIndicators = rangeSpawner.AOEIndicator(character, offsetX, offsetY);
         }

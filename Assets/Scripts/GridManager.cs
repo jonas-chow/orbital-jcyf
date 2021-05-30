@@ -23,7 +23,7 @@ public class GridManager : MonoBehaviour
     // returns false if there is something in that space and you can't insert it
     public bool InsertObject(GameObject obj, int x, int y)
     {
-        if (x < 0 || x >= length || y < 0 || y >= height) {
+        if (!IsValidCoords(x, y)) {
             return false;
         }
         if (grid[x, y] == null) {
@@ -37,7 +37,7 @@ public class GridManager : MonoBehaviour
     // returns the object that is removed, or null if nothing is removed
     public GameObject RemoveObject(int x, int y)
     {
-        if (x < 0 || x >= length || y < 0 || y >= height) {
+        if (!IsValidCoords(x, y)) {
             return null;
         }
         GameObject obj = grid[x, y];
@@ -48,7 +48,7 @@ public class GridManager : MonoBehaviour
     // moves the object from one position to another
     public bool MoveObject(int prevX, int prevY, int newX, int newY)
     {
-        if (newX < 0 || newX >= length || newY < 0 || newY >= height) {
+        if (!IsValidCoords(newX, newY)) {
             return false;
         }
         if (grid[newX, newY] == null) {
@@ -62,7 +62,7 @@ public class GridManager : MonoBehaviour
     // get object if there is an object at position, returns null if empty
     public GameObject GetObject(int x, int y)
     {
-        if (x < 0 || x >= length || y < 0 || y >= height) {
+        if (!IsValidCoords(x, y)) {
             return null;
         }
         GameObject obj = grid[x, y];
@@ -122,5 +122,10 @@ public class GridManager : MonoBehaviour
             }
         }
         return cms;
+    }
+
+    public bool IsValidCoords(int x, int y)
+    {
+        return x >= 0 && x < length && y >= 0 && y < height;
     }
 }
