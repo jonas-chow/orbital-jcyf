@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -46,31 +47,33 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (readyForTurn) {
-            readyForTurn = false;
-            StartCoroutine(StartTurn());
-        }
-
-        if (isTurn) {
-            if (Input.GetButtonDown("Next Character")) {
-                DeactivateCurrent();
-                currentChar = (currentChar + 1) % numFriendly;
-                ActivateCurrent();
+        if (numEnemy > 0) {
+            if (readyForTurn) {
+                readyForTurn = false;
+                StartCoroutine(StartTurn());
             }
 
-            if (Input.GetButtonDown("Previous Character")) {
-                DeactivateCurrent();
-                currentChar = (currentChar + numFriendly - 1) % numFriendly;
-                ActivateCurrent();
+            if (isTurn) {
+                if (Input.GetButtonDown("Next Character")) {
+                    DeactivateCurrent();
+                    currentChar = (currentChar + 1) % numFriendly;
+                    ActivateCurrent();
+                }
+
+                if (Input.GetButtonDown("Previous Character")) {
+                    DeactivateCurrent();
+                    currentChar = (currentChar + numFriendly - 1) % numFriendly;
+                    ActivateCurrent();
+                }
             }
-        }
 
-        if (animationPhase && !animating) {
-            animating = true;
-            StartCoroutine(AnimateActions());
+            if (animationPhase && !animating) {
+                animating = true;
+                StartCoroutine(AnimateActions());
+            }
+        } else {
+            GameEnded();
         }
-
-        GameEnded();
     }
     
     // do I want this to be static idk?
@@ -83,9 +86,10 @@ public class GameManager : MonoBehaviour
     }
 
     // currently only taking case where all enemies die
-    public void GameEnded() {
-        if (numEnemy <= 0) {
-            gameEndUI.SetActive(true);
+    private void GameEnded() {
+        gameEndUI.SetActive(true);
+        if (Input.anyKeyDown) {
+            SceneManager.LoadScene("Main Menu");
         }
     }
     
