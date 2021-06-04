@@ -796,7 +796,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   multiplayerMenu: {fileID: 1088212717}
-  roomMenu: {fileID: 921787252}
 --- !u!1 &600574193
 GameObject:
   m_ObjectHideFlags: 0
@@ -3100,6 +3099,7 @@ MonoBehaviour:
   roomName: {fileID: 878716905}
   content: {fileID: 1733196975}
   listing: {fileID: 6009706233806298307, guid: 2c8a88fea3a6b449fa73e0d4a473b2ff, type: 3}
+  roomMenu: {fileID: 921787252}
 --- !u!1 &1098204787
 GameObject:
   m_ObjectHideFlags: 0
