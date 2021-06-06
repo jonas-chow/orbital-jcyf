@@ -49,7 +49,6 @@ public class MultiplayerLobby : MonoBehaviourPunCallbacks
     public override void OnCreatedRoom()
     {
         roomMenu.SetActive(true);
-        roomMenu.GetComponent<RoomMenu>().init();
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -66,7 +65,6 @@ public class MultiplayerLobby : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         roomMenu.SetActive(true);
-        roomMenu.GetComponent<RoomMenu>().init();
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
