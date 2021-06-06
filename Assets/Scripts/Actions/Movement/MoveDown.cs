@@ -12,7 +12,9 @@ public class MoveDown : Action
 
     public override void Execute()
     {
-        EventHandler.Instance.SendMovementEvent(getX(), getY(), "down", true);
+        if (EventHandler.Instance != null) {
+            EventHandler.Instance.SendMovementEvent(getX(), getY(), "down", true);
+        }
         character.Move("down");
     }
 }

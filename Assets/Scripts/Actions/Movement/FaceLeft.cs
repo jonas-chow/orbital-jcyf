@@ -12,7 +12,9 @@ public class FaceLeft : Action
 
     public override void Execute()
     {
-        EventHandler.Instance.SendMovementEvent(getX(), getY(), "left", false);
+        if (EventHandler.Instance != null) {
+            EventHandler.Instance.SendMovementEvent(getX(), getY(), "left", false);
+        }
         character.Face("left");
     }
 }

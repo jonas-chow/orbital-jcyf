@@ -12,7 +12,9 @@ public class FaceUp : Action
 
     public override void Execute()
     {
-        EventHandler.Instance.SendMovementEvent(getX(), getY(), "up", false);
+        if (EventHandler.Instance != null) {
+            EventHandler.Instance.SendMovementEvent(getX(), getY(), "up", false);
+        }
         character.Face("up");
     }
 }

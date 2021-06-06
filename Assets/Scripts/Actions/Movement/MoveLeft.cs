@@ -12,7 +12,9 @@ public class MoveLeft : Action
 
     public override void Execute()
     {
-        EventHandler.Instance.SendMovementEvent(getX(), getY(), "left", true);
+        if (EventHandler.Instance != null) {
+            EventHandler.Instance.SendMovementEvent(getX(), getY(), "left", true);
+        }
         character.Move("left");
     }
 }
