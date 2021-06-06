@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
+    private static GridManager instance;
+    public static GridManager Instance { get { return instance; } }
+    void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        } else {
+            instance = this;
+        }
+    }
+
     [SerializeField]
     private int length = 16, height = 16;
     private GameObject[,] grid;

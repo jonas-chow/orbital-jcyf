@@ -12,11 +12,7 @@ public class FaceUp : Action
 
     public override void Execute()
     {
-        // face up
-        character.transform.up = Vector3.up;
-        character.faceDirection = "up";
-        // hp bar stays on top
-        character.hp.transform.up = Vector3.up;
-        character.hp.transform.localPosition = new Vector3(0, 0.55f, 0);
+        EventHandler.Instance.SendMovementEvent(getX(), getY(), "up", false);
+        character.Face("up");
     }
 }

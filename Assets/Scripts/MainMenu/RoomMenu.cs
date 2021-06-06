@@ -113,6 +113,6 @@ public class RoomMenu : MonoBehaviourPunCallbacks
 
     public void ClickStart()
     {
-        PhotonNetwork.LoadLevel(1);
+        PhotonNetwork.LoadLevel(2);
     }
 }

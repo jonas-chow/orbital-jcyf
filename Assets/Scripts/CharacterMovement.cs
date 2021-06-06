@@ -239,4 +239,66 @@ public class CharacterMovement : MonoBehaviour
             Debug.Log("Enemy defeated.");
         }
     }
+
+    public void Move(string direction)
+    {
+        switch (direction)
+        {
+            case "up":
+                if (grid.MoveObject(getX(), getY(), getX(), getY() + 1)) {
+                    transform.position += Vector3.up;
+                }
+                Face("up");
+                break;
+            case "down":
+                if (grid.MoveObject(getX(), getY(), getX(), getY() - 1)) {
+                    transform.position += Vector3.down;
+                }
+                Face("down");
+                break;
+            case "left":
+                if (grid.MoveObject(getX(), getY(), getX() - 1, getY())) {
+                    transform.position += Vector3.left;
+                }
+                Face("left");
+                break;
+            case "right":
+                if (grid.MoveObject(getX(), getY(), getX() + 1, getY())) {
+                    transform.position += Vector3.right;
+                }
+                Face("right");
+                break;
+        }
+    }
+
+    public void Face(string direction)
+    {
+        switch (direction)
+        {
+            case "up":
+                transform.up = Vector3.up;
+                faceDirection = "up";
+                hp.transform.up = Vector3.up;
+                hp.transform.localPosition = new Vector3(0, 0.55f, 0);
+                break;
+            case "down":
+                transform.up = Vector3.down;
+                faceDirection = "down";
+                hp.transform.localPosition = new Vector3(0, -0.55f, 0);
+                break;
+            case "left":
+                transform.up = Vector3.left;
+                faceDirection = "left";
+                hp.transform.up = Vector3.up;
+                hp.transform.localPosition = new Vector3(0.55f, 0, 0);
+                break;
+            case "right":
+                transform.up = Vector3.right;
+                faceDirection = "right";
+                hp.transform.localPosition = new Vector3(-0.55f, 0, 0);
+                break;
+        }
+
+        hp.transform.up = Vector3.up;
+    }
 }
