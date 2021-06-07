@@ -7,11 +7,10 @@ public class MeleeAOEAttack : Attack
     public MeleeAOEAttack(CharacterMovement character, int damage) 
     {
         this.character = character;
-        this.rangeSpawner = GridManager.Instance.GetComponent<RangeSpawner>();
         this.damage = damage;
         this.range = 1;
         this.name = "MeleeAttack";
-        this.rangeIndicators = rangeSpawner.AOEIndicator(character, 0, 0);
+        this.rangeIndicators = RangeSpawner.Instance.AOEIndicator(character, 0, 0);
     }
 
     public override void Execute()

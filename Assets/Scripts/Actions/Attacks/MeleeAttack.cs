@@ -7,11 +7,10 @@ public class MeleeAttack : Attack
     public MeleeAttack(CharacterMovement character, int damage) 
     {
         this.character = character;
-        this.rangeSpawner = GridManager.Instance.GetComponent<RangeSpawner>();
         this.damage = damage;
         this.range = 1;
         this.name = "MeleeAttack";
-        this.rangeIndicators = rangeSpawner.LinearIndicator(character, range, character.faceDirection);
+        this.rangeIndicators = RangeSpawner.Instance.LinearIndicator(character, range, character.faceDirection);
     }
 
     public override void Execute()
@@ -55,7 +54,7 @@ public class MeleeAttack : Attack
         if (this.direction != "up") {
             this.direction = "up";
             ClearIndicators();
-            this.rangeIndicators = rangeSpawner.LinearIndicator(character, range, "up");
+            this.rangeIndicators = RangeSpawner.Instance.LinearIndicator(character, range, "up");
         }
     }
 
@@ -64,7 +63,7 @@ public class MeleeAttack : Attack
         if (this.direction != "down") {
             this.direction = "down";
             ClearIndicators();
-            this.rangeIndicators = rangeSpawner.LinearIndicator(character, range, "down");
+            this.rangeIndicators = RangeSpawner.Instance.LinearIndicator(character, range, "down");
         }
     }
 
@@ -73,7 +72,7 @@ public class MeleeAttack : Attack
         if (this.direction != "left") {
             this.direction = "left";
             ClearIndicators();
-            this.rangeIndicators = rangeSpawner.LinearIndicator(character, range, "left");
+            this.rangeIndicators = RangeSpawner.Instance.LinearIndicator(character, range, "left");
         }
     }
 
@@ -82,7 +81,7 @@ public class MeleeAttack : Attack
         if (this.direction != "right") {
             this.direction = "right";
             ClearIndicators();
-            this.rangeIndicators = rangeSpawner.LinearIndicator(character, range, "right");
+            this.rangeIndicators = RangeSpawner.Instance.LinearIndicator(character, range, "right");
         }
     }
 }

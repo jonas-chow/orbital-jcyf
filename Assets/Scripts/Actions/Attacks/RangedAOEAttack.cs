@@ -11,12 +11,11 @@ public class RangedAOEAttack : Attack
     public RangedAOEAttack(CharacterMovement character, int damage, int range) 
     {
         this.character = character;
-        this.rangeSpawner = GridManager.Instance.GetComponent<RangeSpawner>();
         this.damage = damage;
         this.range = range;
         this.name = "MeleeAttack";
-        this.rangeIndicators = rangeSpawner.AOEIndicator(character, offsetX, offsetY);
-        this.rangeLimits = rangeSpawner.RangeLimit(character, range);
+        this.rangeIndicators = RangeSpawner.Instance.AOEIndicator(character, offsetX, offsetY);
+        this.rangeLimits = RangeSpawner.Instance.RangeLimit(character, range);
     }
 
     public override void Execute()
@@ -58,7 +57,7 @@ public class RangedAOEAttack : Attack
             GridManager.Instance.IsValidCoords(getX() + offsetX, getY() + nextOffset)) {
             offsetY = nextOffset;
             ClearIndicators();
-            this.rangeIndicators = rangeSpawner.AOEIndicator(character, offsetX, offsetY);
+            this.rangeIndicators = RangeSpawner.Instance.AOEIndicator(character, offsetX, offsetY);
         }
         // change indicator
     }
@@ -71,7 +70,7 @@ public class RangedAOEAttack : Attack
             GridManager.Instance.IsValidCoords(getX() + offsetX, getY() + nextOffset)) {
             offsetY = nextOffset;
             ClearIndicators();
-            this.rangeIndicators = rangeSpawner.AOEIndicator(character, offsetX, offsetY);
+            this.rangeIndicators = RangeSpawner.Instance.AOEIndicator(character, offsetX, offsetY);
         }
         // change indicator
     }
@@ -84,7 +83,7 @@ public class RangedAOEAttack : Attack
             GridManager.Instance.IsValidCoords(getX() + nextOffset, getY() + offsetY)) {
             offsetX = nextOffset;
             ClearIndicators();
-            this.rangeIndicators = rangeSpawner.AOEIndicator(character, offsetX, offsetY);
+            this.rangeIndicators = RangeSpawner.Instance.AOEIndicator(character, offsetX, offsetY);
         }
         // change indicator
     }
@@ -97,7 +96,7 @@ public class RangedAOEAttack : Attack
             GridManager.Instance.IsValidCoords(getX() + nextOffset, getY() + offsetY)) {
             offsetX = nextOffset;
             ClearIndicators();
-            this.rangeIndicators = rangeSpawner.AOEIndicator(character, offsetX, offsetY);
+            this.rangeIndicators = RangeSpawner.Instance.AOEIndicator(character, offsetX, offsetY);
         }
         // change indicator
     }

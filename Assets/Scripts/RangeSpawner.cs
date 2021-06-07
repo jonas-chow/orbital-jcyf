@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class RangeSpawner : MonoBehaviour
 {
+    private static RangeSpawner instance;
+    public static RangeSpawner Instance { get { return instance; } }
+    void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        } else {
+            instance = this;
+        }
+    }
+    
     public GameObject rangeIndicator;
     public GameObject rangeLimit;
 
