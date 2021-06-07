@@ -189,12 +189,12 @@ public class CharacterMovement : MonoBehaviour
 
     private int getX()
     {
-        return (int) transform.localPosition.x;
+        return GridManager.Instance.GetX(transform.position.x);
     }
 
     private int getY()
     {
-        return (int) transform.localPosition.y;
+        return GridManager.Instance.GetY(transform.position.y);
     }
 
     public void TakeDamage(int damage)

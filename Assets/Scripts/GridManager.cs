@@ -152,4 +152,14 @@ public class GridManager : MonoBehaviour
     {
         return transform.position + new Vector3(x, y, 0);
     }
+
+    public int GetX(float xCoord)
+    {
+        return (int)(xCoord - transform.position.x);
+    }
+
+    public int GetY(float yCoord)
+    {
+        return (int)(yCoord - transform.position.y);
+    }
 }

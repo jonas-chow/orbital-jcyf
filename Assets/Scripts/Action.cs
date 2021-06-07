@@ -11,11 +11,11 @@ public abstract class Action
 
     protected int getX()
     {
-        return (int) character.transform.localPosition.x;
+        return GridManager.Instance.GetX(character.transform.position.x);
     }
 
     protected int getY()
     {
-        return (int) character.transform.localPosition.y;
+        return GridManager.Instance.GetY(character.transform.position.y);
     }
 }
