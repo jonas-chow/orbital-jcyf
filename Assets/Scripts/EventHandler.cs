@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -61,6 +62,7 @@ public class EventHandler : MonoBehaviourPunCallbacks
         int damage;
         int targetX;
         int targetY;
+        CharacterMovement cm;
         switch (eventData.Code)
         {
             case MovementEvent:
@@ -69,7 +71,8 @@ public class EventHandler : MonoBehaviourPunCallbacks
                 charY = (int)data[1];
                 direction = (string)data[2];
                 isMove = (bool)data[3];
-                CharacterMovement cm = GridManager.Instance.GetCharacter(charX, charY);
+
+                cm = GridManager.Instance.GetCharacter(charX, charY);
                 if (isMove)
                 {
                     cm.Move(direction);
@@ -84,16 +87,44 @@ public class EventHandler : MonoBehaviourPunCallbacks
                 direction = (string)data[2];
                 range = (int)data[3];
                 damage = (int)data[4];
-                CharacterMovement characterMovement = GridManager.Instance.GetFirstCharacterInLine(charX, charY, range, direction);
-                if (characterMovement != null) {
-                    characterMovement.TakeDamage(damage);
+
+                cm = GridManager.Instance.GetCharacter(charX, charY);
+                if (direction != "none") {
+                    cm.Face(direction);
+                }
+
+                CharacterMovement enemy = GridManager.Instance.GetFirstCharacterInLine(charX, charY, range, cm.faceDirection);
+                if (enemy != null) {
+                    enemy.TakeDamage(damage);
                 }
                 break;
             case AOEAttackEvent:
                 data = (object[])eventData.CustomData;
-                targetX = (int) data[0];
-                targetY = (int)data[1];
-                damage = (int)data[2];
+                charX = (int) data[0];
+                charY = (int) data[1];
+                targetX = (int) data[2];
+                targetY = (int)data[3];
+                damage = (int)data[4];
+
+                cm = GridManager.Instance.GetCharacter(charX, charY);
+                int dirY = targetY - charY;
+                int dirX = targetX - charX;
+                if (Math.Abs(dirX) > Math.Abs(dirY)) {
+                    // horizontal component larger than vertical
+                    if (dirX > 0) {
+                        cm.Face("right");
+                    } else if (dirX < 0) {
+                        cm.Face("left");
+                    }
+                } else {
+                    // vertical component equal or larger to horizontal
+                    if (dirY > 0) {
+                        cm.Face("up");
+                    } else if (dirY < 0) {
+                        cm.Face("down");
+                    }
+                }
+
                 // Instead of finding all not controllable, we find all controllable here
                 // Because the event is from the opponent
                 List<CharacterMovement> enemies = GridManager.Instance
@@ -122,9 +153,9 @@ public class EventHandler : MonoBehaviourPunCallbacks
         PhotonNetwork.RaiseEvent(LinearAttackEvent, data, RaiseEventOptions.Default, SendOptions.SendReliable);
     }
 
-    public void SendAOEAttackEvent(int targetX, int targetY, int damage)
+    public void SendAOEAttackEvent(int charX, int charY, int targetX, int targetY, int damage)
     {
-        object[] data = new object[] {targetX, targetY, damage};
+        object[] data = new object[] {charX, charY, targetX, targetY, damage};
         PhotonNetwork.RaiseEvent(AOEAttackEvent, data, RaiseEventOptions.Default, SendOptions.SendReliable);
     }
 

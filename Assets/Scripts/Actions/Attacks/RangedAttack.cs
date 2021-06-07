@@ -17,6 +17,10 @@ public class RangedAttack : Attack
 
     public override void Execute()
     {
+        if (EventHandler.Instance != null) {
+            EventHandler.Instance.SendLinearAttackEvent(getX(), getY(), direction, range, damage);
+        }
+    
         ChangeDirection();
 
         // If user did not input a direction, the final direction used will be where the player faces on executing the attack

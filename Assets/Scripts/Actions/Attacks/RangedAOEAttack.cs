@@ -22,7 +22,28 @@ public class RangedAOEAttack : Attack
 
     public override void Execute()
     {
-        ChangeDirection();
+        if (EventHandler.Instance != null) {
+            EventHandler.Instance.SendAOEAttackEvent(
+                getX(), getY(), getX() + offsetX, getY() + offsetY, damage);
+        }
+
+        // Face in the direction you fired
+        if (Math.Abs(offsetX) > Math.Abs(offsetY)) {
+            // horizontal component larger than vertical
+            if (offsetX > 0) {
+                character.Face("right");
+            } else if (offsetX < 0) {
+                character.Face("left");
+            }
+        } else {
+            // vertical component equal or larger to horizontal
+            if (offsetY > 0) {
+                character.Face("up");
+            } else if (offsetY < 0) {
+                character.Face("down");
+            }
+        }
+
         List<CharacterMovement> enemies = grid
             .GetAllCharactersInAOE(getX() + offsetX, getY() + offsetY)
             .FindAll(cm => !cm.isControllable);

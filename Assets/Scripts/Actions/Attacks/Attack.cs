@@ -52,20 +52,8 @@ public abstract class Attack : Action
 
   protected void ChangeDirection()
   {
-    switch (this.direction)
-    {
-      case "up":
-        new FaceUp(character).Execute();
-        break;
-      case "down":
-        new FaceDown(character).Execute();
-        break;
-      case "left":
-        new FaceLeft(character).Execute();
-        break;
-      case "right":
-        new FaceRight(character).Execute();
-        break;
+    if (this.direction != "none") {
+      character.Face(direction);
     }
   }
 }

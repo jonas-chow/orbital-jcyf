@@ -17,6 +17,10 @@ public class MeleeAttack : Attack
 
     public override void Execute()
     {
+        if (EventHandler.Instance != null) {
+            EventHandler.Instance.SendLinearAttackEvent(getX(), getY(), direction, range, damage);
+        }
+
         ChangeDirection();
 
         CharacterMovement enemy = null;
@@ -24,6 +28,7 @@ public class MeleeAttack : Attack
         if (direction == "none") {
             direction = character.faceDirection;
         }
+        
         if (direction == "up")
         {
             enemy = grid.GetCharacter(getX(), getY() + 1);

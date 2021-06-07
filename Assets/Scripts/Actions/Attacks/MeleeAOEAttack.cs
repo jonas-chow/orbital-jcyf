@@ -17,7 +17,10 @@ public class MeleeAOEAttack : Attack
 
     public override void Execute()
     {
-        ChangeDirection();
+        if (EventHandler.Instance != null) {
+            EventHandler.Instance.SendAOEAttackEvent(
+                getX(), getY(), getX(), getY(), damage);
+        }
 
         // Get all enemy characters in the AOE centred at character
         List<CharacterMovement> enemies = grid
