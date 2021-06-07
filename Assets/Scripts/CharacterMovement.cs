@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     public GameObject enemyColor;
-    public bool isFriendly;
+    public bool isEnemy;
 
     private bool isActive = false;
     public HealthBar hp;
@@ -272,6 +272,7 @@ public class CharacterMovement : MonoBehaviour
 
     public void SetEnemy(bool isEnemy)
     {
+        this.isEnemy = isEnemy;
         enemyColor.SetActive(isEnemy);
     }
 }

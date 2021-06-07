@@ -304,6 +304,7 @@ MonoBehaviour:
   Melee1: {fileID: 457443623152210106, guid: 3a4ebbd6873ff472681ed8b0d6bb97c7, type: 3}
   Ranged1: {fileID: 1956248704052452388, guid: fe35b30b1a5eb40868ae104c74a57a3f, type: 3}
   Mage1: {fileID: 750558534659890123, guid: 149f6e766552a44c287a9a162f6bdac1, type: 3}
+  readyForTurn: 0
 --- !u!4 &72328980
 Transform:
   m_ObjectHideFlags: 0
@@ -486,7 +487,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

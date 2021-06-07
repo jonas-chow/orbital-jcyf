@@ -23,7 +23,7 @@ public class MeleeAOEAttack : Attack
         // Get all enemy characters in the AOE centred at character
         List<CharacterMovement> enemies = GridManager.Instance
             .GetAllCharactersInAOE(getX(), getY())
-            .FindAll(cm => !cm.isFriendly);
+            .FindAll(cm => cm.isEnemy);
         
         enemies.ForEach(enemy => enemy.TakeDamage(damage));
     }

@@ -24,8 +24,8 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    private int length = 16, height = 16;
+    public int length = 16;
+    public int height = 16;
     private GameObject[,] grid;
 
     // returns false if there is something in that space and you can't insert it

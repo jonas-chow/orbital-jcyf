@@ -44,7 +44,7 @@ public class RangedAOEAttack : Attack
 
         List<CharacterMovement> enemies = GridManager.Instance
             .GetAllCharactersInAOE(getX() + offsetX, getY() + offsetY)
-            .FindAll(cm => !cm.isFriendly);
+            .FindAll(cm => cm.isEnemy);
 
         enemies.ForEach(enemy => enemy.TakeDamage(damage));
     }

@@ -43,7 +43,7 @@ public class MeleeAttack : Attack
         {
             enemy = GridManager.Instance.GetCharacter(getX() + 1, getY());
         }
-        if (enemy != null && !enemy.isFriendly)
+        if (enemy != null && enemy.isEnemy)
         {
             enemy.GetComponent<CharacterMovement>().TakeDamage(damage);
         }

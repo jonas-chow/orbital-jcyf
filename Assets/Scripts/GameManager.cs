@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    // TODO: more robust death/victory detection
+    // Popups when game is loading
+    // Fix the lobby bugs
+
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
     void Awake()
@@ -18,7 +22,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // rmb to remove this
     void Start()
     {
         InstantiateSelf();
@@ -37,7 +40,7 @@ public class GameManager : MonoBehaviour
     
     private bool animationPhase = true;
     private bool animating = false;
-    private bool readyForTurn = true;
+    public bool readyForTurn = false;
     private float animationGap = .3f;
 
     public void InstantiateSelf()
@@ -130,24 +133,6 @@ public class GameManager : MonoBehaviour
     // send events related to instantiation
     // flip the grid for the enemy stuff in event handler
 
-    
-
-/*
-    // Start is called before the first frame update
-    void Start()
-    {   
-        characters = GetComponentsInChildren<CharacterMovement>();
-        friendly = Array.FindAll(characters, c => c.isFriendly);
-        numChar = characters.Length;
-        numFriendly = friendly.Length;
-        numEnemy =  numChar - numFriendly;
-
-        
-        if (numFriendly > 0) {
-            characters[currentChar].init();
-        }
-    }
-*/
 
     // Update is called once per frame
     void Update()
@@ -228,10 +213,8 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // artificially wait for animations
-        Debug.Log("Your turn in one second");
-        yield return new WaitForSeconds(1f);
-        readyForTurn = true;
+        EventHandler.Instance.SendTurnEndEvent();
+        Debug.Log("Waiting for opponent turn to end");
     }
 
     IEnumerator AnimateActions()
