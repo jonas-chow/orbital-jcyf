@@ -15,9 +15,13 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         } else {
             instance = this;
-            // rmb to remove this
-            this.InstantiateSelf();
         }
+    }
+
+    // rmb to remove this
+    void Start()
+    {
+        InstantiateSelf();
     }
 
     [SerializeField]
