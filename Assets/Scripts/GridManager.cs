@@ -13,24 +13,20 @@ public class GridManager : MonoBehaviour
             Destroy(this.gameObject);
         } else {
             instance = this;
+            grid = new GameObject[length, height];
+            for (int i = 0; i < length; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    grid[i, j] = null;
+                }
+            }
         }
     }
 
     [SerializeField]
     private int length = 16, height = 16;
     private GameObject[,] grid;
-
-    public void init()
-    {
-        grid = new GameObject[length, height];
-        for (int i = 0; i < length; i++)
-        {
-            for (int j = 0; j < height; j++)
-            {
-                grid[i, j] = null;
-            }
-        }
-    }
 
     // returns false if there is something in that space and you can't insert it
     public bool InsertObject(GameObject obj, int x, int y)
@@ -139,5 +135,21 @@ public class GridManager : MonoBehaviour
     public bool IsValidCoords(int x, int y)
     {
         return x >= 0 && x < length && y >= 0 && y < height;
+    }
+
+    public bool MoveToAndInsert(GameObject obj, int x, int y)
+    {
+        if (IsValidCoords(x, y) && grid[x, y] == null) {
+            obj.transform.position = GetCoords(x, y);
+            InsertObject(obj, x, y);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Vector3 GetCoords(int x, int y)
+    {
+        return transform.position + new Vector3(x, y, 0);
     }
 }

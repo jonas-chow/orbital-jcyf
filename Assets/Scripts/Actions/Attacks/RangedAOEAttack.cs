@@ -11,8 +11,7 @@ public class RangedAOEAttack : Attack
     public RangedAOEAttack(CharacterMovement character, int damage, int range) 
     {
         this.character = character;
-        this.grid = CharacterMovement.grid;
-        this.rangeSpawner = grid.GetComponent<RangeSpawner>();
+        this.rangeSpawner = GridManager.Instance.GetComponent<RangeSpawner>();
         this.damage = damage;
         this.range = range;
         this.name = "MeleeAttack";
@@ -44,9 +43,9 @@ public class RangedAOEAttack : Attack
             }
         }
 
-        List<CharacterMovement> enemies = grid
+        List<CharacterMovement> enemies = GridManager.Instance
             .GetAllCharactersInAOE(getX() + offsetX, getY() + offsetY)
-            .FindAll(cm => !cm.isControllable);
+            .FindAll(cm => !cm.isFriendly);
 
         enemies.ForEach(enemy => enemy.TakeDamage(damage));
     }
@@ -56,7 +55,7 @@ public class RangedAOEAttack : Attack
         this.direction = "up";
         int nextOffset = offsetY + 1;
         if (IsWithinRange(offsetX, nextOffset) && 
-            grid.IsValidCoords(getX() + offsetX, getY() + nextOffset)) {
+            GridManager.Instance.IsValidCoords(getX() + offsetX, getY() + nextOffset)) {
             offsetY = nextOffset;
             ClearIndicators();
             this.rangeIndicators = rangeSpawner.AOEIndicator(character, offsetX, offsetY);
@@ -69,7 +68,7 @@ public class RangedAOEAttack : Attack
         this.direction = "down";
         int nextOffset = offsetY - 1;
         if (IsWithinRange(offsetX, nextOffset) && 
-            grid.IsValidCoords(getX() + offsetX, getY() + nextOffset)) {
+            GridManager.Instance.IsValidCoords(getX() + offsetX, getY() + nextOffset)) {
             offsetY = nextOffset;
             ClearIndicators();
             this.rangeIndicators = rangeSpawner.AOEIndicator(character, offsetX, offsetY);
@@ -82,7 +81,7 @@ public class RangedAOEAttack : Attack
         this.direction = "left";
         int nextOffset = offsetX - 1;
         if (IsWithinRange(nextOffset, offsetY) && 
-            grid.IsValidCoords(getX() + nextOffset, getY() + offsetY)) {
+            GridManager.Instance.IsValidCoords(getX() + nextOffset, getY() + offsetY)) {
             offsetX = nextOffset;
             ClearIndicators();
             this.rangeIndicators = rangeSpawner.AOEIndicator(character, offsetX, offsetY);
@@ -95,7 +94,7 @@ public class RangedAOEAttack : Attack
         this.direction = "right";
         int nextOffset = offsetX + 1;
         if (IsWithinRange(nextOffset, offsetY) && 
-            grid.IsValidCoords(getX() + nextOffset, getY() + offsetY)) {
+            GridManager.Instance.IsValidCoords(getX() + nextOffset, getY() + offsetY)) {
             offsetX = nextOffset;
             ClearIndicators();
             this.rangeIndicators = rangeSpawner.AOEIndicator(character, offsetX, offsetY);

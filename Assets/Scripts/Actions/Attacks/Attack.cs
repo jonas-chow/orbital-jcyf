@@ -7,7 +7,6 @@ public abstract class Attack : Action
   protected int damage;
   protected int range;
   protected string direction = "none";
-  protected GridManager grid;
   protected RangeSpawner rangeSpawner;
   protected GameObject[] rangeIndicators = new GameObject[0] {};
   protected GameObject[] rangeLimits = new GameObject[0] {};

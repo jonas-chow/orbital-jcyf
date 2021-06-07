@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
-    private GameManager game;
-
-    public static GridManager grid;
-    private static ActionQueue queue;
-    public bool isControllable;
+    public GameObject enemyColor;
+    public bool isFriendly;
 
     private bool isActive = false;
     public HealthBar hp;
-    public SelectionAura selection;
+    public GameObject selection;
     public string faceDirection = "up";
 
     private bool aiming = false;
@@ -48,26 +45,6 @@ public class CharacterMovement : MonoBehaviour
 
     private Attack attack;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        hp.SetVisible(isActive);
-        if (isControllable) {
-            selection.SetSelect(isActive);
-        }
-
-        if (grid == null) {
-            grid = GameObject.FindObjectOfType<GridManager>();
-            grid.init();
-        }
-
-        if (queue == null) {
-            queue = gameObject.GetComponentInParent<ActionQueue>();
-        }
-
-        grid.InsertObject(gameObject, getX(), getY());
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -76,30 +53,30 @@ public class CharacterMovement : MonoBehaviour
                 if (Input.GetButtonDown("Horizontal")) {
                     if (Input.GetAxis("Horizontal") > 0) {
                         if (Input.GetButton("Stay Still")) {
-                            queue.EnqueueAction(new FaceRight(this));
+                            ActionQueue.Instance.EnqueueAction(new FaceRight(this));
                         } else {
-                            queue.EnqueueAction(new MoveRight(this));
+                            ActionQueue.Instance.EnqueueAction(new MoveRight(this));
                         }
                     } else {
                         if (Input.GetButton("Stay Still")) {
-                            queue.EnqueueAction(new FaceLeft(this));
+                            ActionQueue.Instance.EnqueueAction(new FaceLeft(this));
                         } else {
-                            queue.EnqueueAction(new MoveLeft(this));
+                            ActionQueue.Instance.EnqueueAction(new MoveLeft(this));
                         }
                     }
                 }
                 if (Input.GetButtonDown("Vertical")) {
                     if (Input.GetAxis("Vertical") > 0) {
                         if (Input.GetButton("Stay Still")) {
-                            queue.EnqueueAction(new FaceUp(this));
+                            ActionQueue.Instance.EnqueueAction(new FaceUp(this));
                         } else {
-                            queue.EnqueueAction(new MoveUp(this));
+                            ActionQueue.Instance.EnqueueAction(new MoveUp(this));
                         }
                     } else {
                         if (Input.GetButton("Stay Still")) {
-                            queue.EnqueueAction(new FaceDown(this));
+                            ActionQueue.Instance.EnqueueAction(new FaceDown(this));
                         } else {
-                            queue.EnqueueAction(new MoveDown(this));
+                            ActionQueue.Instance.EnqueueAction(new MoveDown(this));
                         }
                     }
                 }
@@ -122,8 +99,8 @@ public class CharacterMovement : MonoBehaviour
                     (attackNum == 3 && Input.GetButtonUp("Attack3")) ||
                     (attackNum == 4 && Input.GetButtonUp("Attack4")) ) {
                     DisableAiming();
-                    queue.EnqueueAction(attack);
-                    queue.Enable();
+                    ActionQueue.Instance.EnqueueAction(attack);
+                    ActionQueue.Instance.Enable();
                 }
 
                 if (Input.GetButtonDown("Horizontal")) {
@@ -147,7 +124,7 @@ public class CharacterMovement : MonoBehaviour
     private void AimingMode(int attackNumber)
     {
         aiming = true;
-        queue.Disable();
+        ActionQueue.Instance.Disable();
         attackNum = attackNumber;
         switch (attackNumber)
         {
@@ -196,27 +173,18 @@ public class CharacterMovement : MonoBehaviour
     {
         isActive = true;
         hp.SetVisible(true);
-        selection.SetSelect(true);
+        selection.SetActive(true);
     }
 
     public void Deactivate()
     {
         isActive = false;
         hp.SetVisible(false);
-        selection.SetSelect(false);
+        selection.SetActive(false);
 
         // in case turn ends and player was in the middle of aiming
         DisableAiming();
-        queue.Enable();
-    }
-
-    // For Game Manager to call, to ensure that this initial state happens regardless of order of start() being called
-    public void init()
-    {
-        isActive = true;
-
-        hp.SetVisible(true);
-        selection.SetSelect(true);
+        ActionQueue.Instance.Enable();
     }
 
     private int getX()
@@ -232,10 +200,10 @@ public class CharacterMovement : MonoBehaviour
     public void TakeDamage(int damage)
     {
         if (hp.TakeDamage(damage)) {
-            grid.RemoveObject(getX(), getY());
+            GridManager.Instance.RemoveObject(getX(), getY());
             GameObject.Destroy(gameObject);
             // how to see if its enemy or friendly
-            GameManager.RemoveEnemy();
+            GameManager.Instance.RemoveEnemy();
             Debug.Log("Enemy defeated.");
         }
     }
@@ -245,25 +213,25 @@ public class CharacterMovement : MonoBehaviour
         switch (direction)
         {
             case "up":
-                if (grid.MoveObject(getX(), getY(), getX(), getY() + 1)) {
+                if (GridManager.Instance.MoveObject(getX(), getY(), getX(), getY() + 1)) {
                     transform.position += Vector3.up;
                 }
                 Face("up");
                 break;
             case "down":
-                if (grid.MoveObject(getX(), getY(), getX(), getY() - 1)) {
+                if (GridManager.Instance.MoveObject(getX(), getY(), getX(), getY() - 1)) {
                     transform.position += Vector3.down;
                 }
                 Face("down");
                 break;
             case "left":
-                if (grid.MoveObject(getX(), getY(), getX() - 1, getY())) {
+                if (GridManager.Instance.MoveObject(getX(), getY(), getX() - 1, getY())) {
                     transform.position += Vector3.left;
                 }
                 Face("left");
                 break;
             case "right":
-                if (grid.MoveObject(getX(), getY(), getX() + 1, getY())) {
+                if (GridManager.Instance.MoveObject(getX(), getY(), getX() + 1, getY())) {
                     transform.position += Vector3.right;
                 }
                 Face("right");
@@ -300,5 +268,10 @@ public class CharacterMovement : MonoBehaviour
         }
 
         hp.transform.up = Vector3.up;
+    }
+
+    public void SetEnemy(bool isEnemy)
+    {
+        enemyColor.SetActive(isEnemy);
     }
 }

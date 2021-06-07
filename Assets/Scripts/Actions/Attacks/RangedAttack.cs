@@ -7,8 +7,7 @@ public class RangedAttack : Attack
     public RangedAttack(CharacterMovement character, int damage, int range) 
     {
         this.character = character;
-        this.grid = CharacterMovement.grid;
-        this.rangeSpawner = grid.GetComponent<RangeSpawner>();
+        this.rangeSpawner = GridManager.Instance.GetComponent<RangeSpawner>();
         this.range = range;
         this.damage = damage;
         this.name = "MeleeAttack";
@@ -27,10 +26,10 @@ public class RangedAttack : Attack
         if (direction == "none") {
           direction = character.faceDirection;
         }
-        CharacterMovement enemy = grid
+        CharacterMovement enemy = GridManager.Instance
             .GetFirstCharacterInLine(getX(), getY(), range, direction);
         
-        if (enemy != null && !enemy.isControllable)
+        if (enemy != null && !enemy.isFriendly)
         {
             enemy.TakeDamage(damage);
         }

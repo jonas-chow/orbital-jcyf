@@ -129,7 +129,7 @@ public class EventHandler : MonoBehaviourPunCallbacks
                 // Because the event is from the opponent
                 List<CharacterMovement> enemies = GridManager.Instance
                     .GetAllCharactersInAOE(targetX, targetY)
-                    .FindAll(cm => cm.isControllable);
+                    .FindAll(cm => cm.isFriendly);
                 enemies.ForEach(enemy => enemy.TakeDamage(damage));
                 break;
             case TurnEndEvent:

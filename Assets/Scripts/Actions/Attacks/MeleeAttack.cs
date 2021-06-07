@@ -7,8 +7,7 @@ public class MeleeAttack : Attack
     public MeleeAttack(CharacterMovement character, int damage) 
     {
         this.character = character;
-        this.grid = CharacterMovement.grid;
-        this.rangeSpawner = grid.GetComponent<RangeSpawner>();
+        this.rangeSpawner = GridManager.Instance.GetComponent<RangeSpawner>();
         this.damage = damage;
         this.range = 1;
         this.name = "MeleeAttack";
@@ -28,24 +27,24 @@ public class MeleeAttack : Attack
         if (direction == "none") {
             direction = character.faceDirection;
         }
-        
+
         if (direction == "up")
         {
-            enemy = grid.GetCharacter(getX(), getY() + 1);
+            enemy = GridManager.Instance.GetCharacter(getX(), getY() + 1);
         }
         if (direction == "down")
         {
-            enemy = grid.GetCharacter(getX(), getY() - 1);
+            enemy = GridManager.Instance.GetCharacter(getX(), getY() - 1);
         }
         if (direction == "left")
         {
-            enemy = grid.GetCharacter(getX() - 1, getY());
+            enemy = GridManager.Instance.GetCharacter(getX() - 1, getY());
         }
         if (direction == "right")
         {
-            enemy = grid.GetCharacter(getX() + 1, getY());
+            enemy = GridManager.Instance.GetCharacter(getX() + 1, getY());
         }
-        if (enemy != null && !enemy.isControllable)
+        if (enemy != null && !enemy.isFriendly)
         {
             enemy.GetComponent<CharacterMovement>().TakeDamage(damage);
         }

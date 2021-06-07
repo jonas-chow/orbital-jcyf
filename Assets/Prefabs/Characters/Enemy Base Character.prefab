@@ -343,7 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc837274ecb364a93989a34fa3e2bd8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isControllable: 0
+  isFriendly: 0
   hp: {fileID: 9136340724331206590}
   selection: {fileID: 0}
   faceDirection: up

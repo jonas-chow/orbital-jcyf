@@ -7,8 +7,7 @@ public class MeleeAOEAttack : Attack
     public MeleeAOEAttack(CharacterMovement character, int damage) 
     {
         this.character = character;
-        this.grid = CharacterMovement.grid;
-        this.rangeSpawner = grid.GetComponent<RangeSpawner>();
+        this.rangeSpawner = GridManager.Instance.GetComponent<RangeSpawner>();
         this.damage = damage;
         this.range = 1;
         this.name = "MeleeAttack";
@@ -23,9 +22,9 @@ public class MeleeAOEAttack : Attack
         }
 
         // Get all enemy characters in the AOE centred at character
-        List<CharacterMovement> enemies = grid
+        List<CharacterMovement> enemies = GridManager.Instance
             .GetAllCharactersInAOE(getX(), getY())
-            .FindAll(cm => !cm.isControllable);
+            .FindAll(cm => !cm.isFriendly);
         
         enemies.ForEach(enemy => enemy.TakeDamage(damage));
     }
