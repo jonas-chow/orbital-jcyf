@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     // Popups when game is loading
     // Fix the lobby bugs
     // Choose your prefabs in lobby
+    // Customisable controls
 
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
@@ -29,7 +30,7 @@ public class GameManager : MonoBehaviour
     }
 
     [SerializeField]
-    private GameObject gameEndUI;
+    private GameObject defeatUI, victoryUI, loadingUI;
 
     [SerializeField]
     private GameObject Melee1, Ranged1, Mage1;
@@ -150,6 +151,7 @@ public class GameManager : MonoBehaviour
     public void CheckBothReady()
     {
         if (friendlyLoaded && enemyLoaded && enemyReady) {
+            loadingUI.SetActive(false);
             EventHandler.Instance.FlipCoin();
         }
     }
@@ -158,7 +160,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (numEnemy > 0) {
+        if (numEnemy > 0 && numFriendly > 0) {
             if (readyForTurn) {
                 readyForTurn = false;
                 StartCoroutine(StartTurn());
@@ -183,24 +185,42 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(AnimateActions());
             }
         } else {
-            GameEnded();
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                SceneManager.LoadScene("Main Menu");
+            }
         }
     }
     
     public void RemoveEnemy() {
-        numEnemy -= 1;
+        numEnemy--;
+        if (numEnemy == 0) {
+            Win();
+        }
     }
     
-    public void RemoveFriendly() {
-        numFriendly -=1;
+    public void RemoveFriendly(CharacterMovement dead) {
+        int deadIdx = Array.FindIndex(friendly, character => character.Equals(dead));
+        numFriendly--;
+
+        if (numFriendly > 0) {
+            if (deadIdx >= currentChar) {
+                friendly = Array.FindAll(friendly, character => !character.Equals(dead));
+            } else {
+                friendly = Array.FindAll(friendly, character => !character.Equals(dead));
+                currentChar--;
+            }
+        } else {
+            Lose();
+        }
     }
 
     // currently only taking case where all enemies die
-    private void GameEnded() {
-        gameEndUI.SetActive(true);
-        if (Input.anyKeyDown) {
-            SceneManager.LoadScene("Main Menu");
-        }
+    private void Lose() {
+        defeatUI.SetActive(true);
+    }
+
+    private void Win() {
+        victoryUI.SetActive(true);
     }
     
 
