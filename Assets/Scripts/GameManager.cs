@@ -6,8 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    // TODO: more robust death/victory detection
-    // Popups when game is loading
+    // TODO:
     // Fix the lobby bugs
     // Choose your prefabs in lobby
     // Customisable controls
@@ -30,7 +29,7 @@ public class GameManager : MonoBehaviour
     }
 
     [SerializeField]
-    private GameObject defeatUI, victoryUI, loadingUI;
+    private GameObject defeatUI, victoryUI, loadingUI, yourTurnUI, enemyTurnUI;
 
     [SerializeField]
     private GameObject Melee1, Ranged1, Mage1;
@@ -237,7 +236,7 @@ public class GameManager : MonoBehaviour
     IEnumerator StartTurn()
     {
         Debug.Log("Turn start");
-        // YourTurn.SetActive(true);
+        StartCoroutine(AppearForAWhile(yourTurnUI));
         ActivateCurrent();
         animationPhase = true;
         // start turn and wait for turn
@@ -262,7 +261,7 @@ public class GameManager : MonoBehaviour
     public void EnemyTurn()
     {
         Debug.Log("Waiting for opponent turn to end");        
-        // EnemyTurn.SetActive(true);
+        StartCoroutine(AppearForAWhile(enemyTurnUI));
     }
 
     IEnumerator AnimateActions()
@@ -276,5 +275,12 @@ public class GameManager : MonoBehaviour
         ActionQueue.Instance.ResetQueue();
         animationPhase = false;
         animating = false;
+    }
+
+    IEnumerator AppearForAWhile(GameObject obj)
+    {
+        obj.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        obj.SetActive(false);
     }
 }
