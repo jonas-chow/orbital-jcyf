@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     // TODO: more robust death/victory detection
     // Popups when game is loading
     // Fix the lobby bugs
+    // Choose your prefabs in lobby
 
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
@@ -37,6 +38,9 @@ public class GameManager : MonoBehaviour
     private int numEnemy = 3;
     private int numFriendly = 3;
     private int currentChar = 0;
+    private bool friendlyLoaded = false;
+    private bool enemyLoaded = false;
+    public bool enemyReady = false;
     
     private bool animationPhase = true;
     private bool animating = false;
@@ -70,6 +74,10 @@ public class GameManager : MonoBehaviour
             ranged.GetComponent<CharacterMovement>(),
             mage.GetComponent<CharacterMovement>()};
 
+        friendlyLoaded = true;
+        CheckLoading();
+        CheckBothReady();
+
         // For single player mode
         if (EventHandler.Instance == null) {
             InstantiateEnemies(
@@ -84,7 +92,6 @@ public class GameManager : MonoBehaviour
         string rangedChar, int rangedX, int rangedY,
         string mageChar, int mageX, int mageY)
     {
-
         // instantiate melee character
         GameObject melee = BuildChar(meleeChar, true);
         GridManager.Instance.MoveToAndInsert(melee, meleeX, meleeY);
@@ -102,6 +109,10 @@ public class GameManager : MonoBehaviour
             melee.GetComponent<CharacterMovement>(),
             ranged.GetComponent<CharacterMovement>(),
             mage.GetComponent<CharacterMovement>()};
+
+        enemyLoaded = true;
+        CheckLoading();
+        CheckBothReady();
     }
 
     private GameObject BuildChar(string prefabName, bool isEnemy)
@@ -128,10 +139,20 @@ public class GameManager : MonoBehaviour
         }
         return obj;
     }
-    // TODO: make prefabs with both friendly and enemy
-    // clean up the code
-    // send events related to instantiation
-    // flip the grid for the enemy stuff in event handler
+
+    private void CheckLoading()
+    {
+        if (friendlyLoaded && enemyLoaded) {
+            EventHandler.Instance.SendReady();
+        }
+    }
+
+    public void CheckBothReady()
+    {
+        if (friendlyLoaded && enemyLoaded && enemyReady) {
+            EventHandler.Instance.FlipCoin();
+        }
+    }
 
 
     // Update is called once per frame
@@ -196,6 +217,7 @@ public class GameManager : MonoBehaviour
     IEnumerator StartTurn()
     {
         Debug.Log("Turn start");
+        // YourTurn.SetActive(true);
         ActivateCurrent();
         animationPhase = true;
         // start turn and wait for turn
@@ -214,7 +236,13 @@ public class GameManager : MonoBehaviour
         }
 
         EventHandler.Instance.SendTurnEndEvent();
-        Debug.Log("Waiting for opponent turn to end");
+        EnemyTurn();
+    }
+
+    public void EnemyTurn()
+    {
+        Debug.Log("Waiting for opponent turn to end");        
+        // EnemyTurn.SetActive(true);
     }
 
     IEnumerator AnimateActions()

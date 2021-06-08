@@ -16,6 +16,8 @@ public class EventHandler : MonoBehaviourPunCallbacks
     private const byte AOEAttackEvent = 3;
     private const byte TurnEndEvent = 4;
     private const byte InstantiateEvent = 5;
+    private const byte FirstTurnEvent = 6;
+    private const byte ReadyEvent = 7;
 
     // ensures that there is only one event handler, for easy reference
     void Awake()
@@ -43,10 +45,20 @@ public class EventHandler : MonoBehaviourPunCallbacks
         };
         
         PhotonNetwork.RaiseEvent(InstantiateEvent, data, RaiseEventOptions.Default,SendOptions.SendReliable);
+    }
 
-        // temporary
-        if (PhotonNetwork.IsMasterClient) {
-            GameManager.Instance.readyForTurn = true;
+    public void FlipCoin()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            bool startFirst = UnityEngine.Random.Range(0, 2) == 0;
+            PhotonNetwork.RaiseEvent(FirstTurnEvent, startFirst, RaiseEventOptions.Default, SendOptions.SendReliable);
+            if (startFirst)
+            {
+                GameManager.Instance.readyForTurn = true;
+            } else {
+                GameManager.Instance.EnemyTurn();
+            }
         }
     }
 
@@ -158,6 +170,18 @@ public class EventHandler : MonoBehaviourPunCallbacks
                     (string)data[3], (int)data[4], (int)data[5], 
                     (string)data[6], (int)data[7], (int)data[8]); 
                 break;
+            case FirstTurnEvent:
+                bool enemyFirst = (bool)eventData.CustomData;
+                if (enemyFirst) {
+                    GameManager.Instance.EnemyTurn();
+                } else {
+                    GameManager.Instance.readyForTurn = true;
+                }
+                break;
+            case ReadyEvent:
+                GameManager.Instance.enemyReady = true;
+                GameManager.Instance.CheckBothReady();
+                break;
         }
     }
 
@@ -196,6 +220,11 @@ public class EventHandler : MonoBehaviourPunCallbacks
     public void SendTurnEndEvent()
     {
         PhotonNetwork.RaiseEvent(TurnEndEvent, null, RaiseEventOptions.Default, SendOptions.SendReliable);
+    }
+
+    public void SendReady()
+    {
+        PhotonNetwork.RaiseEvent(ReadyEvent, null, RaiseEventOptions.Default, SendOptions.SendReliable);
     }
 
     private string InvertDirection(string direction)
