@@ -14,6 +14,7 @@ public class RoomMenu : MonoBehaviourPunCallbacks
     public GameObject p1Ready;
     public GameObject p2Ready;
     public GameObject startButton;
+    public GameObject loadout;
 
     private Room room;
     private Player player1 = null;
@@ -62,6 +63,11 @@ public class RoomMenu : MonoBehaviourPunCallbacks
     {
         Debug.Log("leaving");
         PhotonNetwork.LeaveRoom();
+    }
+
+    public void OpenLoadout()
+    {
+        loadout.SetActive(true);
     }
 
     public override void OnLeftRoom()

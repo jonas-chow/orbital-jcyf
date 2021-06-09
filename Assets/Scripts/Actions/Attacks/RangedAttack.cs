@@ -28,7 +28,7 @@ public class RangedAttack : Attack
         CharacterMovement enemy = GridManager.Instance
             .GetFirstCharacterInLine(getX(), getY(), range, direction);
         
-        if (enemy != null && !enemy.isFriendly)
+        if (enemy != null && enemy.isEnemy)
         {
             enemy.TakeDamage(damage);
         }

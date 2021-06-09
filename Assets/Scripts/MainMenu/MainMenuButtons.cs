@@ -8,10 +8,11 @@ using Photon.Realtime;
 public class MainMenuButtons : MonoBehaviourPunCallbacks
 {
     public GameObject multiplayerMenu;
+    public GameObject loadout;
 
-    public void PlayGame()
+    public void OpenLoadout()
     {
-        SceneManager.LoadScene("Game");
+        loadout.SetActive(true);
     }
 
     public void Connect()

@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    // TODO:
+    // Fix the lobby bugs
+    // Choose your prefabs in lobby
+    // Customisable controls
+
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
     void Awake()
@@ -18,14 +23,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // rmb to remove this
     void Start()
     {
         InstantiateSelf();
     }
 
     [SerializeField]
-    private GameObject gameEndUI;
+    private GameObject defeatUI, victoryUI, loadingUI, yourTurnUI, enemyTurnUI;
 
     [SerializeField]
     private GameObject Melee1, Ranged1, Mage1;
@@ -34,10 +38,13 @@ public class GameManager : MonoBehaviour
     private int numEnemy = 3;
     private int numFriendly = 3;
     private int currentChar = 0;
+    private bool friendlyLoaded = false;
+    private bool enemyLoaded = false;
+    public bool enemyReady = false;
     
     private bool animationPhase = true;
     private bool animating = false;
-    private bool readyForTurn = true;
+    public bool readyForTurn = false;
     private float animationGap = .3f;
 
     public void InstantiateSelf()
@@ -67,6 +74,10 @@ public class GameManager : MonoBehaviour
             ranged.GetComponent<CharacterMovement>(),
             mage.GetComponent<CharacterMovement>()};
 
+        friendlyLoaded = true;
+        CheckLoading();
+        CheckBothReady();
+
         // For single player mode
         if (EventHandler.Instance == null) {
             InstantiateEnemies(
@@ -81,7 +92,6 @@ public class GameManager : MonoBehaviour
         string rangedChar, int rangedX, int rangedY,
         string mageChar, int mageX, int mageY)
     {
-
         // instantiate melee character
         GameObject melee = BuildChar(meleeChar, true);
         GridManager.Instance.MoveToAndInsert(melee, meleeX, meleeY);
@@ -99,6 +109,10 @@ public class GameManager : MonoBehaviour
             melee.GetComponent<CharacterMovement>(),
             ranged.GetComponent<CharacterMovement>(),
             mage.GetComponent<CharacterMovement>()};
+
+        enemyLoaded = true;
+        CheckLoading();
+        CheckBothReady();
     }
 
     private GameObject BuildChar(string prefabName, bool isEnemy)
@@ -125,34 +139,27 @@ public class GameManager : MonoBehaviour
         }
         return obj;
     }
-    // TODO: make prefabs with both friendly and enemy
-    // clean up the code
-    // send events related to instantiation
-    // flip the grid for the enemy stuff in event handler
 
-    
-
-/*
-    // Start is called before the first frame update
-    void Start()
-    {   
-        characters = GetComponentsInChildren<CharacterMovement>();
-        friendly = Array.FindAll(characters, c => c.isFriendly);
-        numChar = characters.Length;
-        numFriendly = friendly.Length;
-        numEnemy =  numChar - numFriendly;
-
-        
-        if (numFriendly > 0) {
-            characters[currentChar].init();
+    private void CheckLoading()
+    {
+        if (friendlyLoaded && enemyLoaded) {
+            EventHandler.Instance.SendReady();
         }
     }
-*/
+
+    public void CheckBothReady()
+    {
+        if (friendlyLoaded && enemyLoaded && enemyReady) {
+            loadingUI.SetActive(false);
+            EventHandler.Instance.FlipCoin();
+        }
+    }
+
 
     // Update is called once per frame
     void Update()
     {
-        if (numEnemy > 0) {
+        if (numEnemy > 0 && numFriendly > 0) {
             if (readyForTurn) {
                 readyForTurn = false;
                 StartCoroutine(StartTurn());
@@ -177,24 +184,42 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(AnimateActions());
             }
         } else {
-            GameEnded();
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                SceneManager.LoadScene("Main Menu");
+            }
         }
     }
     
     public void RemoveEnemy() {
-        numEnemy -= 1;
+        numEnemy--;
+        if (numEnemy == 0) {
+            Win();
+        }
     }
     
-    public void RemoveFriendly() {
-        numFriendly -=1;
+    public void RemoveFriendly(CharacterMovement dead) {
+        int deadIdx = Array.FindIndex(friendly, character => character.Equals(dead));
+        numFriendly--;
+
+        if (numFriendly > 0) {
+            if (deadIdx >= currentChar) {
+                friendly = Array.FindAll(friendly, character => !character.Equals(dead));
+            } else {
+                friendly = Array.FindAll(friendly, character => !character.Equals(dead));
+                currentChar--;
+            }
+        } else {
+            Lose();
+        }
     }
 
     // currently only taking case where all enemies die
-    private void GameEnded() {
-        gameEndUI.SetActive(true);
-        if (Input.anyKeyDown) {
-            SceneManager.LoadScene("Main Menu");
-        }
+    private void Lose() {
+        defeatUI.SetActive(true);
+    }
+
+    private void Win() {
+        victoryUI.SetActive(true);
     }
     
 
@@ -211,6 +236,7 @@ public class GameManager : MonoBehaviour
     IEnumerator StartTurn()
     {
         Debug.Log("Turn start");
+        StartCoroutine(AppearForAWhile(yourTurnUI));
         ActivateCurrent();
         animationPhase = true;
         // start turn and wait for turn
@@ -228,10 +254,14 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // artificially wait for animations
-        Debug.Log("Your turn in one second");
-        yield return new WaitForSeconds(1f);
-        readyForTurn = true;
+        EventHandler.Instance.SendTurnEndEvent();
+        EnemyTurn();
+    }
+
+    public void EnemyTurn()
+    {
+        Debug.Log("Waiting for opponent turn to end");        
+        StartCoroutine(AppearForAWhile(enemyTurnUI));
     }
 
     IEnumerator AnimateActions()
@@ -245,5 +275,12 @@ public class GameManager : MonoBehaviour
         ActionQueue.Instance.ResetQueue();
         animationPhase = false;
         animating = false;
+    }
+
+    IEnumerator AppearForAWhile(GameObject obj)
+    {
+        obj.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        obj.SetActive(false);
     }
 }

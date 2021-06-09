@@ -17,7 +17,7 @@ public class TimeBar : MonoBehaviour
         }
     }
 
-    private float value = 1f;
+    private float value = 0f;
     private float turnTime = 3f;
     public Slider slider;
     public Gradient gradient;

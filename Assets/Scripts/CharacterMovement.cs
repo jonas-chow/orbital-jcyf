@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     public GameObject enemyColor;
-    public bool isFriendly;
+    public bool isEnemy;
 
     private bool isActive = false;
     public HealthBar hp;
@@ -199,12 +199,15 @@ public class CharacterMovement : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        // if died
         if (hp.TakeDamage(damage)) {
             GridManager.Instance.RemoveObject(getX(), getY());
             GameObject.Destroy(gameObject);
-            // how to see if its enemy or friendly
-            GameManager.Instance.RemoveEnemy();
-            Debug.Log("Enemy defeated.");
+            if (isEnemy) {
+                GameManager.Instance.RemoveEnemy();
+            } else {
+                GameManager.Instance.RemoveFriendly(this);
+            }
         }
     }
 
@@ -272,6 +275,7 @@ public class CharacterMovement : MonoBehaviour
 
     public void SetEnemy(bool isEnemy)
     {
+        this.isEnemy = isEnemy;
         enemyColor.SetActive(isEnemy);
     }
 }
