@@ -203,15 +203,39 @@ public class GameManager : MonoBehaviour
 
         if (numFriendly > 0) {
             if (deadIdx >= currentChar) {
-                friendly = Array.FindAll(friendly, character => !character.Equals(dead));
+                CharacterMovement[] newFriendly = new CharacterMovement[numFriendly];
+                int i = 0;
+                foreach (CharacterMovement cm in friendly)
+                {
+                    if (!cm.Equals(dead))
+                    {
+                        newFriendly[i] = cm;
+                        i++;
+                    }
+                }
+                friendly = newFriendly;
             } else {
-                friendly = Array.FindAll(friendly, character => !character.Equals(dead));
+                CharacterMovement[] newFriendly = new CharacterMovement[numFriendly];
+                int i = 0;
+                foreach (CharacterMovement cm in friendly)
+                {
+                    if (!cm.Equals(dead))
+                    {
+                        newFriendly[i] = cm;
+                        i++;
+                    }
+                }
+                friendly = newFriendly;
                 currentChar--;
             }
         } else {
             Lose();
         }
     }
+    // 1 2 3
+    // 1 3
+    // crash
+    // 1
 
     // currently only taking case where all enemies die
     private void Lose() {
