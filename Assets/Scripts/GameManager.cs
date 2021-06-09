@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     private bool animationPhase = true;
     private bool animating = false;
     public bool readyForTurn = false;
-    private float animationGap = .3f;
+    private float animationGap = .1f;
 
     public void InstantiateSelf()
     {
@@ -203,6 +203,9 @@ public class GameManager : MonoBehaviour
 
         if (numFriendly > 0) {
             if (deadIdx >= currentChar) {
+                if (friendly[currentChar].Equals(dead)) {
+                    currentChar--;
+                }
                 CharacterMovement[] newFriendly = new CharacterMovement[numFriendly];
                 int i = 0;
                 foreach (CharacterMovement cm in friendly)
@@ -214,6 +217,19 @@ public class GameManager : MonoBehaviour
                     }
                 }
                 friendly = newFriendly;
+            } else if (deadIdx < currentChar) {
+                CharacterMovement[] newFriendly = new CharacterMovement[numFriendly];
+                int i = 0;
+                foreach (CharacterMovement cm in friendly)
+                {
+                    if (!cm.Equals(dead))
+                    {
+                        newFriendly[i] = cm;
+                        i++;
+                    }
+                }
+                friendly = newFriendly;
+                currentChar--;
             } else {
                 CharacterMovement[] newFriendly = new CharacterMovement[numFriendly];
                 int i = 0;
@@ -232,12 +248,7 @@ public class GameManager : MonoBehaviour
             Lose();
         }
     }
-    // 1 2 3
-    // 1 3
-    // crash
-    // 1
 
-    // currently only taking case where all enemies die
     private void Lose() {
         defeatUI.SetActive(true);
     }
