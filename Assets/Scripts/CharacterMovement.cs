@@ -6,6 +6,7 @@ public class CharacterMovement : MonoBehaviour
 {
     public GameObject enemyColor;
     public bool isEnemy;
+    public GameObject fog;
 
     private bool isActive = false;
     public HealthBar hp;
@@ -277,5 +278,6 @@ public class CharacterMovement : MonoBehaviour
     {
         this.isEnemy = isEnemy;
         enemyColor.SetActive(isEnemy);
+        fog.SetActive(!isEnemy);
     }
 }
