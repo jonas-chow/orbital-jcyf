@@ -203,9 +203,6 @@ public class GameManager : MonoBehaviour
 
         if (numFriendly > 0) {
             if (deadIdx >= currentChar) {
-                if (friendly[currentChar].Equals(dead)) {
-                    currentChar--;
-                }
                 CharacterMovement[] newFriendly = new CharacterMovement[numFriendly];
                 int i = 0;
                 foreach (CharacterMovement cm in friendly)
@@ -217,19 +214,9 @@ public class GameManager : MonoBehaviour
                     }
                 }
                 friendly = newFriendly;
-            } else if (deadIdx < currentChar) {
-                CharacterMovement[] newFriendly = new CharacterMovement[numFriendly];
-                int i = 0;
-                foreach (CharacterMovement cm in friendly)
-                {
-                    if (!cm.Equals(dead))
-                    {
-                        newFriendly[i] = cm;
-                        i++;
-                    }
+                if (currentChar >= numFriendly) {
+                    currentChar = 0;
                 }
-                friendly = newFriendly;
-                currentChar--;
             } else {
                 CharacterMovement[] newFriendly = new CharacterMovement[numFriendly];
                 int i = 0;
