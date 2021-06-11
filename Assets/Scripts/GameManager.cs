@@ -185,6 +185,7 @@ public class GameManager : MonoBehaviour
             }
         } else {
             if (Input.GetKeyDown(KeyCode.Escape)) {
+                EventHandler.Instance.Disconnect();
                 SceneManager.LoadScene("Main Menu");
             }
         }
