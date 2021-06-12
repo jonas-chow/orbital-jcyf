@@ -19,9 +19,19 @@ public class EventHandler : MonoBehaviourPunCallbacks
     private const byte FirstTurnEvent = 6;
     private const byte ReadyEvent = 7;
 
-    public void Disconnect()
+    public void MainMenu()
     {
-        PhotonNetwork.Disconnect();
+        PhotonNetwork.LeaveRoom();
+    }
+
+    public override void OnLeftRoom()
+    {
+        PhotonNetwork.LoadLevel(0);
+    }
+
+    public void Rematch()
+    {
+        PhotonNetwork.LoadLevel(0);
     }
     
     // ensures that there is only one event handler, for easy reference

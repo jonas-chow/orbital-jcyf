@@ -183,11 +183,6 @@ public class GameManager : MonoBehaviour
                 animating = true;
                 StartCoroutine(AnimateActions());
             }
-        } else {
-            if (Input.GetKeyDown(KeyCode.Escape)) {
-                EventHandler.Instance.Disconnect();
-                SceneManager.LoadScene("Main Menu");
-            }
         }
     }
     

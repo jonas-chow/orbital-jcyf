@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using ExitGames.Client.Photon;
 using TMPro;
 
 public class RoomMenu : MonoBehaviourPunCallbacks
@@ -19,44 +20,58 @@ public class RoomMenu : MonoBehaviourPunCallbacks
     private Room room;
     private Player player1 = null;
     private Player player2 = null;
+    private ExitGames.Client.Photon.Hashtable notReady = new ExitGames.Client.Photon.Hashtable();
+    private ExitGames.Client.Photon.Hashtable ready = new ExitGames.Client.Photon.Hashtable();
+    private const byte readyEvent = 199;
+    private const byte startEvent = 198;
 
     public override void OnEnable()
     {
         base.OnEnable();
-        PhotonNetwork.AutomaticallySyncScene = true;
+        PhotonNetwork.NetworkingClient.EventReceived += EventReceived;
         room = PhotonNetwork.CurrentRoom;
         roomName.text = room.Name;
-        if (room.Players.ContainsKey(1)) {
-            player1 = room.Players[1];
-        } 
-        if (room.Players.ContainsKey(2)) {
-            player2 = room.Players[2];
+        if (!ready.ContainsKey("ready")) {
+            ready.Add("ready", true);
+            notReady.Add("ready", false);
         }
 
-        p1Name.text = player1 != null ? player1.NickName : "Waiting for players";
+        player1 = PhotonNetwork.LocalPlayer;
+        PhotonNetwork.SetPlayerCustomProperties(notReady);
+        p1Ready.SetActive(false);
+
+        foreach (KeyValuePair<int, Player> kvp in room.Players)
+        {
+            Player player = kvp.Value;
+            if (!player.Equals(PhotonNetwork.LocalPlayer)) {
+                player2 = player;
+                if (player.CustomProperties.ContainsKey("ready") && (bool)player.CustomProperties["ready"]) {
+                    p2Ready.SetActive(true);
+                }
+            }
+        }
+
+        p1Name.text = player1.NickName;
         p2Name.text = player2 != null ? player2.NickName : "Waiting for players";
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        PhotonNetwork.NetworkingClient.EventReceived -= EventReceived;
     }
 
     public override void OnPlayerEnteredRoom(Player player)
     {
-        if (PlayerId(PhotonNetwork.LocalPlayer) == 2) {
-            player1 = player;
-            p1Name.text = player.NickName;
-        } else {
-            player2 = player;
-            p2Name.text = player.NickName;
-        }
+        player2 = player;
+        p2Name.text = player.NickName;
     }
 
     public override void OnPlayerLeftRoom(Player player)
     {
-        if (PlayerId(player) == 1) {
-            player1 = null;
-            p1Name.text = "Waiting for players";
-        } else {
-            player2 = null;
-            p2Name.text = "Waiting for players";
-        }
+        player2 = null;
+        p2Name.text = "Waiting for players";
+        p2Ready.SetActive(false);
     }
 
     public void LeaveRoom()
@@ -74,51 +89,39 @@ public class RoomMenu : MonoBehaviourPunCallbacks
     {
         gameObject.SetActive(false);
     }
-    
-    private int PlayerId(Player player)
-    {
-        if (player1.Equals(player)) {
-            return 1;
-        } else if (player2.Equals(player)) {
-            return 2;
-        } else {
-            // player not in room, something went wrong
-            return 0;
-        }
-    }
 
     public void ClickReady()
     {
-        base.photonView.RPC("toggleReadyText", RpcTarget.AllBufferedViaServer, PhotonNetwork.LocalPlayer);
-    }
+        PhotonNetwork.SetPlayerCustomProperties(p1Ready.activeSelf ? notReady : ready);
+        PhotonNetwork.RaiseEvent(readyEvent, null, RaiseEventOptions.Default, SendOptions.SendReliable);
+        p1Ready.SetActive(!p1Ready.activeSelf);
 
-
-    [PunRPC]
-    private void toggleReadyText(Player player)
-    {
-        switch (PlayerId(player))
-        {
-            case 1:
-                p1Ready.SetActive(!p1Ready.activeSelf);
-                break;
-            case 2:
-                p2Ready.SetActive(!p2Ready.activeSelf);
-                break;
-        }
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            if (p2Ready.activeSelf && p1Ready.activeSelf)
-            {
-                startButton.SetActive(true);
-            } else {
-                startButton.SetActive(false);
-            }
+        if (p1Ready.activeSelf && p2Ready.activeSelf && PhotonNetwork.IsMasterClient) {
+            startButton.SetActive(true);
         }
     }
 
     public void ClickStart()
     {
+        PhotonNetwork.RaiseEvent(startEvent, null, RaiseEventOptions.Default, SendOptions.SendReliable);
+        PhotonNetwork.SetPlayerCustomProperties(notReady);
         PhotonNetwork.LoadLevel(2);
+    }
+
+    public void EventReceived(EventData eventData)
+    {
+        switch (eventData.Code)
+        {
+            case readyEvent:
+                p2Ready.SetActive(!p2Ready.activeSelf);
+                if (p1Ready.activeSelf && p2Ready.activeSelf && PhotonNetwork.IsMasterClient) {
+                    startButton.SetActive(true);
+                }
+                break;
+            case startEvent:
+                PhotonNetwork.SetPlayerCustomProperties(notReady);
+                PhotonNetwork.LoadLevel(2);
+                break;
+        }
     }
 }
