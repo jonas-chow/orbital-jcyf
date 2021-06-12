@@ -7,7 +7,8 @@ using Photon.Realtime;
 
 public class MainMenuButtons : MonoBehaviourPunCallbacks
 {
-    public GameObject multiplayerMenu;
+    public GameObject multiplayerLobby;
+    public GameObject multiplayerRoom;
     public GameObject loadout;
 
     public void OpenLoadout()
@@ -15,20 +16,32 @@ public class MainMenuButtons : MonoBehaviourPunCallbacks
         loadout.SetActive(true);
     }
 
+    void Start()
+    {
+        if (PhotonNetwork.IsConnected) {
+            multiplayerLobby.SetActive(true);
+        }
+        if (PhotonNetwork.CurrentRoom != null) {
+            multiplayerRoom.SetActive(true);
+        }
+    }
+
     public void Connect()
     {
-        Debug.Log("Connecting");
         PhotonNetwork.NickName = PlayerPrefs.GetString("Username", "");
         if (PhotonNetwork.NickName != "") {
             PhotonNetwork.GameVersion = "v1";
+            Popup.StartPopup("Connecting...");
             PhotonNetwork.ConnectUsingSettings();
+        } else {
+            Popup.Notify("Please enter name");
         }
     }
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("Connected");
         PhotonNetwork.JoinLobby();
-        multiplayerMenu.SetActive(true);
+        multiplayerLobby.SetActive(true);
+        Popup.StopPopup();
     }
 }

@@ -183,11 +183,6 @@ public class GameManager : MonoBehaviour
                 animating = true;
                 StartCoroutine(AnimateActions());
             }
-        } else {
-            if (Input.GetKeyDown(KeyCode.Escape)) {
-                EventHandler.Instance.Disconnect();
-                SceneManager.LoadScene("Main Menu");
-            }
         }
     }
     
@@ -305,5 +300,12 @@ public class GameManager : MonoBehaviour
         obj.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         obj.SetActive(false);
+    }
+
+    public void OpponentDisconnect()
+    {
+        if (numEnemy > 0 && numFriendly > 0) {
+            Win();
+        }
     }
 }
