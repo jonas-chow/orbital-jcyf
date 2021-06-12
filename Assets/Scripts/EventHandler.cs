@@ -29,6 +29,16 @@ public class EventHandler : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel(0);
     }
 
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        PhotonNetwork.LoadLevel(0);
+    }
+
+    public override void OnPlayerLeftRoom(Player player)
+    {
+        GameManager.Instance.OpponentDisconnect();
+    }
+
     public void Rematch()
     {
         PhotonNetwork.LoadLevel(0);

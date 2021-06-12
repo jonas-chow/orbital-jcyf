@@ -76,7 +76,7 @@ public class RoomMenu : MonoBehaviourPunCallbacks
 
     public void LeaveRoom()
     {
-        Debug.Log("leaving");
+        Popup.StartPopup("Leaving...");
         PhotonNetwork.LeaveRoom();
     }
 
@@ -88,6 +88,7 @@ public class RoomMenu : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         gameObject.SetActive(false);
+        Popup.StopPopup();
     }
 
     public void ClickReady()
@@ -105,7 +106,7 @@ public class RoomMenu : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.RaiseEvent(startEvent, null, RaiseEventOptions.Default, SendOptions.SendReliable);
         PhotonNetwork.SetPlayerCustomProperties(notReady);
-        PhotonNetwork.LoadLevel(2);
+        PhotonNetwork.LoadLevel(1);
     }
 
     public void EventReceived(EventData eventData)
@@ -120,8 +121,13 @@ public class RoomMenu : MonoBehaviourPunCallbacks
                 break;
             case startEvent:
                 PhotonNetwork.SetPlayerCustomProperties(notReady);
-                PhotonNetwork.LoadLevel(2);
+                PhotonNetwork.LoadLevel(1);
                 break;
         }
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        gameObject.SetActive(false);
     }
 }

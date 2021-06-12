@@ -14,23 +14,29 @@ public class MultiplayerLobby : MonoBehaviourPunCallbacks
 
     public void BackButton()
     {
-        gameObject.SetActive(false);
+        Popup.StartPopup("Disconnecting...");
         PhotonNetwork.Disconnect();
     }
 
     public void CreateGame()
     {
         if (roomName.text != "") {
+            Popup.StartPopup("Creating room...");
             RoomOptions options = new RoomOptions();
             options.MaxPlayers = 2;
             PhotonNetwork.CreateRoom(roomName.text, options, TypedLobby.Default);
+        } else {
+            Popup.Notify("Please enter room name");
         }
     }
 
     public void JoinGame()
     {
         if (roomName.text != "") {
+            Popup.StartPopup("Joining room...");
             PhotonNetwork.JoinRoom(roomName.text);
+        } else {
+            Popup.Notify("Please enter room name");
         }
     }
 
@@ -43,33 +49,46 @@ public class MultiplayerLobby : MonoBehaviourPunCallbacks
 
     public void RandomGame()
     {
+        Popup.StartPopup("Joining room...");
         PhotonNetwork.JoinRandomRoom();
     }
 
     public override void OnCreatedRoom()
     {
+        Popup.StopPopup();
         roomMenu.SetActive(true);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        Debug.Log("Room already exists");
-        Debug.Log(message);
+        Popup.StopPopup();
+        Popup.Notify(message);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        Debug.Log("No room");
+        Popup.StopPopup();
+        Popup.Notify(message);
     }
 
     public override void OnJoinedRoom()
     {
+        Popup.StopPopup();
         roomMenu.SetActive(true);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        Debug.Log("No rooms available, making one");
-        CreateRandomGame();
+        Popup.StopPopup();
+        Popup.Notify(message);
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        Popup.StopPopup();
+        if (cause != DisconnectCause.DisconnectByClientLogic) {
+            Popup.Notify("Disconnected");
+        }
+        gameObject.SetActive(false);
     }
 }

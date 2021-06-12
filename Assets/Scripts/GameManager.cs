@@ -301,4 +301,11 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         obj.SetActive(false);
     }
+
+    public void OpponentDisconnect()
+    {
+        if (numEnemy > 0 && numFriendly > 0) {
+            Win();
+        }
+    }
 }
