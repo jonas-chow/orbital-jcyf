@@ -14,7 +14,7 @@ public class DamageText : MonoBehaviour
 
     private IEnumerator DisappearSoon()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         GameObject.Destroy(this.gameObject);
     }
 
