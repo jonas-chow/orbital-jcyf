@@ -147,10 +147,8 @@ public class CharacterMovement : MonoBehaviour
     private void DisableAiming()
     {
         aiming = false;
-        if (attack != null) {
-            attack.ClearIndicators();
-            attack.ClearLimits();
-        }
+        Attack.ClearIndicators();
+        Attack.ClearLimits();
     }
 
     private Attack NewAttack(AttackTypes type, int damage, int range)

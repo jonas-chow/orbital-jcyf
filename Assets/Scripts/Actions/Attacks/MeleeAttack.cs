@@ -10,7 +10,7 @@ public class MeleeAttack : Attack
         this.damage = damage;
         this.range = 1;
         this.name = "MeleeAttack";
-        this.rangeIndicators = RangeSpawner.Instance.LinearIndicator(character, range, character.faceDirection);
+        Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range, character.faceDirection));
     }
 
     public override void Execute()
@@ -53,8 +53,7 @@ public class MeleeAttack : Attack
     {
         if (this.direction != "up") {
             this.direction = "up";
-            ClearIndicators();
-            this.rangeIndicators = RangeSpawner.Instance.LinearIndicator(character, range, "up");
+            Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range, "up"));
         }
     }
 
@@ -62,8 +61,8 @@ public class MeleeAttack : Attack
     {
         if (this.direction != "down") {
             this.direction = "down";
-            ClearIndicators();
-            this.rangeIndicators = RangeSpawner.Instance.LinearIndicator(character, range, "down");
+            Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range, "down"));
+
         }
     }
 
@@ -71,8 +70,7 @@ public class MeleeAttack : Attack
     {
         if (this.direction != "left") {
             this.direction = "left";
-            ClearIndicators();
-            this.rangeIndicators = RangeSpawner.Instance.LinearIndicator(character, range, "left");
+            Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range, "left"));
         }
     }
 
@@ -80,8 +78,7 @@ public class MeleeAttack : Attack
     {
         if (this.direction != "right") {
             this.direction = "right";
-            ClearIndicators();
-            this.rangeIndicators = RangeSpawner.Instance.LinearIndicator(character, range, "right");
+            Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range, "right"));
         }
     }
 }

@@ -10,7 +10,7 @@ public class MeleeAOEAttack : Attack
         this.damage = damage;
         this.range = 1;
         this.name = "MeleeAttack";
-        this.rangeIndicators = RangeSpawner.Instance.AOEIndicator(character, 0, 0);
+        Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(character, 0, 0));
     }
 
     public override void Execute()

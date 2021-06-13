@@ -14,8 +14,8 @@ public class RangedAOEAttack : Attack
         this.damage = damage;
         this.range = range;
         this.name = "MeleeAttack";
-        this.rangeIndicators = RangeSpawner.Instance.AOEIndicator(character, offsetX, offsetY);
-        this.rangeLimits = RangeSpawner.Instance.RangeLimit(character, range);
+        Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(character, offsetX, offsetY));
+        Attack.SetLimits(RangeSpawner.Instance.RangeLimit(character, range));
     }
 
     public override void Execute()
@@ -56,10 +56,8 @@ public class RangedAOEAttack : Attack
         if (IsWithinRange(offsetX, nextOffset) && 
             GridManager.Instance.IsValidCoords(getX() + offsetX, getY() + nextOffset)) {
             offsetY = nextOffset;
-            ClearIndicators();
-            this.rangeIndicators = RangeSpawner.Instance.AOEIndicator(character, offsetX, offsetY);
+            Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(character, offsetX, offsetY));
         }
-        // change indicator
     }
 
     public override void AimDown()
@@ -69,10 +67,8 @@ public class RangedAOEAttack : Attack
         if (IsWithinRange(offsetX, nextOffset) && 
             GridManager.Instance.IsValidCoords(getX() + offsetX, getY() + nextOffset)) {
             offsetY = nextOffset;
-            ClearIndicators();
-            this.rangeIndicators = RangeSpawner.Instance.AOEIndicator(character, offsetX, offsetY);
+            Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(character, offsetX, offsetY));
         }
-        // change indicator
     }
 
     public override void AimLeft()
@@ -82,10 +78,8 @@ public class RangedAOEAttack : Attack
         if (IsWithinRange(nextOffset, offsetY) && 
             GridManager.Instance.IsValidCoords(getX() + nextOffset, getY() + offsetY)) {
             offsetX = nextOffset;
-            ClearIndicators();
-            this.rangeIndicators = RangeSpawner.Instance.AOEIndicator(character, offsetX, offsetY);
+            Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(character, offsetX, offsetY));
         }
-        // change indicator
     }
 
     public override void AimRight()
@@ -95,10 +89,8 @@ public class RangedAOEAttack : Attack
         if (IsWithinRange(nextOffset, offsetY) && 
             GridManager.Instance.IsValidCoords(getX() + nextOffset, getY() + offsetY)) {
             offsetX = nextOffset;
-            ClearIndicators();
-            this.rangeIndicators = RangeSpawner.Instance.AOEIndicator(character, offsetX, offsetY);
+            Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(character, offsetX, offsetY));
         }
-        // change indicator
     }
 
     private bool IsWithinRange(int x, int y)
