@@ -6,11 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    // TODO:
-    // Fix the lobby bugs
-    // Choose your prefabs in lobby
-    // Customisable controls
-
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
     void Awake()
@@ -46,6 +41,7 @@ public class GameManager : MonoBehaviour
     private bool animating = false;
     public bool readyForTurn = false;
     private float animationGap = .1f;
+    public int actionCount = 0;
 
     public void InstantiateSelf()
     {
@@ -73,6 +69,19 @@ public class GameManager : MonoBehaviour
             melee.GetComponent<CharacterMovement>(),
             ranged.GetComponent<CharacterMovement>(),
             mage.GetComponent<CharacterMovement>()};
+
+        CharacterMenu.Instance.init(new int[] {
+            friendly[0].attack1Cooldown, 
+            friendly[0].attack2Cooldown, 
+            friendly[0].attack3Cooldown, 
+            friendly[1].attack1Cooldown, 
+            friendly[1].attack2Cooldown, 
+            friendly[1].attack3Cooldown, 
+            friendly[2].attack1Cooldown, 
+            friendly[2].attack2Cooldown, 
+            friendly[2].attack3Cooldown});
+
+        CharacterMenu.Instance.SelectChar(0);
 
         friendlyLoaded = true;
         CheckLoading();
@@ -249,6 +258,7 @@ public class GameManager : MonoBehaviour
     void ActivateCurrent()
     {
         friendly[currentChar].Activate();
+        CharacterMenu.Instance.SelectChar(friendly[currentChar].charID);
     }
 
     IEnumerator StartTurn()
@@ -307,5 +317,11 @@ public class GameManager : MonoBehaviour
         if (numEnemy > 0 && numFriendly > 0) {
             Win();
         }
+    }
+
+    public void ActionAdded()
+    {
+        actionCount++;
+        CharacterMenu.Instance.TurnPass();
     }
 }

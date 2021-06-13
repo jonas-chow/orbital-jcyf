@@ -138,6 +138,10 @@ PrefabInstance:
       value: Mage
       objectReference: {fileID: 0}
     - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: charID
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
       propertyPath: attack1Type
       value: 2
       objectReference: {fileID: 0}
@@ -184,6 +188,22 @@ PrefabInstance:
     - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
       propertyPath: attack4Damage
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: attack1Cooldown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: attack2Cooldown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: attack3Cooldown
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: attack4Cooldown
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3336968709993778860, guid: a446b43e30b804575ba2966619114272, type: 3}
       propertyPath: m_RootOrder

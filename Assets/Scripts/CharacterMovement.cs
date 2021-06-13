@@ -5,9 +5,10 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     public GameObject enemyColor;
+    public GameObject damageText;
     public bool isEnemy;
     public GameObject fog;
-
+    public int charID;
     private bool isActive = false;
     public HealthBar hp;
     public GameObject selection;
@@ -26,21 +27,22 @@ public class CharacterMovement : MonoBehaviour
     public AttackTypes attack1Type;
     public int attack1Damage;
     public int attack1Range;
+    public int attack1Cooldown;
+    private int attack1Turn = -999;
 
     [Header("Attack 2")]
     public AttackTypes attack2Type;
     public int attack2Damage;
     public int attack2Range;
+    public int attack2Cooldown;
+    private int attack2Turn = -999;
 
     [Header("Attack 3")]
     public AttackTypes attack3Type;
     public int attack3Damage;
     public int attack3Range;
-
-    [Header("Attack 4")]
-    public AttackTypes attack4Type;
-    public int attack4Damage;
-    public int attack4Range;
+    public int attack3Cooldown;
+    private int attack3Turn = -999;
 
     private int attackNum;
 
@@ -81,26 +83,38 @@ public class CharacterMovement : MonoBehaviour
                         }
                     }
                 }
-                if (Input.GetButtonDown("Attack1")) {
+                if (Input.GetButtonDown("Attack1") && 
+                    GameManager.Instance.actionCount - attack1Turn > attack1Cooldown) {
                     AimingMode(1);
                 }
-                if (Input.GetButtonDown("Attack2")) {
+                if (Input.GetButtonDown("Attack2") && 
+                    GameManager.Instance.actionCount - attack2Turn > attack2Cooldown) {
                     AimingMode(2);
                 }
-                if (Input.GetButtonDown("Attack3")) {
+                if (Input.GetButtonDown("Attack3") && 
+                    GameManager.Instance.actionCount - attack3Turn > attack3Cooldown) {
                     AimingMode(3);
-                }
-                if (Input.GetButtonDown("Attack4")) {
-                    AimingMode(4);
                 }
             } else {
                 // aiming mode
                 if ((attackNum == 1 && Input.GetButtonUp("Attack1")) ||
                     (attackNum == 2 && Input.GetButtonUp("Attack2")) ||
-                    (attackNum == 3 && Input.GetButtonUp("Attack3")) ||
-                    (attackNum == 4 && Input.GetButtonUp("Attack4")) ) {
+                    (attackNum == 3 && Input.GetButtonUp("Attack3")) ) {
+                    switch (attackNum) {
+                        case 1:
+                            attack1Turn = GameManager.Instance.actionCount;
+                            break;
+                        case 2:
+                            attack2Turn = GameManager.Instance.actionCount;
+                            break;
+                        case 3:
+                            attack3Turn = GameManager.Instance.actionCount;
+                            break;
+                    }
+
                     DisableAiming();
                     ActionQueue.Instance.EnqueueAction(attack);
+                    CharacterMenu.Instance.UseSkill(charID, attackNum - 1);
                     ActionQueue.Instance.Enable();
                 }
 
@@ -137,9 +151,6 @@ public class CharacterMovement : MonoBehaviour
                 break;
             case 3:
                 attack = NewAttack(attack3Type, attack3Damage, attack3Range);
-                break;
-            case 4:
-                attack = NewAttack(attack4Type, attack4Damage, attack4Range);
                 break;
         }
     }
@@ -198,8 +209,13 @@ public class CharacterMovement : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        GameObject
+            .Instantiate(damageText, this.transform.position + Vector3.up * 0.8f, Quaternion.identity)
+            .GetComponent<DamageText>()
+            .SetText(damage.ToString());
+
         // if died
-        if (hp.TakeDamage(damage)) {
+        if (hp.TakeDamage(damage, isEnemy ? -1 : charID)) {
             GridManager.Instance.RemoveObject(getX(), getY());
             GameObject.Destroy(gameObject);
             if (isEnemy) {

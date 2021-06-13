@@ -22,17 +22,7 @@ public class HealthBar : MonoBehaviour
         redBar.GetComponent<SpriteRenderer>().enabled = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (visible) {
-            float scale = (float) hp / maxHp;
-            greenBar.transform.localPosition = NewPosition(scale);
-            greenBar.transform.localScale = new Vector3(scale, 1, 1);
-        }
-    }
-
-    Vector3 NewPosition(float scale)
+    private Vector3 NewPosition(float scale)
     {
         return new Vector3(scale / 2 - 0.5f, 0, 0);
     }
@@ -45,9 +35,17 @@ public class HealthBar : MonoBehaviour
     }
 
     // returns whether the character dies
-    public bool TakeDamage(int damage)
+    public bool TakeDamage(int damage, int charID)
     {
         hp -= damage;
+        float scale = (float)hp / maxHp;
+        greenBar.transform.localPosition = NewPosition(scale);
+        greenBar.transform.localScale = new Vector3(scale, 1, 1);
+
+        // if char is not an enemy (very bad practice)
+        if (charID != -1) {
+            CharacterMenu.Instance.SetHealth(charID, scale);
+        }
 
         // refreshes the visible time if already visible
         StopCoroutine("TemporaryVisible");

@@ -64,6 +64,7 @@ public class ActionQueue : MonoBehaviour
     public void EnqueueAction(Action action)
     {
         actions.Enqueue(action);
+        GameManager.Instance.ActionAdded();
         Vector3 pos = GetNextPosition();
         // the key
         objQueue.Enqueue(GameObject.Instantiate(GetPrefab(action), pos, Quaternion.identity));

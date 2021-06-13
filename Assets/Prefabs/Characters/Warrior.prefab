@@ -181,6 +181,22 @@ PrefabInstance:
       propertyPath: attack4Damage
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: attack1Cooldown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: attack2Cooldown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: attack3Cooldown
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1718499127430642775, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: attack4Cooldown
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3336968709993778860, guid: a446b43e30b804575ba2966619114272, type: 3}
       propertyPath: m_RootOrder
       value: 5

@@ -182,6 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyColor: {fileID: 1725752766729257526}
+  damageText: {fileID: 1159168646705591353, guid: daca40db4ce494cf0ab0af755c51145e, type: 3}
   isEnemy: 0
   fog: {fileID: 5351337433807048665}
   hp: {fileID: 9136340724331206590}
@@ -190,15 +191,19 @@ MonoBehaviour:
   attack1Type: 0
   attack1Damage: 0
   attack1Range: 0
+  attack1Cooldown: 0
   attack2Type: 0
   attack2Damage: 0
   attack2Range: 0
+  attack2Cooldown: 0
   attack3Type: 0
   attack3Damage: 0
   attack3Range: 0
+  attack3Cooldown: 0
   attack4Type: 0
   attack4Damage: 0
   attack4Range: 0
+  attack4Cooldown: 0
 --- !u!1 &1725752766729257526
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,7 +220,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5312738952118393125
 Transform:
   m_ObjectHideFlags: 0
@@ -271,7 +276,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 10
   m_Sprite: {fileID: 2747690628134850419, guid: 16037dbd798344f57a526d53d48f5ead, type: 3}
-  m_Color: {r: 0.8113208, g: 0.15690637, b: 0.20832457, a: 1}
+  m_Color: {r: 0.6886792, g: 0, b: 0.052975528, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
