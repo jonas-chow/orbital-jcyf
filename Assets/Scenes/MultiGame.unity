@@ -1472,10 +1472,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: 
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0.1
+  - name: MeleeHit
+    clip: {fileID: 8300000, guid: 31664a7f83c73b44ba10101166b537c6, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MeleeMiss
+    clip: {fileID: 8300000, guid: 7c11b7110e652d0458991a57c6b7f25f, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: ArrowHit
+    clip: {fileID: 8300000, guid: efa642c396a3b4e49a5fbb70d74b0b2d, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: ArrowMiss
+    clip: {fileID: 8300000, guid: a95b71d676ed67444b831c4b101f9dcc, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
 --- !u!4 &848471535
 Transform:
   m_ObjectHideFlags: 0
@@ -2139,7 +2155,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1341777619
 GameObject:
@@ -2159,13 +2175,8 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-<<<<<<< HEAD
-  m_IsActive: 0
---- !u!224 &1473468721
-=======
   m_IsActive: 1
 --- !u!224 &1341777620
->>>>>>> acc18b8c784e74da0c78db151a0837f039c06831
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

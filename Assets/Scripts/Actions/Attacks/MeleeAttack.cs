@@ -46,6 +46,10 @@ public class MeleeAttack : Attack
         if (enemy != null && enemy.isEnemy)
         {
             enemy.GetComponent<CharacterMovement>().TakeDamage(damage);
+            AudioManager.Instance.Play("MeleeHit");
+        } else
+        {
+            AudioManager.Instance.Play("MeleeMiss");
         }
     }
 

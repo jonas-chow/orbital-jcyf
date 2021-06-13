@@ -31,6 +31,10 @@ public class RangedAttack : Attack
         if (enemy != null && enemy.isEnemy)
         {
             enemy.TakeDamage(damage);
+            AudioManager.Instance.Play("ArrowHit");
+        } else
+        {
+            AudioManager.Instance.Play("ArrowMiss");
         }
     }
 
