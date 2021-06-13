@@ -3130,6 +3130,70 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &831564450
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 831564452}
+  - component: {fileID: 831564451}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &831564451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 831564450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 257ec99c6fe869647b83b2d2bd6600f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: MeleeHit
+    clip: {fileID: 8300000, guid: 31664a7f83c73b44ba10101166b537c6, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MeleeMiss
+    clip: {fileID: 8300000, guid: 7c11b7110e652d0458991a57c6b7f25f, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: ArrowHit
+    clip: {fileID: 8300000, guid: efa642c396a3b4e49a5fbb70d74b0b2d, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: ArrowMiss
+    clip: {fileID: 8300000, guid: a95b71d676ed67444b831c4b101f9dcc, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
+--- !u!4 &831564452
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 831564450}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.148321, y: -1.9768171, z: -1569.8867}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &884585970
 GameObject:
   m_ObjectHideFlags: 0

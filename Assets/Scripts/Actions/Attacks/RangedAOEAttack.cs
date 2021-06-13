@@ -47,6 +47,7 @@ public class RangedAOEAttack : Attack
             .FindAll(cm => cm.isEnemy);
 
         enemies.ForEach(enemy => enemy.TakeDamage(damage));
+        AudioManager.Instance.Play("MagicAttack");
     }
 
     public override void AimUp() 
