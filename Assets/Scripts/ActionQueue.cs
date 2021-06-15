@@ -57,7 +57,7 @@ public class ActionQueue : MonoBehaviour
             case "MeleeAttack":
                 return MeleeAttack;
             default:
-                return null;
+                return MeleeAttack;
         }
     }
 

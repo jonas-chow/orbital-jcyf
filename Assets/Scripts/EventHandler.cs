@@ -12,12 +12,11 @@ public class EventHandler : MonoBehaviourPunCallbacks
     public static EventHandler Instance { get { return instance; } }
 
     private const byte MovementEvent = 1;
-    private const byte LinearAttackEvent = 2;
-    private const byte AOEAttackEvent = 3;
-    private const byte TurnEndEvent = 4;
-    private const byte InstantiateEvent = 5;
-    private const byte FirstTurnEvent = 6;
-    private const byte ReadyEvent = 7;
+    private const byte AttackEvent = 2;
+    private const byte TurnEndEvent = 3;
+    private const byte InstantiateEvent = 4;
+    private const byte FirstTurnEvent = 5;
+    private const byte ReadyEvent = 6;
 
     public void MainMenu()
     {
@@ -112,6 +111,7 @@ public class EventHandler : MonoBehaviourPunCallbacks
         bool isMove;
         int range;
         int damage;
+        int charId;
         int targetX;
         int targetY;
         CharacterMovement cm;
@@ -119,12 +119,11 @@ public class EventHandler : MonoBehaviourPunCallbacks
         {
             case MovementEvent:
                 data = (object[])eventData.CustomData;
-                charX = (int)data[0];
-                charY = (int)data[1];
-                direction = (string)data[2];
-                isMove = (bool)data[3];
+                charId = (int)data[0];
+                direction = (string)data[1];
+                isMove = (bool)data[2];
 
-                cm = GridManager.Instance.GetCharacter(charX, charY);
+                cm = GameManager.Instance.enemies[charId];
                 if (isMove)
                 {
                     cm.Move(direction);
@@ -132,60 +131,12 @@ public class EventHandler : MonoBehaviourPunCallbacks
                     cm.Face(direction);
                 }
                 break;
-            case LinearAttackEvent:
+            case AttackEvent:
                 data = (object[])eventData.CustomData;
-                charX = (int)data[0];
-                charY = (int)data[1];
-                direction = (string)data[2];
-                range = (int)data[3];
-                damage = (int)data[4];
-
-                cm = GridManager.Instance.GetCharacter(charX, charY);
-                if (direction != "none") {
-                    cm.Face(direction);
-                }
-
-                CharacterMovement enemy = GridManager.Instance.GetFirstCharacterInLine(charX, charY, range, cm.faceDirection);
-                if (enemy != null && !enemy.isEnemy) {
-                    enemy.TakeDamage(damage);
-                }
-                break;
-            case AOEAttackEvent:
-                data = (object[])eventData.CustomData;
-                charX = (int) data[0];
-                charY = (int) data[1];
-                targetX = (int) data[2];
-                targetY = (int)data[3];
-                damage = (int)data[4];
-
-                cm = GridManager.Instance.GetCharacter(charX, charY);
-                int dirY = targetY - charY;
-                int dirX = targetX - charX;
-                if (Math.Abs(dirX) > Math.Abs(dirY)) {
-                    // horizontal component larger than vertical
-                    if (dirX > 0) {
-                        cm.Face("right");
-                    } else if (dirX < 0) {
-                        cm.Face("left");
-                    }
-                } else {
-                    // vertical component equal or larger to horizontal
-                    if (dirY > 0) {
-                        cm.Face("up");
-                    } else if (dirY < 0) {
-                        cm.Face("down");
-                    }
-                }
-
-                // Instead of finding all enemies, we find all not enemies here
-                // Because the event is from the opponent
-                List<CharacterMovement> enemies = GridManager.Instance
-                    .GetAllCharactersInAOE(targetX, targetY)
-                    .FindAll(cm => !cm.isEnemy);
-                enemies.ForEach(enemy => enemy.TakeDamage(damage));
-                break;
-            case TurnEndEvent:
-                GameManager.Instance.readyForTurn = true;
+                charId = (int)data[0];
+                int attackId = (int)data[1];
+                object[] extraData = (object[])data[2];
+                GameManager.Instance.enemies[charId].EventAttack(attackId, extraData);
                 break;
             case InstantiateEvent:
                 data = (object[])eventData.CustomData;
@@ -210,36 +161,16 @@ public class EventHandler : MonoBehaviourPunCallbacks
         }
     }
 
-    public void SendMovementEvent(int charX, int charY, string direction, bool isMove)
+    public void SendMovementEvent(int charId, string direction, bool isMove)
     {
-        object[] data = new object[] {
-            InvertXCoord(charX), 
-            InvertYCoord(charY), 
-            InvertDirection(direction), 
-            isMove};
+        object[] data = new object[] {charId, direction, isMove};
         PhotonNetwork.RaiseEvent(MovementEvent, data, RaiseEventOptions.Default, SendOptions.SendReliable);
     }
 
-    public void SendLinearAttackEvent(int charX, int charY, string direction, int range, int damage)
+    public void SendAttackEvent(int charId, int attackId, object[] extraData)
     {
-        object[] data = new object[] {
-            InvertXCoord(charX), 
-            InvertYCoord(charY), 
-            InvertDirection(direction), 
-            range, 
-            damage};
-        PhotonNetwork.RaiseEvent(LinearAttackEvent, data, RaiseEventOptions.Default, SendOptions.SendReliable);
-    }
-
-    public void SendAOEAttackEvent(int charX, int charY, int targetX, int targetY, int damage)
-    {
-        object[] data = new object[] {
-            InvertXCoord(charX), 
-            InvertYCoord(charY), 
-            InvertXCoord(targetX), 
-            InvertYCoord(targetY), 
-            damage};
-        PhotonNetwork.RaiseEvent(AOEAttackEvent, data, RaiseEventOptions.Default, SendOptions.SendReliable);
+        object[] data = new object[] {charId, attackId, extraData};
+        PhotonNetwork.RaiseEvent(AttackEvent, data, RaiseEventOptions.Default, SendOptions.SendReliable);
     }
 
     public void SendTurnEndEvent()

@@ -12,9 +12,15 @@ public class MoveDown : Action
 
     public override void Execute()
     {
-        if (EventHandler.Instance != null) {
-            EventHandler.Instance.SendMovementEvent(getX(), getY(), "down", true);
-        }
+        SendEvent();
         character.Move("down");
+    }
+
+    // send a move up event
+    public override void SendEvent()
+    {
+        if (EventHandler.Instance != null) {
+            EventHandler.Instance.SendMovementEvent(character.charID, "up", true);
+        }
     }
 }

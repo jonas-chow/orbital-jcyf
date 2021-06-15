@@ -8,6 +8,7 @@ public abstract class Action
     public string name;
     
     public abstract void Execute();
+    public abstract void SendEvent();
 
     protected int getX()
     {

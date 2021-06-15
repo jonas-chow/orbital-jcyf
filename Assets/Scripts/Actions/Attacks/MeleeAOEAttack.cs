@@ -2,31 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeAOEAttack : Attack
+/*
+    Needs: sourceChar
+*/
+public abstract class MeleeAOEAttack : Attack
 { 
-    public MeleeAOEAttack(CharacterMovement character, int damage) 
+    public List<CharacterMovement> FindTargets()
     {
-        this.character = character;
-        this.damage = damage;
-        this.range = 1;
-        this.name = "MeleeAttack";
-        Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(character, 0, 0));
+        // Get all enemy characters in the AOE centred at character
+        return GridManager.Instance.GetAllCharactersInAOE(GetX(), GetY());
     }
 
-    public override void Execute()
+    public List<CharacterMovement> FindEventTargets()
     {
-        if (EventHandler.Instance != null) {
-            EventHandler.Instance.SendAOEAttackEvent(
-                getX(), getY(), getX(), getY(), damage);
-        }
-
         // Get all enemy characters in the AOE centred at character
-        List<CharacterMovement> enemies = GridManager.Instance
-            .GetAllCharactersInAOE(getX(), getY())
-            .FindAll(cm => cm.isEnemy);
-        
-        enemies.ForEach(enemy => enemy.TakeDamage(damage));
+        return GridManager.Instance.GetAllCharactersInAOE(GetX(), GetY());
     }
 
     // Melee AOE attacks can't be aimed, but will still make you face that direction
+    public override void InitialiseAim()
+    {
+        Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(sourceChar, 0, 0));
+    }
+    public override void AimUp() {}
+    public override void AimDown() {}
+    public override void AimLeft() {}
+    public override void AimRight() {}
 }
