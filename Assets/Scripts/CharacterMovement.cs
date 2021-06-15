@@ -2,51 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterMovement : MonoBehaviour
+public abstract class CharacterMovement : MonoBehaviour
 {
-    public GameObject enemyColor;
+    public GameObject friendlySprite;
+    public GameObject enemySprite;
+    public GameObject selection;
+    // so you can rotate the sprites without rotating the hp
+    public GameObject overallSprites;
+
     public GameObject damageText;
     public bool isEnemy;
     public GameObject fog;
+
+    // 0 for warrior, 1 for ranged, 2 for mage
     public int charID;
     private bool isActive = false;
     public HealthBar hp;
-    public GameObject selection;
     public string faceDirection = "up";
 
+    public int atk;
+    public int def;
+    public bool invincible = false;
+    public int atkBuff = 0;
+    public int defBuff = 0;
+    public bool disabled;
+    public bool stealthed;
+
     private bool aiming = false;
-    public enum AttackTypes
-    {
-        Melee = 1,
-        Ranged = 2,
-        MeleeAOE = 3,
-        RangedAOE = 4
-    }
 
-    [Header("Attack 1")]
-    public AttackTypes attack1Type;
-    public int attack1Damage;
-    public int attack1Range;
-    public int attack1Cooldown;
+    // currently aimed attack
+    protected int attackNum;
+    protected Attack attack;
+
+    public Attack attack1;
+    public Attack attack2;
+    public Attack attack3;
+
     private int attack1Turn = -999;
-
-    [Header("Attack 2")]
-    public AttackTypes attack2Type;
-    public int attack2Damage;
-    public int attack2Range;
-    public int attack2Cooldown;
     private int attack2Turn = -999;
-
-    [Header("Attack 3")]
-    public AttackTypes attack3Type;
-    public int attack3Damage;
-    public int attack3Range;
-    public int attack3Cooldown;
     private int attack3Turn = -999;
-
-    private int attackNum;
-
-    private Attack attack;
 
     // Update is called once per frame
     void Update()
@@ -67,8 +61,7 @@ public class CharacterMovement : MonoBehaviour
                             ActionQueue.Instance.EnqueueAction(new MoveLeft(this));
                         }
                     }
-                }
-                if (Input.GetButtonDown("Vertical")) {
+                } else if (Input.GetButtonDown("Vertical")) {
                     if (Input.GetAxis("Vertical") > 0) {
                         if (Input.GetButton("Stay Still")) {
                             ActionQueue.Instance.EnqueueAction(new FaceUp(this));
@@ -82,17 +75,14 @@ public class CharacterMovement : MonoBehaviour
                             ActionQueue.Instance.EnqueueAction(new MoveDown(this));
                         }
                     }
-                }
-                if (Input.GetButtonDown("Attack1") && 
-                    GameManager.Instance.actionCount - attack1Turn > attack1Cooldown) {
+                } else if (Input.GetButtonDown("Attack1") && 
+                    GameManager.Instance.actionCount - attack1Turn > attack1.cooldown) {
                     AimingMode(1);
-                }
-                if (Input.GetButtonDown("Attack2") && 
-                    GameManager.Instance.actionCount - attack2Turn > attack2Cooldown) {
+                } else if (Input.GetButtonDown("Attack2") && 
+                    GameManager.Instance.actionCount - attack2Turn > attack2.cooldown) {
                     AimingMode(2);
-                }
-                if (Input.GetButtonDown("Attack3") && 
-                    GameManager.Instance.actionCount - attack3Turn > attack3Cooldown) {
+                } else if (Input.GetButtonDown("Attack3") && 
+                    GameManager.Instance.actionCount - attack3Turn > attack3.cooldown) {
                     AimingMode(3);
                 }
             } else {
@@ -116,16 +106,13 @@ public class CharacterMovement : MonoBehaviour
                     ActionQueue.Instance.EnqueueAction(attack);
                     CharacterMenu.Instance.UseSkill(charID, attackNum - 1);
                     ActionQueue.Instance.Enable();
-                }
-
-                if (Input.GetButtonDown("Horizontal")) {
+                } else if (Input.GetButtonDown("Horizontal")) {
                     if (Input.GetAxis("Horizontal") > 0) {
                         attack.AimRight();
                     } else {
                         attack.AimLeft();
                     }
-                }
-                if (Input.GetButtonDown("Vertical")) {
+                } else if (Input.GetButtonDown("Vertical")) {
                     if (Input.GetAxis("Vertical") > 0) {
                         attack.AimUp();
                     } else {
@@ -140,43 +127,16 @@ public class CharacterMovement : MonoBehaviour
     {
         aiming = true;
         ActionQueue.Instance.Disable();
-        attackNum = attackNumber;
-        switch (attackNumber)
-        {
-            case 1:
-                attack = NewAttack(attack1Type, attack1Damage, attack1Range);
-                break;
-            case 2:
-                attack = NewAttack(attack2Type, attack2Damage, attack2Range);
-                break;
-            case 3:
-                attack = NewAttack(attack3Type, attack3Damage, attack3Range);
-                break;
-        }
+        SetupAttack(attackNumber);
     }
+
+    public abstract void SetupAttack(int attackNumber);
 
     private void DisableAiming()
     {
         aiming = false;
         Attack.ClearIndicators();
         Attack.ClearLimits();
-    }
-
-    private Attack NewAttack(AttackTypes type, int damage, int range)
-    {
-        switch (type)
-        {
-            case AttackTypes.Melee:
-                return new MeleeAttack(this, damage);
-            case AttackTypes.Ranged:
-                return new RangedAttack(this, damage, range);
-            case AttackTypes.MeleeAOE:
-                return new MeleeAOEAttack(this, damage);
-            case AttackTypes.RangedAOE:
-                return new RangedAOEAttack(this, damage, range);
-            default:
-                return null;
-        }
     }
 
     public void Activate()
@@ -197,18 +157,21 @@ public class CharacterMovement : MonoBehaviour
         ActionQueue.Instance.Enable();
     }
 
-    private int getX()
+    public int GetX()
     {
         return GridManager.Instance.GetX(transform.position.x);
     }
 
-    private int getY()
+    public int GetY()
     {
         return GridManager.Instance.GetY(transform.position.y);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float enemyAtk, int damage)
     {
+        // enemy attack is a float so that the division happens as a float
+        damage = (int)((enemyAtk / def) * damage);
+
         GameObject
             .Instantiate(damageText, this.transform.position + Vector3.up * 0.8f, Quaternion.identity)
             .GetComponent<DamageText>()
@@ -216,7 +179,7 @@ public class CharacterMovement : MonoBehaviour
 
         // if died
         if (hp.TakeDamage(damage, isEnemy ? -1 : charID)) {
-            GridManager.Instance.RemoveObject(getX(), getY());
+            GridManager.Instance.RemoveObject(GetX(), GetY());
             GameObject.Destroy(gameObject);
             if (isEnemy) {
                 GameManager.Instance.RemoveEnemy();
@@ -226,30 +189,40 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
+    public void Heal(int healAmount)
+    {
+        GameObject
+            .Instantiate(damageText, this.transform.position + Vector3.up * 0.8f, Quaternion.identity)
+            .GetComponent<DamageText>()
+            .SetText(healAmount.ToString());
+
+        hp.TakeDamage(-healAmount, isEnemy ? -1 : charID);
+    }
+
     public void Move(string direction)
     {
         switch (direction)
         {
             case "up":
-                if (GridManager.Instance.MoveObject(getX(), getY(), getX(), getY() + 1)) {
+                if (GridManager.Instance.MoveObject(GetX(), GetY(), GetX(), GetY() + 1)) {
                     transform.position += Vector3.up;
                 }
                 Face("up");
                 break;
             case "down":
-                if (GridManager.Instance.MoveObject(getX(), getY(), getX(), getY() - 1)) {
+                if (GridManager.Instance.MoveObject(GetX(), GetY(), GetX(), GetY() - 1)) {
                     transform.position += Vector3.down;
                 }
                 Face("down");
                 break;
             case "left":
-                if (GridManager.Instance.MoveObject(getX(), getY(), getX() - 1, getY())) {
+                if (GridManager.Instance.MoveObject(GetX(), GetY(), GetX() - 1, GetY())) {
                     transform.position += Vector3.left;
                 }
                 Face("left");
                 break;
             case "right":
-                if (GridManager.Instance.MoveObject(getX(), getY(), getX() + 1, getY())) {
+                if (GridManager.Instance.MoveObject(GetX(), GetY(), GetX() + 1, GetY())) {
                     transform.position += Vector3.right;
                 }
                 Face("right");
@@ -262,36 +235,45 @@ public class CharacterMovement : MonoBehaviour
         switch (direction)
         {
             case "up":
-                transform.up = Vector3.up;
+                overallSprites.transform.up = Vector3.up;
                 faceDirection = "up";
-                hp.transform.up = Vector3.up;
-                hp.transform.localPosition = new Vector3(0, 0.55f, 0);
                 break;
             case "down":
-                transform.up = Vector3.down;
+                overallSprites.transform.up = Vector3.down;
                 faceDirection = "down";
-                hp.transform.localPosition = new Vector3(0, -0.55f, 0);
                 break;
             case "left":
-                transform.up = Vector3.left;
+                overallSprites.transform.up = Vector3.left;
                 faceDirection = "left";
-                hp.transform.up = Vector3.up;
-                hp.transform.localPosition = new Vector3(0.55f, 0, 0);
                 break;
             case "right":
-                transform.up = Vector3.right;
+                overallSprites.transform.up = Vector3.right;
                 faceDirection = "right";
-                hp.transform.localPosition = new Vector3(-0.55f, 0, 0);
                 break;
         }
-
-        hp.transform.up = Vector3.up;
     }
 
     public void SetEnemy(bool isEnemy)
     {
         this.isEnemy = isEnemy;
-        enemyColor.SetActive(isEnemy);
         fog.SetActive(!isEnemy);
+        enemySprite.SetActive(isEnemy);
+        friendlySprite.SetActive(!isEnemy);
+    }
+
+    public void EventAttack(int attackId, object[] extraData)
+    {
+        switch (attackId)
+        {
+            case 1:
+                attack1.EventExecute(extraData);
+                break;
+            case 2:
+                attack2.EventExecute(extraData);
+                break;
+            case 3:
+                attack3.EventExecute(extraData);
+                break;
+        }
     }
 }

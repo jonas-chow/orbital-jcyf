@@ -332,14 +332,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff44f28995aba40d0aca4bf593337509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testing: 1
   defeatUI: {fileID: 996488427}
   victoryUI: {fileID: 982411403}
   loadingUI: {fileID: 1473468720}
   yourTurnUI: {fileID: 1004296848}
   enemyTurnUI: {fileID: 1552450480}
-  Melee1: {fileID: 457443623152210106, guid: 3a4ebbd6873ff472681ed8b0d6bb97c7, type: 3}
-  Ranged1: {fileID: 1956248704052452388, guid: fe35b30b1a5eb40868ae104c74a57a3f, type: 3}
-  Mage1: {fileID: 750558534659890123, guid: 149f6e766552a44c287a9a162f6bdac1, type: 3}
+  Tank: {fileID: 4462285856982276167, guid: 140064e9ce98a4885af1b3d3de952b8a, type: 3}
+  Bruiser: {fileID: 2148188933481110109, guid: e1b1650b794a34f388496efc311bc968, type: 3}
+  Assassin: {fileID: 4485937164728609935, guid: 99548cadc299d4d99b4969d48d8586ce, type: 3}
+  Scout: {fileID: 1218566954008906623, guid: d9089776cae43429a8462e154eaf9aab, type: 3}
+  Trapper: {fileID: 7322224806365348413, guid: a344defbb02f94d97a78d44ce4393d5b, type: 3}
+  Hunter: {fileID: 1058420121252410066, guid: 551be889394cb4e6e87c7d2cbe545cc9, type: 3}
+  Healer: {fileID: 2886753976550833790, guid: 00413ac32427a40d6820dd0b746ff86d, type: 3}
+  Wizard: {fileID: 2042471319138287248, guid: 56dad5c5cc47d48c489e3b297cebe505, type: 3}
+  Summoner: {fileID: 6995237673195709254, guid: 300d2ccf48ad041819d4353903c22a4a, type: 3}
+  enemies: []
+  friendly: []
   enemyReady: 0
   readyForTurn: 0
   actionCount: 0
@@ -5124,7 +5133,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1473468721
 RectTransform:
   m_ObjectHideFlags: 0

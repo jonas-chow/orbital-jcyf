@@ -20,16 +20,76 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        InstantiateSelf();
+        if (testing) {
+            GameObject tank = BuildChar("Tank", false);
+            GridManager.Instance.MoveToAndInsert(tank, 3, 5);
+            GameObject bruiser = BuildChar("Bruiser", false);
+            GridManager.Instance.MoveToAndInsert(bruiser, 4, 5);
+            GameObject assassin = BuildChar("Assassin", false);
+            GridManager.Instance.MoveToAndInsert(assassin, 5, 5);
+            GameObject trapper = BuildChar("Trapper", false);
+            GridManager.Instance.MoveToAndInsert(trapper, 6, 5);
+            GameObject scout = BuildChar("Scout", false);
+            GridManager.Instance.MoveToAndInsert(scout, 7, 5);
+            GameObject hunter = BuildChar("Hunter", false);
+            GridManager.Instance.MoveToAndInsert(hunter, 8, 5);
+            GameObject wizard = BuildChar("Wizard", false);
+            GridManager.Instance.MoveToAndInsert(wizard, 9, 5);
+            GameObject healer = BuildChar("Healer", false);
+            GridManager.Instance.MoveToAndInsert(healer, 10, 5);
+            GameObject summoner = BuildChar("Summoner", false);
+            GridManager.Instance.MoveToAndInsert(summoner, 11, 5);
+            friendly = System.Array.ConvertAll(new GameObject[] {
+                tank, bruiser, assassin, 
+                trapper, scout, hunter, 
+                wizard, healer, summoner},
+                go => go.GetComponent<CharacterMovement>());
+
+            GameObject etank = BuildChar("Tank", true);
+            GridManager.Instance.MoveToAndInsert(etank, 3, 10);
+            GameObject ebruiser = BuildChar("Bruiser", true);
+            GridManager.Instance.MoveToAndInsert(ebruiser, 4, 10);
+            GameObject eassassin = BuildChar("Assassin", true);
+            GridManager.Instance.MoveToAndInsert(eassassin, 5, 10);
+            GameObject etrapper = BuildChar("Trapper", true);
+            GridManager.Instance.MoveToAndInsert(etrapper, 6, 10);
+            GameObject escout = BuildChar("Scout", true);
+            GridManager.Instance.MoveToAndInsert(escout, 7, 10);
+            GameObject ehunter = BuildChar("Hunter", true);
+            GridManager.Instance.MoveToAndInsert(ehunter, 8, 10);
+            GameObject ewizard = BuildChar("Wizard", true);
+            GridManager.Instance.MoveToAndInsert(ewizard, 9, 10);
+            GameObject ehealer = BuildChar("Healer", true);
+            GridManager.Instance.MoveToAndInsert(ehealer, 10, 10);
+            GameObject esummoner = BuildChar("Summoner", true);
+            GridManager.Instance.MoveToAndInsert(esummoner, 11, 10);
+            enemies = System.Array.ConvertAll(new GameObject[] {
+                etank, ebruiser, eassassin, 
+                etrapper, escout, ehunter, 
+                ewizard, ehealer, esummoner},
+                go => go.GetComponent<CharacterMovement>());
+
+            numFriendly = 9;
+            numEnemy = 9;
+            loadingUI.SetActive(false);
+            readyForTurn = true;
+        } else {
+            InstantiateSelf();
+        }
     }
 
+    public bool testing;
     [SerializeField]
     private GameObject defeatUI, victoryUI, loadingUI, yourTurnUI, enemyTurnUI;
 
     [SerializeField]
-    private GameObject Melee1, Ranged1, Mage1;
-    private CharacterMovement[] enemies;
-    private CharacterMovement[] friendly;
+    private GameObject Tank, Bruiser, Assassin;
+    [SerializeField]
+    private GameObject Scout, Trapper, Hunter;
+    [SerializeField]
+    private GameObject Healer, Wizard, Summoner;
+    public CharacterMovement[] enemies;
+    public CharacterMovement[] friendly;
     private int numEnemy = 3;
     private int numFriendly = 3;
     private int currentChar = 0;
@@ -46,19 +106,19 @@ public class GameManager : MonoBehaviour
     public void InstantiateSelf()
     {
         // instantiate melee character
-        GameObject melee = BuildChar(PlayerPrefs.GetString("Melee", "Melee1"), false);
+        GameObject melee = BuildChar(PlayerPrefs.GetString("Melee", "Tank"), false);
         GridManager.Instance.MoveToAndInsert(
             melee,
             PlayerPrefs.GetInt("MeleeX", 0),
             PlayerPrefs.GetInt("MeleeY", 0));
         // instantiate ranged character
-        GameObject ranged = BuildChar(PlayerPrefs.GetString("Ranged", "Ranged1"), false);
+        GameObject ranged = BuildChar(PlayerPrefs.GetString("Ranged", "Trapper"), false);
         GridManager.Instance.MoveToAndInsert(
             ranged,
             PlayerPrefs.GetInt("RangedX", 1),
             PlayerPrefs.GetInt("RangedY", 0));
         // instantiate mage character
-        GameObject mage = BuildChar(PlayerPrefs.GetString("Mage", "Mage1"), false);
+        GameObject mage = BuildChar(PlayerPrefs.GetString("Mage", "Wizard"), false);
         GridManager.Instance.MoveToAndInsert(
             mage,
             PlayerPrefs.GetInt("MageX", 2),
@@ -71,15 +131,15 @@ public class GameManager : MonoBehaviour
             mage.GetComponent<CharacterMovement>()};
 
         CharacterMenu.Instance.init(new int[] {
-            friendly[0].attack1Cooldown, 
-            friendly[0].attack2Cooldown, 
-            friendly[0].attack3Cooldown, 
-            friendly[1].attack1Cooldown, 
-            friendly[1].attack2Cooldown, 
-            friendly[1].attack3Cooldown, 
-            friendly[2].attack1Cooldown, 
-            friendly[2].attack2Cooldown, 
-            friendly[2].attack3Cooldown});
+            friendly[0].attack1.cooldown, 
+            friendly[0].attack2.cooldown, 
+            friendly[0].attack3.cooldown, 
+            friendly[1].attack1.cooldown, 
+            friendly[1].attack2.cooldown, 
+            friendly[1].attack3.cooldown, 
+            friendly[2].attack1.cooldown, 
+            friendly[2].attack2.cooldown, 
+            friendly[2].attack3.cooldown});
 
         CharacterMenu.Instance.SelectChar(0);
 
@@ -90,9 +150,9 @@ public class GameManager : MonoBehaviour
         // For single player mode
         if (EventHandler.Instance == null) {
             InstantiateEnemies(
-                "Melee1", 15, 15,
-                "Ranged1", 14, 15,
-                "Mage1", 13, 15);
+                "Tank", 15, 15,
+                "Trapper", 14, 15,
+                "Wizard", 13, 15);
         }
     }
 
@@ -129,18 +189,35 @@ public class GameManager : MonoBehaviour
         GameObject obj = null;
         switch (prefabName)
         {
-            case "Melee1":
-                obj = Melee1;
+            case "Tank":
+                obj = Tank;
                 break;
-            case "Ranged1":
-                obj = Ranged1;
+            case "Bruiser":
+                obj = Bruiser;
                 break;
-            case "Mage1":
-                obj = Mage1;
+            case "Assassin":
+                obj = Assassin;
+                break;
+            case "Scout":
+                obj = Scout;
+                break;
+            case "Trapper":
+                obj = Trapper;
+                break;
+            case "Hunter":
+                obj = Hunter;
+                break;
+            case "Healer":
+                obj = Healer;
+                break;
+            case "Wizard":
+                obj = Wizard;
+                break;
+            case "Summoner":
+                obj = Summoner;
                 break;
             default:
-                obj = Melee1;
-                break;
+                throw new NotImplementedException();
         }
         if (obj != null) {
             obj = Instantiate(obj, transform);
@@ -284,11 +361,14 @@ public class GameManager : MonoBehaviour
 
         EventHandler.Instance.SendTurnEndEvent();
         EnemyTurn();
+        if (testing) {
+            yield return new WaitForSeconds(.5f);
+            readyForTurn = true;
+        }
     }
 
     public void EnemyTurn()
-    {
-        Debug.Log("Waiting for opponent turn to end");        
+    {       
         StartCoroutine(AppearForAWhile(enemyTurnUI));
     }
 

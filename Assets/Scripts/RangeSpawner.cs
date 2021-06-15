@@ -21,6 +21,7 @@ public class RangeSpawner : MonoBehaviour
 
     public GameObject[] LinearIndicator(CharacterMovement character, int range, string direction)
     {
+        Debug.Log(range);
         Vector3 dir = Vector3.zero;
         switch (direction)
         {
@@ -46,6 +47,19 @@ public class RangeSpawner : MonoBehaviour
             );
         }
         
+        return objects;
+    }
+
+    public GameObject[] CharacterIndicator(CharacterMovement[] characters)
+    {
+        GameObject[] objects = new GameObject[characters.Length];
+        for (int i = 0; i < characters.Length; i++) {
+            objects[i] = GameObject.Instantiate(
+                rangeIndicator,
+                characters[i].transform.position,
+                Quaternion.identity);
+        }
+
         return objects;
     }
 

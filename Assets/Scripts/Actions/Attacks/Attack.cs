@@ -4,9 +4,11 @@ using UnityEngine;
 
 public abstract class Attack : Action
 { 
-  protected int damage;
-  protected int range;
-  protected string direction = "none";
+  public int cooldown;
+  public int range;
+  public int damage;
+  public CharacterMovement sourceChar;
+
   private static GameObject[] rangeIndicators = new GameObject[] {};
   private static GameObject[] rangeLimits = new GameObject[] {};
 
@@ -38,31 +40,22 @@ public abstract class Attack : Action
     rangeLimits = limits;
   }
 
-  public virtual void AimUp() 
+  public abstract void InitialiseAim();
+  public abstract void AimUp();
+  public abstract void AimDown();
+  public abstract void AimLeft();
+  public abstract void AimRight();
+
+  public abstract void EventExecute(object[] extraData);
+
+  public int GetX()
   {
-    this.direction = "up";
+    return sourceChar.GetX();
   }
 
-  public virtual void AimDown()
+  public int GetY()
   {
-    this.direction = "down";
-  }
-
-  public virtual void AimLeft()
-  {
-    this.direction = "left";
-  }
-
-  public virtual void AimRight()
-  {
-    this.direction = "right";
-  }
-
-  protected void ChangeDirection()
-  {
-    if (this.direction != "none") {
-      character.Face(direction);
-    }
+    return sourceChar.GetY();
   }
 }
 

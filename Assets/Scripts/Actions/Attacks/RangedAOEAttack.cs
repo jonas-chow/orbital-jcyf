@@ -3,94 +3,89 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedAOEAttack : Attack
+
+/*
+    Needs: sourceChar, range
+*/
+public abstract class RangedAOEAttack : Attack
 { 
     private int offsetX = 0;
     private int offsetY = 0;
+    private int range;
 
-    public RangedAOEAttack(CharacterMovement character, int damage, int range) 
+    public List<CharacterMovement> FindTargets()
     {
-        this.character = character;
-        this.damage = damage;
-        this.range = range;
-        this.name = "MeleeAttack";
-        Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(character, offsetX, offsetY));
-        Attack.SetLimits(RangeSpawner.Instance.RangeLimit(character, range));
+        return GridManager.Instance.GetAllCharactersInAOE(GetX() + offsetX, GetY() + offsetY);
     }
 
-    public override void Execute()
+    public List<CharacterMovement> FindEventTargets(int offsetX, int offsetY)
     {
-        if (EventHandler.Instance != null) {
-            EventHandler.Instance.SendAOEAttackEvent(
-                getX(), getY(), getX() + offsetX, getY() + offsetY, damage);
-        }
+        return GridManager.Instance.GetAllCharactersInAOE(GetX() + offsetX, GetY() + offsetY);
+    }
 
+    public void FaceTargetDirection()
+    {
         // Face in the direction you fired
         if (Math.Abs(offsetX) > Math.Abs(offsetY)) {
             // horizontal component larger than vertical
             if (offsetX > 0) {
-                character.Face("right");
+                sourceChar.Face("right");
             } else if (offsetX < 0) {
-                character.Face("left");
+                sourceChar.Face("left");
             }
         } else {
             // vertical component equal or larger to horizontal
             if (offsetY > 0) {
-                character.Face("up");
+                sourceChar.Face("up");
             } else if (offsetY < 0) {
-                character.Face("down");
+                sourceChar.Face("down");
             }
         }
+    }
 
-        List<CharacterMovement> enemies = GridManager.Instance
-            .GetAllCharactersInAOE(getX() + offsetX, getY() + offsetY)
-            .FindAll(cm => cm.isEnemy);
-
-        enemies.ForEach(enemy => enemy.TakeDamage(damage));
-        AudioManager.Instance.Play("MagicAttack");
+    public override void InitialiseAim()
+    {
+        Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(sourceChar, offsetX, offsetY));
+        Attack.SetLimits(RangeSpawner.Instance.RangeLimit(sourceChar, range));
     }
 
     public override void AimUp() 
     {
-        this.direction = "up";
         int nextOffset = offsetY + 1;
         if (IsWithinRange(offsetX, nextOffset) && 
-            GridManager.Instance.IsValidCoords(getX() + offsetX, getY() + nextOffset)) {
+            GridManager.Instance.IsValidCoords(GetX() + offsetX, GetY() + nextOffset)) {
             offsetY = nextOffset;
-            Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(character, offsetX, offsetY));
+            Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(sourceChar, offsetX, offsetY));
         }
     }
 
     public override void AimDown()
     {
-        this.direction = "down";
         int nextOffset = offsetY - 1;
         if (IsWithinRange(offsetX, nextOffset) && 
-            GridManager.Instance.IsValidCoords(getX() + offsetX, getY() + nextOffset)) {
+            GridManager.Instance.IsValidCoords(GetX() + offsetX, GetY() + nextOffset)) {
             offsetY = nextOffset;
-            Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(character, offsetX, offsetY));
+            Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(sourceChar, offsetX, offsetY));
         }
     }
 
     public override void AimLeft()
     {
-        this.direction = "left";
         int nextOffset = offsetX - 1;
         if (IsWithinRange(nextOffset, offsetY) && 
-            GridManager.Instance.IsValidCoords(getX() + nextOffset, getY() + offsetY)) {
+            GridManager.Instance.IsValidCoords(GetX() + nextOffset, GetY() + offsetY)) {
             offsetX = nextOffset;
-            Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(character, offsetX, offsetY));
+            Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(sourceChar, offsetX, offsetY));
         }
     }
 
     public override void AimRight()
     {
-        this.direction = "right";
         int nextOffset = offsetX + 1;
         if (IsWithinRange(nextOffset, offsetY) && 
-            GridManager.Instance.IsValidCoords(getX() + nextOffset, getY() + offsetY)) {
+            GridManager.Instance.IsValidCoords(GetX() + nextOffset, GetY() + offsetY)) {
             offsetX = nextOffset;
-            Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(character, offsetX, offsetY));
+            Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(sourceChar, offsetX, offsetY));
         }
     }
 
