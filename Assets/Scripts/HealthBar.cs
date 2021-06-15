@@ -38,6 +38,11 @@ public class HealthBar : MonoBehaviour
     public bool TakeDamage(int damage, int charID)
     {
         hp -= damage;
+        if (hp <= 0) {
+            hp = 0;
+        } else if (hp > maxHp) {
+            hp = maxHp;
+        }
         float scale = (float)hp / maxHp;
         greenBar.transform.localPosition = NewPosition(scale);
         greenBar.transform.localScale = new Vector3(scale, 1, 1);
@@ -51,13 +56,7 @@ public class HealthBar : MonoBehaviour
         StopCoroutine("TemporaryVisible");
         StartCoroutine("TemporaryVisible");
 
-        if (hp <= 0) {
-            hp = 0;
-            return true;
-        } else if (hp > maxHp) {
-            hp = maxHp;
-        }
-        return false;
+        return hp == 0;
     }
 
     IEnumerator TemporaryVisible()

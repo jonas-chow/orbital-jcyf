@@ -22,8 +22,8 @@ public class TankMovement : CharacterMovement
         {
             SendEvent();
             CharacterMovement target = FindTarget();
-            if (target.isEnemy) {
-                target.TakeDamage(self.atk, damage);
+            if (target != null && target.isEnemy) {
+                target.TakeDamage(self.GetAttack(), damage);
             }
         }
 
@@ -37,8 +37,8 @@ public class TankMovement : CharacterMovement
         {
             string dir = (string)extraData[0];
             CharacterMovement target = FindEventTarget(dir);
-            if (!target.isEnemy) {
-                target.TakeDamage(self.atk, damage);
+            if (target != null && !target.isEnemy) {
+                target.TakeDamage(self.GetAttack(), damage);
             }
         }
     }
