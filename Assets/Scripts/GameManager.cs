@@ -340,7 +340,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StartTurn()
     {
-        Debug.Log("Turn start");
+        System.Array.ForEach(friendly, cm => cm.ClearBuffs());
         StartCoroutine(AppearForAWhile(yourTurnUI));
         ActivateCurrent();
         animationPhase = true;
@@ -361,6 +361,7 @@ public class GameManager : MonoBehaviour
 
         EventHandler.Instance.SendTurnEndEvent();
         EnemyTurn();
+        System.Array.ForEach(enemies, cm => cm.ClearBuffs());
         if (testing) {
             yield return new WaitForSeconds(.5f);
             readyForTurn = true;

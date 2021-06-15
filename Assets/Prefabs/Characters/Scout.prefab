@@ -22,8 +22,8 @@ MonoBehaviour:
   charID: 1
   hp: {fileID: 8789514174735261847}
   faceDirection: up
-  atk: 0
-  def: 0
+  atk: 15
+  def: 15
   invincible: 0
   atkBuff: 0
   defBuff: 0

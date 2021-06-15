@@ -170,7 +170,10 @@ public abstract class CharacterMovement : MonoBehaviour
     public void TakeDamage(float enemyAtk, int damage)
     {
         // enemy attack is a float so that the division happens as a float
-        damage = (int)((enemyAtk / def) * damage);
+        damage = (int)((enemyAtk / GetDefense()) * damage);
+        if (invincible) {
+            damage = 0;
+        }
 
         GameObject
             .Instantiate(damageText, this.transform.position + Vector3.up * 0.8f, Quaternion.identity)
@@ -275,5 +278,34 @@ public abstract class CharacterMovement : MonoBehaviour
                 attack3.EventExecute(extraData);
                 break;
         }
+    }
+
+    public int GetAttack()
+    {
+        int attack = atk + atkBuff;
+        if (atk < 1) {
+            return 1;
+        } else {
+            return attack;
+        }
+    }
+
+    public int GetDefense()
+    {
+        int defense = def + defBuff;
+        if (defense < 1) {
+            return 1;
+        } else {
+            return defense;
+        }
+    }
+
+    public void ClearBuffs()
+    {
+        defBuff = 0;
+        atkBuff = 0;
+        invincible = false;
+        stealthed = false;
+        disabled = false;
     }
 }
