@@ -76,7 +76,11 @@ public class ActionQueue : MonoBehaviour
     public void ExecuteNext()
     {
         if (isEnabled) {
-            actions.Dequeue().Execute();
+            Action next = actions.Dequeue();
+            // only execute the action if the char didnt manage to die
+            if (next.character.isAlive) {
+                next.Execute();
+            }
             // the key
             GameObject.Destroy(objQueue.Dequeue());
             // the arrow

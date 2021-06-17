@@ -10,13 +10,13 @@ TODO:
 2) Implement execute, sendEvent, eventExecute
 */
 
-public class BruiserMovement : CharacterMovement
+public class FamiliarMovement : CharacterMovement
 {
     private class Attack1 : LinearAttack
     {
-        public BruiserMovement self;
+        public FamiliarMovement self;
 
-        public Attack1(BruiserMovement cm)
+        public Attack1(FamiliarMovement cm)
         {
             this.character = cm;
             this.self = cm;
@@ -25,7 +25,7 @@ public class BruiserMovement : CharacterMovement
             this.cooldown = 2;
         }
 
-        // basic melee attack with med damage
+        // basic melee attack which debuffs
         public override void Execute()
         {
             SendEvent();
@@ -53,9 +53,9 @@ public class BruiserMovement : CharacterMovement
 
     private class Attack2 : MeleeAOEAttack
     {
-        public BruiserMovement self;
+        public FamiliarMovement self;
 
-        public Attack2(BruiserMovement cm)
+        public Attack2(FamiliarMovement cm)
         {
             this.character = cm;
             this.self = cm;
@@ -64,6 +64,7 @@ public class BruiserMovement : CharacterMovement
             this.cooldown = 3;
         }
 
+        // explode and die
         public override void Execute()
         {
             SendEvent();
@@ -93,9 +94,10 @@ public class BruiserMovement : CharacterMovement
 
     private class Attack3 : SelfAttack
     {
-        public BruiserMovement self;
+        public FamiliarMovement self;
 
-        public Attack3(BruiserMovement cm)
+        // swap with summoner
+        public Attack3(FamiliarMovement cm)
         {
             this.character = cm;
             this.self = cm;
@@ -146,5 +148,15 @@ public class BruiserMovement : CharacterMovement
         }
 
         attack.InitialiseAim();
+    }
+
+    public void init(bool isEnemy)
+    {
+
+    }
+
+    public void Die()
+    {
+        attack2.Execute();
     }
 }

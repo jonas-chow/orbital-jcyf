@@ -18,7 +18,7 @@ public class WizardMovement : CharacterMovement
 
         public Attack1(WizardMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
         }
 
@@ -46,7 +46,7 @@ public class WizardMovement : CharacterMovement
 
         public Attack2(WizardMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
         }
 
@@ -74,7 +74,7 @@ public class WizardMovement : CharacterMovement
 
         public Attack3(WizardMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
         }
 

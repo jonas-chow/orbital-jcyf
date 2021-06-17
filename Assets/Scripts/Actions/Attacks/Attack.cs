@@ -7,7 +7,6 @@ public abstract class Attack : Action
   public int cooldown;
   public int range;
   public int damage;
-  public CharacterMovement sourceChar;
 
   private static GameObject[] rangeIndicators = new GameObject[] {};
   private static GameObject[] rangeLimits = new GameObject[] {};
@@ -50,12 +49,12 @@ public abstract class Attack : Action
 
   public int GetX()
   {
-    return sourceChar.GetX();
+    return character.GetX();
   }
 
   public int GetY()
   {
-    return sourceChar.GetY();
+    return character.GetY();
   }
 }
 

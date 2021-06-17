@@ -31,16 +31,16 @@ public abstract class RangedTargetAttack : Attack
         if (Math.Abs(offsetX) > Math.Abs(offsetY)) {
             // horizontal component larger than vertical
             if (offsetX > 0) {
-                sourceChar.Face("right");
+                character.Face("right");
             } else if (offsetX < 0) {
-                sourceChar.Face("left");
+                character.Face("left");
             }
         } else {
             // vertical component equal or larger to horizontal
             if (offsetY > 0) {
-                sourceChar.Face("up");
+                character.Face("up");
             } else if (offsetY < 0) {
-                sourceChar.Face("down");
+                character.Face("down");
             }
         }
     }
@@ -52,9 +52,9 @@ public abstract class RangedTargetAttack : Attack
 
     public override void InitialiseAim()
     {
-        Attack.SetIndicators(RangeSpawner.Instance.RangedTargetIndicator(sourceChar, offsetX, offsetY));
+        Attack.SetIndicators(RangeSpawner.Instance.RangedTargetIndicator(character, offsetX, offsetY));
         if (range != globalRange) {
-            Attack.SetLimits(RangeSpawner.Instance.RangeLimit(sourceChar, range));
+            Attack.SetLimits(RangeSpawner.Instance.RangeLimit(character, range));
         }
     }
 
@@ -64,7 +64,7 @@ public abstract class RangedTargetAttack : Attack
         if (IsWithinRange(offsetX, nextOffset) && 
             GridManager.Instance.IsValidCoords(GetX() + offsetX, GetY() + nextOffset)) {
             offsetY = nextOffset;
-            Attack.SetIndicators(RangeSpawner.Instance.RangedTargetIndicator(sourceChar, offsetX, offsetY));
+            Attack.SetIndicators(RangeSpawner.Instance.RangedTargetIndicator(character, offsetX, offsetY));
         }
     }
 
@@ -74,7 +74,7 @@ public abstract class RangedTargetAttack : Attack
         if (IsWithinRange(offsetX, nextOffset) && 
             GridManager.Instance.IsValidCoords(GetX() + offsetX, GetY() + nextOffset)) {
             offsetY = nextOffset;
-            Attack.SetIndicators(RangeSpawner.Instance.RangedTargetIndicator(sourceChar, offsetX, offsetY));
+            Attack.SetIndicators(RangeSpawner.Instance.RangedTargetIndicator(character, offsetX, offsetY));
         }
     }
 
@@ -84,7 +84,7 @@ public abstract class RangedTargetAttack : Attack
         if (IsWithinRange(nextOffset, offsetY) && 
             GridManager.Instance.IsValidCoords(GetX() + nextOffset, GetY() + offsetY)) {
             offsetX = nextOffset;
-            Attack.SetIndicators(RangeSpawner.Instance.RangedTargetIndicator(sourceChar, offsetX, offsetY));
+            Attack.SetIndicators(RangeSpawner.Instance.RangedTargetIndicator(character, offsetX, offsetY));
         }
     }
 
@@ -94,7 +94,7 @@ public abstract class RangedTargetAttack : Attack
         if (IsWithinRange(nextOffset, offsetY) && 
             GridManager.Instance.IsValidCoords(GetX() + nextOffset, GetY() + offsetY)) {
             offsetX = nextOffset;
-            Attack.SetIndicators(RangeSpawner.Instance.RangedTargetIndicator(sourceChar, offsetX, offsetY));
+            Attack.SetIndicators(RangeSpawner.Instance.RangedTargetIndicator(character, offsetX, offsetY));
         }
     }
 

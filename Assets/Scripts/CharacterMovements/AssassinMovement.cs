@@ -18,7 +18,7 @@ public class AssassinMovement : CharacterMovement
 
         public Attack1(AssassinMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
         }
 
@@ -46,7 +46,7 @@ public class AssassinMovement : CharacterMovement
 
         public Attack2(AssassinMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
         }
 
@@ -74,7 +74,7 @@ public class AssassinMovement : CharacterMovement
 
         public Attack3(AssassinMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
         }
 

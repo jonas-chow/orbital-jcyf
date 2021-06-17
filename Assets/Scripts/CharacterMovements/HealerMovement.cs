@@ -18,7 +18,7 @@ public class HealerMovement : CharacterMovement
 
         public Attack1(HealerMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
         }
 
@@ -46,7 +46,7 @@ public class HealerMovement : CharacterMovement
 
         public Attack2(HealerMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
         }
 
@@ -74,7 +74,7 @@ public class HealerMovement : CharacterMovement
 
         public Attack3(HealerMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
         }
 

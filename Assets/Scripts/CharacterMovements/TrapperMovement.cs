@@ -18,7 +18,7 @@ public class TrapperMovement : CharacterMovement
 
         public Attack1(TrapperMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
         }
 
@@ -46,7 +46,7 @@ public class TrapperMovement : CharacterMovement
 
         public Attack2(TrapperMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
         }
 
@@ -74,7 +74,7 @@ public class TrapperMovement : CharacterMovement
 
         public Attack3(TrapperMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
         }
 

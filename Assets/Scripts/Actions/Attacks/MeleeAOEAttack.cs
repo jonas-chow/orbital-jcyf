@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*
-    Needs: sourceChar
+    Needs: character
 */
 public abstract class MeleeAOEAttack : Attack
 { 
@@ -22,7 +22,7 @@ public abstract class MeleeAOEAttack : Attack
     // Melee AOE attacks can't be aimed, but will still make you face that direction
     public override void InitialiseAim()
     {
-        Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(sourceChar, 0, 0));
+        Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(character, 0, 0));
     }
     public override void AimUp() {}
     public override void AimDown() {}

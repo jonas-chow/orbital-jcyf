@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 /*
-    Needs: sourceChar, range ( =1 for melee )
+    Needs: character, range ( =1 for melee )
 */
 public abstract class LinearAttack : Attack
 { 
@@ -14,7 +14,7 @@ public abstract class LinearAttack : Attack
     {
         // If user did not input a direction, the final direction used will be where the player faces on executing the attack
         if (direction == "none") {
-            direction = sourceChar.faceDirection;
+            direction = character.faceDirection;
         }
 
         return GridManager.Instance
@@ -25,7 +25,7 @@ public abstract class LinearAttack : Attack
     {
         // If user did not input a direction, the final direction used will be where the player faces on executing the attack
         if (direction == "none") {
-            direction = sourceChar.faceDirection;
+            direction = character.faceDirection;
         }
 
         return GridManager.Instance
@@ -34,14 +34,14 @@ public abstract class LinearAttack : Attack
 
     public override void InitialiseAim()
     {
-        Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(sourceChar, range, sourceChar.faceDirection));
+        Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range, character.faceDirection));
     }
 
     public override void AimUp() 
     {
         if (this.direction != "up") {
             this.direction = "up";
-            Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(sourceChar, range, "up"));
+            Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range, "up"));
         }
     }
 
@@ -49,7 +49,7 @@ public abstract class LinearAttack : Attack
     {
         if (this.direction != "down") {
             this.direction = "down";
-            Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(sourceChar, range, "down"));
+            Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range, "down"));
 
         }
     }
@@ -58,7 +58,7 @@ public abstract class LinearAttack : Attack
     {
         if (this.direction != "left") {
             this.direction = "left";
-            Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(sourceChar, range, "left"));
+            Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range, "left"));
         }
     }
 
@@ -66,7 +66,7 @@ public abstract class LinearAttack : Attack
     {
         if (this.direction != "right") {
             this.direction = "right";
-            Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(sourceChar, range, "right"));
+            Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range, "right"));
         }
     }
 

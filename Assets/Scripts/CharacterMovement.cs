@@ -27,6 +27,7 @@ public abstract class CharacterMovement : MonoBehaviour
     public int defBuff = 0;
     public bool disabled;
     public bool stealthed;
+    public bool isAlive = true;
 
     private bool aiming = false;
 
@@ -184,6 +185,7 @@ public abstract class CharacterMovement : MonoBehaviour
         if (hp.TakeDamage(damage, isEnemy ? -1 : charID)) {
             GridManager.Instance.RemoveObject(GetX(), GetY());
             GameObject.Destroy(gameObject);
+            isAlive = false;
             if (isEnemy) {
                 GameManager.Instance.RemoveEnemy();
             } else {

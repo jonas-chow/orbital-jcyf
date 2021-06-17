@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*
-    Needs: sourceChar
+    Needs: character
 */
 public abstract class SelfAttack : Attack
 { 
     public override void InitialiseAim()
     {
         Attack.SetIndicators(
-          RangeSpawner.Instance.CharacterIndicator(new CharacterMovement[] {sourceChar}));
+          RangeSpawner.Instance.CharacterIndicator(new CharacterMovement[] {character}));
     }
 
     public override void AimUp() {}

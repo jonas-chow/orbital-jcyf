@@ -20,7 +20,7 @@ public class ScoutMovement : CharacterMovement
 
         public Attack1(ScoutMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
             this.range = 5;
             this.damage = 15;
@@ -58,7 +58,7 @@ public class ScoutMovement : CharacterMovement
 
         public Attack2(ScoutMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
             this.range = globalRange;
             this.cooldown = 10; // change this
@@ -110,7 +110,7 @@ public class ScoutMovement : CharacterMovement
 
         public Attack3(ScoutMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
             this.range = globalRange;
             this.damage = 15;

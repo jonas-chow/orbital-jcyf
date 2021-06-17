@@ -10,7 +10,7 @@ public class TankMovement : CharacterMovement
 
         public Attack1(TankMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
             this.range = 1;
             this.damage = 10;
@@ -49,7 +49,7 @@ public class TankMovement : CharacterMovement
 
         public Attack2(TankMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
             this.damage = 30;
             this.cooldown = 10;
@@ -79,7 +79,7 @@ public class TankMovement : CharacterMovement
 
         public Attack3(TankMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
             this.range = 0;
             this.damage = 0;

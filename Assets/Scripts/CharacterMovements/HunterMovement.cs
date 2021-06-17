@@ -18,7 +18,7 @@ public class HunterMovement : CharacterMovement
 
         public Attack1(HunterMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
         }
 
@@ -46,7 +46,7 @@ public class HunterMovement : CharacterMovement
 
         public Attack2(HunterMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
         }
 
@@ -74,7 +74,7 @@ public class HunterMovement : CharacterMovement
 
         public Attack3(HunterMovement cm)
         {
-            this.sourceChar = cm;
+            this.character = cm;
             this.self = cm;
         }
 
