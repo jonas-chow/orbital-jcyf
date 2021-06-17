@@ -74,7 +74,7 @@ public class ScoutMovement : CharacterMovement
                 GridManager.Instance.MoveToAndInsert(ward, posX, posY);
                 ward.GetComponent<WardMovement>().init(false);
             } else if (target.isEnemy) {
-                target.TakeDamage(self.GetAttack(), damage);
+                target.fog.SetActive(true);
             } else {
                 // refund cooldown if it whiffed
                 self.attack2Turn = -999;
@@ -98,7 +98,7 @@ public class ScoutMovement : CharacterMovement
                 GridManager.Instance.MoveToAndInsert(ward, posX, posY);
                 ward.GetComponent<WardMovement>().init(true);
             } else if (!target.isEnemy) {
-                target.TakeDamage(self.GetAttack(), damage);
+                target.fog.SetActive(true);
             }
             FaceTargetDirection(offsetX, offsetY);
         }
