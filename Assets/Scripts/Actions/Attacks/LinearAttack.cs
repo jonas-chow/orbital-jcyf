@@ -8,7 +8,7 @@ using UnityEngine;
 */
 public abstract class LinearAttack : Attack
 { 
-    public string direction = "none";
+    protected string direction = "none";
 
     public CharacterMovement FindTarget()
     {

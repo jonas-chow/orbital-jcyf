@@ -3,23 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-/*
-    Needs: sourceChar, range
-*/
-public abstract class RangedAOEAttack : Attack
-{ 
+public abstract class RangedTargetAttack : Attack
+{
+    protected int posX = 0;
+    protected int posY = 0;
     protected int offsetX = 0;
     protected int offsetY = 0;
 
-    public List<CharacterMovement> FindTargets()
+    public CharacterMovement FindTarget()
     {
-        return GridManager.Instance.GetAllCharactersInAOE(GetX() + offsetX, GetY() + offsetY);
+        posX = GetX() + offsetX;
+        posY = GetY() + offsetY;
+        return GridManager.Instance.GetCharacter(GetX() + offsetX, GetY() + offsetY);
     }
 
-    public List<CharacterMovement> FindEventTargets(int offsetX, int offsetY)
+    public CharacterMovement FindEventTarget(int offsetX, int offsetY)
     {
-        return GridManager.Instance.GetAllCharactersInAOE(GetX() + offsetX, GetY() + offsetY);
+        posX = GetX() + offsetX;
+        posY = GetY() + offsetY;
+        return GridManager.Instance.GetCharacter(GetX() + offsetX, GetY() + offsetY);
+    }
+
+    public int[] FindTargetPos()
+    {
+        int[] arr = new int[] {GetX() + offsetX, GetY() + offsetY};
+        return arr;
     }
 
     public void FaceTargetDirection()
@@ -44,7 +52,7 @@ public abstract class RangedAOEAttack : Attack
 
     public override void InitialiseAim()
     {
-        Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(sourceChar, offsetX, offsetY));
+        Attack.SetIndicators(RangeSpawner.Instance.RangedTargetIndicator(sourceChar, offsetX, offsetY));
         Attack.SetLimits(RangeSpawner.Instance.RangeLimit(sourceChar, range));
     }
 
@@ -54,7 +62,7 @@ public abstract class RangedAOEAttack : Attack
         if (IsWithinRange(offsetX, nextOffset) && 
             GridManager.Instance.IsValidCoords(GetX() + offsetX, GetY() + nextOffset)) {
             offsetY = nextOffset;
-            Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(sourceChar, offsetX, offsetY));
+            Attack.SetIndicators(RangeSpawner.Instance.RangedTargetIndicator(sourceChar, offsetX, offsetY));
         }
     }
 
@@ -64,7 +72,7 @@ public abstract class RangedAOEAttack : Attack
         if (IsWithinRange(offsetX, nextOffset) && 
             GridManager.Instance.IsValidCoords(GetX() + offsetX, GetY() + nextOffset)) {
             offsetY = nextOffset;
-            Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(sourceChar, offsetX, offsetY));
+            Attack.SetIndicators(RangeSpawner.Instance.RangedTargetIndicator(sourceChar, offsetX, offsetY));
         }
     }
 
@@ -74,7 +82,7 @@ public abstract class RangedAOEAttack : Attack
         if (IsWithinRange(nextOffset, offsetY) && 
             GridManager.Instance.IsValidCoords(GetX() + nextOffset, GetY() + offsetY)) {
             offsetX = nextOffset;
-            Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(sourceChar, offsetX, offsetY));
+            Attack.SetIndicators(RangeSpawner.Instance.RangedTargetIndicator(sourceChar, offsetX, offsetY));
         }
     }
 
@@ -84,7 +92,7 @@ public abstract class RangedAOEAttack : Attack
         if (IsWithinRange(nextOffset, offsetY) && 
             GridManager.Instance.IsValidCoords(GetX() + nextOffset, GetY() + offsetY)) {
             offsetX = nextOffset;
-            Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(sourceChar, offsetX, offsetY));
+            Attack.SetIndicators(RangeSpawner.Instance.RangedTargetIndicator(sourceChar, offsetX, offsetY));
         }
     }
 

@@ -3,7 +3,15 @@ guid: 75647753489944af69dee3373cfe02bc
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - friendlySprite: {instanceID: 0}
+  - enemySprite: {instanceID: 0}
+  - selection: {instanceID: 0}
+  - overallSprites: {instanceID: 0}
+  - damageText: {instanceID: 0}
+  - fog: {instanceID: 0}
+  - hp: {instanceID: 0}
+  - waasdfrd: {fileID: 2030181568552007169, guid: 4956ee75b92e25b4d8f09685490d8257, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

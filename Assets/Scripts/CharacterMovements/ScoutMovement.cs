@@ -12,6 +12,8 @@ TODO:
 
 public class ScoutMovement : CharacterMovement
 {
+    public GameObject ward;
+
     private class Attack1 : LinearAttack
     {
         public ScoutMovement self;
@@ -50,31 +52,47 @@ public class ScoutMovement : CharacterMovement
         }
     }
 
-    private class Attack2 : SelfAttack
+    private class Attack2 : RangedTargetAttack
     {
         public ScoutMovement self;
+        
 
         public Attack2(ScoutMovement cm)
         {
             this.sourceChar = cm;
             this.self = cm;
+            this.range = 5;
+            this.cooldown = 0; // change this
+            this.damage = 19;
         }
 
         public override void Execute()
         {
             SendEvent();
-            // ...
+            if (FindTarget() == null) {
+                GameObject.Instantiate(self.ward,
+                    new Vector3(posX, posY, 0),
+                    Quaternion.identity);
+            } else {
+                FindTarget().TakeDamage(self.GetAttack(), damage);
+            }
         }
 
         public override void SendEvent()
         {
-            object[] extraData = null; // change this
+            object[] extraData = new object[] {offsetX, offsetY};
             EventHandler.Instance.SendAttackEvent(self.charID, 2, extraData);
         }
 
         public override void EventExecute(object[] extraData)
         {
-            // ...
+            if (FindEventTarget((int)extraData[0], (int)extraData[1]) == null) {
+                GameObject.Instantiate(self.ward,
+                    new Vector3((int)extraData[0], (int)extraData[1], 0),
+                    Quaternion.identity);
+            } else {
+                FindEventTarget((int)extraData[0], (int)extraData[1]).TakeDamage(self.GetAttack(), damage);
+            }
         }
     }
 
@@ -86,7 +104,7 @@ public class ScoutMovement : CharacterMovement
         {
             this.sourceChar = cm;
             this.self = cm;
-            this.range = 10;
+            this.range = 30;
             this.damage = 15;
             this.cooldown = 3;
         }
@@ -102,13 +120,17 @@ public class ScoutMovement : CharacterMovement
 
         public override void SendEvent()
         {
-            object[] extraData = null; // change this
+            object[] extraData = new object[] {offsetX, offsetY};
             EventHandler.Instance.SendAttackEvent(self.charID, 3, extraData);
         }
 
         public override void EventExecute(object[] extraData)
         {
-            // ...
+            List<CharacterMovement> allies = FindEventTargets((int)extraData[0], (int)extraData[1])
+                .FindAll(cm => !cm.isEnemy);
+            allies.ForEach(cm => {
+                cm.TakeDamage(self.GetAttack(), damage);
+            });
         }
     }
 
@@ -133,8 +155,8 @@ public class ScoutMovement : CharacterMovement
                 attack2 = new Attack2(this);
                 break;
             case 3:
-                attack = attack2;
-                attack2 = new Attack2(this);
+                attack = attack3;
+                attack3 = new Attack3(this);
                 break;
         }
 

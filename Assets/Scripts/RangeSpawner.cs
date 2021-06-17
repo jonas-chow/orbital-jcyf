@@ -80,6 +80,16 @@ public class RangeSpawner : MonoBehaviour
         return objects;
     }
 
+    public GameObject[] RangedTargetIndicator(CharacterMovement character, int offsetX, int offsetY)
+    {
+        GameObject[] objects = new GameObject[1];
+        Vector3 pos = character.transform.position + new Vector3(offsetX, offsetY, 0);
+        objects[0] = GameObject.Instantiate(rangeIndicator,
+            pos,
+            Quaternion.identity);
+        return objects;
+    }
+
     public GameObject[] RangeLimit(CharacterMovement character, int range)
     {
         Vector3 pos = character.transform.position + new Vector3(0, range, 0);
