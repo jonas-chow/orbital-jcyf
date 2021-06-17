@@ -5,6 +5,7 @@ using UnityEngine;
 
 public abstract class RangedTargetAttack : Attack
 {
+    protected const int globalRange = 30;
     protected int posX = 0;
     protected int posY = 0;
     protected int offsetX = 0;
@@ -14,7 +15,7 @@ public abstract class RangedTargetAttack : Attack
     {
         posX = GetX() + offsetX;
         posY = GetY() + offsetY;
-        return GridManager.Instance.GetCharacter(GetX() + offsetX, GetY() + offsetY);
+        return GridManager.Instance.GetCharacter(posX, posY);
     }
 
     public CharacterMovement FindEventTarget(int offsetX, int offsetY)
@@ -24,13 +25,7 @@ public abstract class RangedTargetAttack : Attack
         return GridManager.Instance.GetCharacter(GetX() + offsetX, GetY() + offsetY);
     }
 
-    public int[] FindTargetPos()
-    {
-        int[] arr = new int[] {GetX() + offsetX, GetY() + offsetY};
-        return arr;
-    }
-
-    public void FaceTargetDirection()
+    public void FaceTargetDirection(int offsetX, int offsetY)
     {
         // Face in the direction you fired
         if (Math.Abs(offsetX) > Math.Abs(offsetY)) {
@@ -50,10 +45,17 @@ public abstract class RangedTargetAttack : Attack
         }
     }
 
+    public object[] InvertOffsets()
+    {
+        return new object[] {-offsetX, -offsetY};
+    }
+
     public override void InitialiseAim()
     {
         Attack.SetIndicators(RangeSpawner.Instance.RangedTargetIndicator(sourceChar, offsetX, offsetY));
-        Attack.SetLimits(RangeSpawner.Instance.RangeLimit(sourceChar, range));
+        if (range != globalRange) {
+            Attack.SetLimits(RangeSpawner.Instance.RangeLimit(sourceChar, range));
+        }
     }
 
     public override void AimUp() 

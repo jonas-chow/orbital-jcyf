@@ -55,44 +55,52 @@ public class ScoutMovement : CharacterMovement
     private class Attack2 : RangedTargetAttack
     {
         public ScoutMovement self;
-        
 
         public Attack2(ScoutMovement cm)
         {
             this.sourceChar = cm;
             this.self = cm;
-            this.range = 5;
-            this.cooldown = 0; // change this
-            this.damage = 19;
+            this.range = globalRange;
+            this.cooldown = 10; // change this
+            this.damage = 20;
         }
 
         public override void Execute()
         {
             SendEvent();
-            if (FindTarget() == null) {
-                GameObject.Instantiate(self.ward,
-                    new Vector3(posX, posY, 0),
-                    Quaternion.identity);
+            CharacterMovement target = FindTarget();
+            if (target == null) {
+                GameObject ward = GameObject.Instantiate(self.ward, Vector3.zero, Quaternion.identity);
+                GridManager.Instance.MoveToAndInsert(ward, posX, posY);
+                ward.GetComponent<WardMovement>().init(false);
+            } else if (target.isEnemy) {
+                target.TakeDamage(self.GetAttack(), damage);
             } else {
-                FindTarget().TakeDamage(self.GetAttack(), damage);
+                // refund cooldown if it whiffed
+                self.attack2Turn = -999;
             }
+            FaceTargetDirection(offsetX, offsetY);
         }
 
         public override void SendEvent()
         {
-            object[] extraData = new object[] {offsetX, offsetY};
+            object[] extraData = InvertOffsets();
             EventHandler.Instance.SendAttackEvent(self.charID, 2, extraData);
         }
 
         public override void EventExecute(object[] extraData)
         {
-            if (FindEventTarget((int)extraData[0], (int)extraData[1]) == null) {
-                GameObject.Instantiate(self.ward,
-                    new Vector3((int)extraData[0], (int)extraData[1], 0),
-                    Quaternion.identity);
-            } else {
-                FindEventTarget((int)extraData[0], (int)extraData[1]).TakeDamage(self.GetAttack(), damage);
+            int offsetX = (int)extraData[0];
+            int offsetY = (int)extraData[1];
+            CharacterMovement target = FindEventTarget(offsetX, offsetY);
+            if (target == null) {
+                GameObject ward = GameObject.Instantiate(self.ward, Vector3.zero, Quaternion.identity);
+                GridManager.Instance.MoveToAndInsert(ward, posX, posY);
+                ward.GetComponent<WardMovement>().init(true);
+            } else if (!target.isEnemy) {
+                target.TakeDamage(self.GetAttack(), damage);
             }
+            FaceTargetDirection(offsetX, offsetY);
         }
     }
 
@@ -104,7 +112,7 @@ public class ScoutMovement : CharacterMovement
         {
             this.sourceChar = cm;
             this.self = cm;
-            this.range = 30;
+            this.range = globalRange;
             this.damage = 15;
             this.cooldown = 3;
         }
@@ -120,17 +128,20 @@ public class ScoutMovement : CharacterMovement
 
         public override void SendEvent()
         {
-            object[] extraData = new object[] {offsetX, offsetY};
+            object[] extraData = InvertOffsets();
             EventHandler.Instance.SendAttackEvent(self.charID, 3, extraData);
         }
 
         public override void EventExecute(object[] extraData)
         {
-            List<CharacterMovement> allies = FindEventTargets((int)extraData[0], (int)extraData[1])
+            int offsetX = (int)extraData[0];
+            int offsetY = (int)extraData[1];
+            List<CharacterMovement> allies = FindEventTargets(offsetX, offsetY)
                 .FindAll(cm => !cm.isEnemy);
             allies.ForEach(cm => {
                 cm.TakeDamage(self.GetAttack(), damage);
             });
+            FaceTargetDirection(offsetX, offsetY);
         }
     }
 

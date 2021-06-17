@@ -38,9 +38,9 @@ public abstract class CharacterMovement : MonoBehaviour
     public Attack attack2;
     public Attack attack3;
 
-    private int attack1Turn = -999;
-    private int attack2Turn = -999;
-    private int attack3Turn = -999;
+    public int attack1Turn = -999;
+    public int attack2Turn = -999;
+    public int attack3Turn = -999;
 
     // Update is called once per frame
     void Update()
@@ -167,7 +167,7 @@ public abstract class CharacterMovement : MonoBehaviour
         return GridManager.Instance.GetY(transform.position.y);
     }
 
-    public void TakeDamage(float enemyAtk, int damage)
+    public virtual void TakeDamage(float enemyAtk, int damage)
     {
         // enemy attack is a float so that the division happens as a float
         damage = (int)((enemyAtk / GetDefense()) * damage);

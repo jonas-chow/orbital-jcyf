@@ -313,6 +313,10 @@ public class GameManager : MonoBehaviour
                 friendly = newFriendly;
                 currentChar--;
             }
+
+            if (TimeBar.Instance.IsTurn()) {
+                ActivateCurrent();
+            }
         } else {
             Lose();
         }

@@ -9,6 +9,7 @@ using UnityEngine;
 */
 public abstract class RangedAOEAttack : Attack
 { 
+    protected const int globalRange = 30;
     protected int offsetX = 0;
     protected int offsetY = 0;
 
@@ -22,7 +23,7 @@ public abstract class RangedAOEAttack : Attack
         return GridManager.Instance.GetAllCharactersInAOE(GetX() + offsetX, GetY() + offsetY);
     }
 
-    public void FaceTargetDirection()
+    public void FaceTargetDirection(int offsetX, int offsetY)
     {
         // Face in the direction you fired
         if (Math.Abs(offsetX) > Math.Abs(offsetY)) {
@@ -42,10 +43,17 @@ public abstract class RangedAOEAttack : Attack
         }
     }
 
+    public object[] InvertOffsets()
+    {
+        return new object[] {-offsetX, -offsetY};
+    }
+
     public override void InitialiseAim()
     {
         Attack.SetIndicators(RangeSpawner.Instance.AOEIndicator(sourceChar, offsetX, offsetY));
-        Attack.SetLimits(RangeSpawner.Instance.RangeLimit(sourceChar, range));
+        if (range != globalRange) {
+            Attack.SetLimits(RangeSpawner.Instance.RangeLimit(sourceChar, range));
+        }
     }
 
     public override void AimUp() 

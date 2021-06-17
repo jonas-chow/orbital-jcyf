@@ -71,7 +71,9 @@ public class BruiserMovement : CharacterMovement
             enemies.ForEach(cm => {
                 cm.TakeDamage(self.GetAttack(), damage);
             });
-            self.TakeDamage(self.GetAttack(), 20);
+
+            // use defense as the attack so that always take 20 fixed damage
+            self.TakeDamage(self.GetDefense(), 20);
         }
 
         public override void SendEvent()
@@ -85,7 +87,7 @@ public class BruiserMovement : CharacterMovement
             allies.ForEach(cm => {
                 cm.TakeDamage(self.GetAttack(), damage);
             });
-            self.TakeDamage(self.GetAttack(), 20);
+            self.TakeDamage(self.GetDefense(), 20);
         }
     }
 
