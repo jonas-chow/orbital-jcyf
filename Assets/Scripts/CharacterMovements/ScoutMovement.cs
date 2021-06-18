@@ -62,7 +62,7 @@ public class ScoutMovement : CharacterMovement
             this.self = cm;
             this.range = globalRange;
             this.cooldown = 10; // change this
-            this.damage = 20;
+            this.damage = 5;
         }
 
         public override void Execute()
@@ -74,7 +74,8 @@ public class ScoutMovement : CharacterMovement
                 GridManager.Instance.MoveToAndInsert(ward, posX, posY);
                 ward.GetComponent<WardMovement>().init(false);
             } else if (target.isEnemy) {
-                target.fog.SetActive(true);
+                target.AddBuff(new VisibleDebuff(2));
+                target.TakeDamage(self.GetAttack(), damage);
             } else {
                 // refund cooldown if it whiffed
                 self.attack2Turn = -999;
@@ -98,7 +99,8 @@ public class ScoutMovement : CharacterMovement
                 GridManager.Instance.MoveToAndInsert(ward, posX, posY);
                 ward.GetComponent<WardMovement>().init(true);
             } else if (!target.isEnemy) {
-                target.fog.SetActive(true);
+                target.AddBuff(new VisibleDebuff(2));
+                target.TakeDamage(self.GetAttack(), damage);
             }
             FaceTargetDirection(offsetX, offsetY);
         }

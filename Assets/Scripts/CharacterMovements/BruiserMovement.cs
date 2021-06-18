@@ -105,7 +105,7 @@ public class BruiserMovement : CharacterMovement
         public override void Execute()
         {
             SendEvent();
-            self.invincible = true;
+            self.AddBuff(new InvincibleBuff(2));
         }
 
         public override void SendEvent()
@@ -115,7 +115,7 @@ public class BruiserMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            self.invincible = true;
+            self.AddBuff(new InvincibleBuff(2));
         }
     }
 

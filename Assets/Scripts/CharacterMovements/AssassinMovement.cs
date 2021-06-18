@@ -68,7 +68,7 @@ public class AssassinMovement : CharacterMovement
         }
     }
 
-    private class Attack3 : MeleeAOEAttack
+    private class Attack3 : SelfAttack
     {
         public AssassinMovement self;
 
@@ -76,12 +76,13 @@ public class AssassinMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
+            this.cooldown = 1;
         }
 
         public override void Execute()
         {
             SendEvent();
-            // ...
+            self.AddBuff(new StealthBuff(2));
         }
 
         public override void SendEvent()
@@ -92,7 +93,7 @@ public class AssassinMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            // ...
+            self.AddBuff(new StealthBuff(2));
         }
     }
 

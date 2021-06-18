@@ -344,7 +344,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StartTurn()
     {
-        System.Array.ForEach(friendly, cm => cm.ClearBuffs());
+        System.Array.ForEach(friendly, cm => cm.TurnPass());
+        System.Array.ForEach(enemies, cm => cm.TurnPass());
         StartCoroutine(AppearForAWhile(yourTurnUI));
         ActivateCurrent();
         animationPhase = true;
@@ -365,8 +366,13 @@ public class GameManager : MonoBehaviour
 
         EventHandler.Instance.SendTurnEndEvent();
         EnemyTurn();
-        System.Array.ForEach(enemies, cm => cm.ClearBuffs());
+        System.Array.ForEach(friendly, cm => cm.TurnPass());
+        System.Array.ForEach(enemies, cm => cm.TurnPass());
+        
         if (testing) {
+            foreach (CharacterMovement cm in enemies) {
+                MoveRandomly(cm);
+            }
             yield return new WaitForSeconds(.5f);
             readyForTurn = true;
         }
@@ -431,6 +437,25 @@ public class GameManager : MonoBehaviour
             CharacterMenu.Instance.Set4thChar(new int[] {
                 cm.attack1.cooldown, cm.attack2.cooldown, cm.attack3.cooldown
             });
+        }
+    }
+
+    public void MoveRandomly(CharacterMovement character)
+    {
+        switch (UnityEngine.Random.Range(0, 4))
+        {
+            case 0:
+                character.Move("up");
+                break;
+            case 1:
+                character.Move("down");
+                break;
+            case 2:
+                character.Move("left");
+                break;
+            case 3:
+                character.Move("right");
+                break;
         }
     }
 }
