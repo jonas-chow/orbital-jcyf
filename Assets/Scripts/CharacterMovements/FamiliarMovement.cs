@@ -12,6 +12,8 @@ TODO:
 
 public class FamiliarMovement : CharacterMovement
 {
+    SummonerMovement summoner;
+
     private class Attack1 : LinearAttack
     {
         public FamiliarMovement self;
@@ -25,7 +27,7 @@ public class FamiliarMovement : CharacterMovement
             this.cooldown = 2;
         }
 
-        // basic melee attack which debuffs
+        // basic melee attack
         public override void Execute()
         {
             SendEvent();
@@ -61,20 +63,15 @@ public class FamiliarMovement : CharacterMovement
             this.self = cm;
             this.range = 1;
             this.damage = 30;
-            this.cooldown = 3;
+            this.cooldown = 99;
         }
 
         // explode and die
         public override void Execute()
         {
             SendEvent();
-            List<CharacterMovement> enemies = FindTargets().FindAll(cm => cm.isEnemy);
-            enemies.ForEach(cm => {
-                cm.TakeDamage(self.GetAttack(), damage);
-            });
-
-            // use defense as the attack so that always take 20 fixed damage
-            self.TakeDamage(self.GetDefense(), 20);
+            CharacterMenu.Instance.SetHealth(self.charID, 0f);
+            self.Die();
         }
 
         public override void SendEvent()
@@ -84,11 +81,7 @@ public class FamiliarMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            List<CharacterMovement> allies = FindEventTargets().FindAll(cm => !cm.isEnemy);
-            allies.ForEach(cm => {
-                cm.TakeDamage(self.GetAttack(), damage);
-            });
-            self.TakeDamage(self.GetDefense(), 20);
+            self.Die();
         }
     }
 
@@ -96,18 +89,25 @@ public class FamiliarMovement : CharacterMovement
     {
         public FamiliarMovement self;
 
-        // swap with summoner
         public Attack3(FamiliarMovement cm)
         {
             this.character = cm;
             this.self = cm;
-            this.cooldown = 10;
         }
 
         public override void Execute()
         {
             SendEvent();
-            self.invincible = true;
+            Vector3 selfPos = self.transform.position;
+            self.transform.position = self.summoner.transform.position;
+            self.summoner.transform.position = selfPos;
+            GridManager.Instance.RemoveObject(self.GetX(), self.GetY());
+            GridManager.Instance.RemoveObject(self.summoner.GetX(), self.summoner.GetY());
+            GridManager.Instance.InsertObject(self.gameObject, self.GetX(), self.GetY());
+            GridManager.Instance.InsertObject(
+                self.summoner.gameObject, 
+                self.summoner.GetX(), 
+                self.summoner.GetY());
         }
 
         public override void SendEvent()
@@ -117,7 +117,16 @@ public class FamiliarMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            self.invincible = true;
+            Vector3 selfPos = self.transform.position;
+            self.transform.position = self.summoner.transform.position;
+            self.summoner.transform.position = selfPos;
+            GridManager.Instance.RemoveObject(self.GetX(), self.GetY());
+            GridManager.Instance.RemoveObject(self.summoner.GetX(), self.summoner.GetY());
+            GridManager.Instance.InsertObject(self.gameObject, self.GetX(), self.GetY());
+            GridManager.Instance.InsertObject(
+                self.summoner.gameObject, 
+                self.summoner.GetX(), 
+                self.summoner.GetY());
         }
     }
 
@@ -150,13 +159,24 @@ public class FamiliarMovement : CharacterMovement
         attack.InitialiseAim();
     }
 
-    public void init(bool isEnemy)
+    public override void Die()
     {
-
+        // find all characters that are in your opposing team
+        List<CharacterMovement> enemies = GridManager.Instance
+            .GetAllCharactersInAOE(GetX(), GetY())
+            .FindAll(cm => cm.isEnemy != isEnemy);
+        // explode
+        enemies.ForEach(cm => cm.TakeDamage(GetAttack(), attack2.damage));
+        summoner.FamiliarDied();
+        base.Die();
     }
 
-    public void Die()
+    public void init(SummonerMovement summoner)
     {
-        attack2.Execute();
+        SetEnemy(summoner.isEnemy);
+        this.summoner = summoner;
+        // familiar inherits summoner's attack at time of summon
+        this.atk = summoner.atk;
+        GameManager.Instance.InsertChar(this);
     }
 }

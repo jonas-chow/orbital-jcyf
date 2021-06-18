@@ -409,4 +409,28 @@ public class GameManager : MonoBehaviour
         actionCount++;
         CharacterMenu.Instance.TurnPass();
     }
+
+    public void InsertChar(CharacterMovement cm)
+    {
+        if (cm.isEnemy) {
+            CharacterMovement[] newEnemies = new CharacterMovement[numEnemy + 1];
+            for (int i = 0; i < numEnemy; i++) {
+                newEnemies[i] = enemies[i];
+            }
+            newEnemies[numEnemy] = cm;
+            numEnemy++;
+            enemies = newEnemies;
+        } else {
+            CharacterMovement[] newFriendlies = new CharacterMovement[numFriendly + 1];
+            for (int i = 0; i < numFriendly; i++) {
+                newFriendlies[i] = friendly[i];
+            }
+            newFriendlies[numFriendly] = cm;
+            numFriendly++;
+            friendly = newFriendlies;
+            CharacterMenu.Instance.Set4thChar(new int[] {
+                cm.attack1.cooldown, cm.attack2.cooldown, cm.attack3.cooldown
+            });
+        }
+    }
 }

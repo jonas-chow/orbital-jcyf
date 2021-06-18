@@ -117,8 +117,8 @@ public class TrapperMovement : CharacterMovement
                 attack2 = new Attack2(this);
                 break;
             case 3:
-                attack = attack2;
-                attack2 = new Attack2(this);
+                attack = attack3;
+                attack3 = new Attack3(this);
                 break;
         }
 

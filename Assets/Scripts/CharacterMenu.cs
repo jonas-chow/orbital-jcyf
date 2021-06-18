@@ -19,12 +19,13 @@ public class CharacterMenu : MonoBehaviour
         }
     }
 
-    public GameObject[] cooldownObjs = new GameObject[9];
-    public CooldownIndicator[] cooldowns = new CooldownIndicator[9];
+    public GameObject[] cooldownObjs = new GameObject[12];
+    public CooldownIndicator[] cooldowns = new CooldownIndicator[12];
     
-    public GameObject[] greenHps = new GameObject[3];
-    public GameObject[] selectionIndicators = new GameObject[3];
-    public GameObject[] deadIndicators = new GameObject[3];
+    public GameObject[] greenHps = new GameObject[4];
+    public GameObject[] selectionIndicators = new GameObject[4];
+    public GameObject[] deadIndicators = new GameObject[4];
+    public GameObject fourthChar;
 
 
 
@@ -40,7 +41,7 @@ public class CharacterMenu : MonoBehaviour
     }
 
     public void SelectChar(int charId) {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             selectionIndicators[i].SetActive(i == charId);
         }
     }
@@ -62,6 +63,16 @@ public class CharacterMenu : MonoBehaviour
         for (int i = 0; i < 9; i++) {
             cooldowns[i].init(cds[i]);
             cooldownObjs[i].SetActive(false);
+        }
+    }
+
+    public void Set4thChar(int[] cds) {
+        fourthChar.SetActive(true);
+        SetHealth(3, 1f);
+        deadIndicators[3].SetActive(false);
+        for (int i = 0; i < 3; i++) {
+            cooldowns[i + 9].init(cds[i]);
+            cooldownObjs[i + 9].SetActive(false);
         }
     }
 }
