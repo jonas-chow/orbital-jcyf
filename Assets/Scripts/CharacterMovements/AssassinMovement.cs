@@ -68,7 +68,7 @@ public class AssassinMovement : CharacterMovement
             SendEvent();
             CharacterMovement target = FindTarget();
             if (target != null && target.isEnemy) {
-                if (target.faceDirection == self.faceDirection)
+                //if (target.faceDirection == self.faceDirection) 
                 target.TakeDamage(self.GetAttack(), damage);
             }
         }
