@@ -68,6 +68,10 @@ public class GameManager : MonoBehaviour
                 etrapper, escout, ehunter, 
                 ewizard, ehealer, esummoner},
                 go => go.GetComponent<CharacterMovement>());
+            
+            foreach (CharacterMovement enemy in enemies) {
+                enemy.Face("down");
+            }
 
             numFriendly = 9;
             numEnemy = 9;
@@ -106,19 +110,19 @@ public class GameManager : MonoBehaviour
     public void InstantiateSelf()
     {
         // instantiate melee character
-        GameObject melee = BuildChar(PlayerPrefs.GetString("Melee", "Tank"), false);
+        GameObject melee = BuildChar(PlayerPrefs.GetString("Melee", "Bruiser"), false);
         GridManager.Instance.MoveToAndInsert(
             melee,
             PlayerPrefs.GetInt("MeleeX", 0),
             PlayerPrefs.GetInt("MeleeY", 0));
         // instantiate ranged character
-        GameObject ranged = BuildChar(PlayerPrefs.GetString("Ranged", "Trapper"), false);
+        GameObject ranged = BuildChar(PlayerPrefs.GetString("Ranged", "Scout"), false);
         GridManager.Instance.MoveToAndInsert(
             ranged,
             PlayerPrefs.GetInt("RangedX", 1),
             PlayerPrefs.GetInt("RangedY", 0));
         // instantiate mage character
-        GameObject mage = BuildChar(PlayerPrefs.GetString("Mage", "Wizard"), false);
+        GameObject mage = BuildChar(PlayerPrefs.GetString("Mage", "Summoner"), false);
         GridManager.Instance.MoveToAndInsert(
             mage,
             PlayerPrefs.GetInt("MageX", 2),
@@ -179,7 +183,12 @@ public class GameManager : MonoBehaviour
             ranged.GetComponent<CharacterMovement>(),
             mage.GetComponent<CharacterMovement>()};
 
+        foreach (CharacterMovement enemy in enemies) {
+            enemy.Face("down");
+        }
+
         enemyLoaded = true;
+        Debug.Log("enemy loaded");
         CheckLoading();
         CheckBothReady();
     }
@@ -442,20 +451,22 @@ public class GameManager : MonoBehaviour
 
     public void MoveRandomly(CharacterMovement character)
     {
-        switch (UnityEngine.Random.Range(0, 4))
-        {
-            case 0:
-                character.Move("up");
-                break;
-            case 1:
-                character.Move("down");
-                break;
-            case 2:
-                character.Move("left");
-                break;
-            case 3:
-                character.Move("right");
-                break;
+        if (character.isAlive) {
+            switch (UnityEngine.Random.Range(0, 4))
+            {
+                case 0:
+                    character.Move("up");
+                    break;
+                case 1:
+                    character.Move("down");
+                    break;
+                case 2:
+                    character.Move("left");
+                    break;
+                case 3:
+                    character.Move("right");
+                    break;
+            }
         }
     }
 }
