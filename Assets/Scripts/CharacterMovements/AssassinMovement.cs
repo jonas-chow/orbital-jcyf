@@ -30,7 +30,11 @@ public class AssassinMovement : CharacterMovement
             SendEvent();
             CharacterMovement target = FindTarget();
             if (target != null && target.isEnemy) {
-                target.TakeDamage(self.GetAttack(), damage);
+                if (target.faceDirection == self.faceDirection) {
+                    target.TakeDamage(self.GetAttack(), damage + 5);
+                } else {
+                    target.TakeDamage(self.GetAttack(), damage);
+                }            
             }
         }
 
@@ -45,7 +49,11 @@ public class AssassinMovement : CharacterMovement
             string dir = (string)extraData[0];
             CharacterMovement target = FindEventTarget(dir);
             if (target != null && !target.isEnemy) {
-                target.TakeDamage(self.GetAttack(), damage);
+                if (target.faceDirection == self.faceDirection) {
+                    target.TakeDamage(self.GetAttack(), damage + 5);
+                } else {
+                    target.TakeDamage(self.GetAttack(), damage);
+                }   
             }
         }
     }
@@ -59,7 +67,6 @@ public class AssassinMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.range = 1;
-            this.damage = 25;
             this.cooldown = 5;
         }
 
@@ -68,7 +75,6 @@ public class AssassinMovement : CharacterMovement
             SendEvent();
             CharacterMovement target = FindTarget();
             if (target != null && target.isEnemy) {
-                //if (target.faceDirection == self.faceDirection) 
                 target.TakeDamage(self.GetAttack(), damage);
             }
         }
