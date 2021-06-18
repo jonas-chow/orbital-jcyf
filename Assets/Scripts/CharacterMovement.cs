@@ -183,14 +183,7 @@ public abstract class CharacterMovement : MonoBehaviour
 
         // if died
         if (hp.TakeDamage(damage, isEnemy ? -1 : charID)) {
-            GridManager.Instance.RemoveObject(GetX(), GetY());
-            GameObject.Destroy(gameObject);
-            isAlive = false;
-            if (isEnemy) {
-                GameManager.Instance.RemoveEnemy();
-            } else {
-                GameManager.Instance.RemoveFriendly(this);
-            }
+            Die();
         }
     }
 
@@ -202,6 +195,18 @@ public abstract class CharacterMovement : MonoBehaviour
             .SetText(healAmount.ToString());
 
         hp.TakeDamage(-healAmount, isEnemy ? -1 : charID);
+    }
+
+    public virtual void Die()
+    {
+        GridManager.Instance.RemoveObject(GetX(), GetY());
+        GameObject.Destroy(gameObject);
+        isAlive = false;
+        if (isEnemy) {
+            GameManager.Instance.RemoveEnemy();
+        } else {
+            GameManager.Instance.RemoveFriendly(this);
+        }
     }
 
     public void Move(string direction)

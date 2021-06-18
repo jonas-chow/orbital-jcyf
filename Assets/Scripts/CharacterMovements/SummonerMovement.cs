@@ -13,8 +13,7 @@ TODO:
 public class SummonerMovement : CharacterMovement
 {
     public GameObject familiarPrefab;
-    public bool hasFamiliar = false;
-    public FamiliarMovement familiarMovement = null;
+    private FamiliarMovement familiarMovement = null;
 
     private class Attack1 : LinearAttack
     {
@@ -29,21 +28,29 @@ public class SummonerMovement : CharacterMovement
             this.cooldown = 2;
         }
 
+        // basic melee attack
         public override void Execute()
         {
             SendEvent();
-            // ...
+            CharacterMovement target = FindTarget();
+            if (target != null && target.isEnemy) {
+                target.TakeDamage(self.GetAttack(), damage);
+            }
         }
 
         public override void SendEvent()
         {
-            object[] extraData = null; // change this
+            object[] extraData = new object[] {InvertDirection(direction)};
             EventHandler.Instance.SendAttackEvent(self.charID, 1, extraData);
         }
 
         public override void EventExecute(object[] extraData)
         {
-            // ...
+            string dir = (string)extraData[0];
+            CharacterMovement target = FindEventTarget(dir);
+            if (target != null && !target.isEnemy) {
+                target.TakeDamage(self.GetAttack(), damage);
+            }
         }
     }
 
@@ -73,7 +80,7 @@ public class SummonerMovement : CharacterMovement
                 GameObject familiar = GameObject.Instantiate(self.familiarPrefab, Vector3.zero, Quaternion.identity);
                 GridManager.Instance.MoveToAndInsert(familiar, posX, posY);
                 self.familiarMovement = familiar.GetComponent<FamiliarMovement>();
-                self.familiarMovement.init(false);
+                self.familiarMovement.init(self);
             } else if (target.isEnemy) {
                 target.TakeDamage(self.GetAttack(), damage);
             } else {
@@ -102,7 +109,7 @@ public class SummonerMovement : CharacterMovement
                 GameObject familiar = GameObject.Instantiate(self.familiarPrefab, Vector3.zero, Quaternion.identity);
                 GridManager.Instance.MoveToAndInsert(familiar, posX, posY);
                 self.familiarMovement = familiar.GetComponent<FamiliarMovement>();
-                self.familiarMovement.init(true);
+                self.familiarMovement.init(self);
             } else if (!target.isEnemy) {
                 target.TakeDamage(self.GetAttack(), damage);
             } 
@@ -175,11 +182,23 @@ public class SummonerMovement : CharacterMovement
                 attack2 = new Attack2(this);
                 break;
             case 3:
-                attack = attack2;
-                attack2 = new Attack2(this);
+                attack = attack3;
+                attack3 = new Attack3(this);
                 break;
         }
 
         attack.InitialiseAim();
+    }
+
+    public override void Die()
+    {
+        // familiar also dies when summoner dies
+        familiarMovement.Die();
+        base.Die();
+    }
+
+    public void FamiliarDied()
+    {
+        familiarMovement = null;
     }
 }
