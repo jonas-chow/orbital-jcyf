@@ -57,13 +57,13 @@ public class EventHandler : MonoBehaviourPunCallbacks
     void Start()
     {
         object[] data = new object[] {
-            PlayerPrefs.GetString("Melee", "Melee1"),
+            PlayerPrefs.GetString("Melee", "Bruiser"),
             InvertXCoord(PlayerPrefs.GetInt("MeleeX", 0)),
             InvertYCoord(PlayerPrefs.GetInt("MeleeY", 0)),
-            PlayerPrefs.GetString("Ranged", "Ranged1"),
+            PlayerPrefs.GetString("Ranged", "Scout"),
             InvertXCoord(PlayerPrefs.GetInt("RangedX", 1)),
             InvertYCoord(PlayerPrefs.GetInt("RangedY", 0)),
-            PlayerPrefs.GetString("Mage", "Mage1"),
+            PlayerPrefs.GetString("Mage", "Summoner"),
             InvertXCoord(PlayerPrefs.GetInt("MageX", 2)),
             InvertYCoord(PlayerPrefs.GetInt("MageY", 0))
         };
@@ -137,6 +137,9 @@ public class EventHandler : MonoBehaviourPunCallbacks
                 int attackId = (int)data[1];
                 object[] extraData = (object[])data[2];
                 GameManager.Instance.enemies[charId].EventAttack(attackId, extraData);
+                break;
+            case TurnEndEvent:
+                GameManager.Instance.readyForTurn = true;
                 break;
             case InstantiateEvent:
                 data = (object[])eventData.CustomData;
