@@ -93,9 +93,9 @@ public class TankMovement : CharacterMovement
             List<CharacterMovement> allies = FindTargets().FindAll(cm => !cm.isEnemy);
             allies.ForEach(cm => {
                 if (cm.Equals(self)) {
-                    cm.defBuff -= 5;
+                    cm.AddBuff(new DefenseBuff(-5, 2));
                 } else {
-                    cm.invincible = true;
+                    cm.AddBuff(new InvincibleBuff(2));
                 }
             });
         }
@@ -110,9 +110,9 @@ public class TankMovement : CharacterMovement
             List<CharacterMovement> enemies = FindEventTargets().FindAll(cm => cm.isEnemy);
             enemies.ForEach(cm => {
                 if (cm.Equals(self)) {
-                    cm.defBuff -= 5;
+                    cm.AddBuff(new DefenseBuff(-5, 2));
                 } else {
-                    cm.invincible = true;
+                    cm.AddBuff(new InvincibleBuff(2));
                 }
             });
         }

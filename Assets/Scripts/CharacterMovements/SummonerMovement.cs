@@ -128,17 +128,22 @@ public class SummonerMovement : CharacterMovement
 
         public override void Execute()
         {
-            SendEvent();
-            Vector3 selfPos = self.transform.position;
-            self.transform.position = self.familiarMovement.transform.position;
-            self.familiarMovement.transform.position = selfPos;
-            GridManager.Instance.RemoveObject(self.GetX(), self.GetY());
-            GridManager.Instance.RemoveObject(self.familiarMovement.GetX(), self.familiarMovement.GetY());
-            GridManager.Instance.InsertObject(self.gameObject, self.GetX(), self.GetY());
-            GridManager.Instance.InsertObject(
-                self.familiarMovement.gameObject, 
-                self.familiarMovement.GetX(), 
-                self.familiarMovement.GetY());
+            if (self.familiarMovement != null) {
+                SendEvent();
+                Vector3 selfPos = self.transform.position;
+                self.transform.position = self.familiarMovement.transform.position;
+                self.familiarMovement.transform.position = selfPos;
+                GridManager.Instance.RemoveObject(self.GetX(), self.GetY());
+                GridManager.Instance.RemoveObject(self.familiarMovement.GetX(), self.familiarMovement.GetY());
+                GridManager.Instance.InsertObject(self.gameObject, self.GetX(), self.GetY());
+                GridManager.Instance.InsertObject(
+                    self.familiarMovement.gameObject, 
+                    self.familiarMovement.GetX(), 
+                    self.familiarMovement.GetY());
+            } else {
+                // refund cooldown if whiffed
+                self.attack3Turn = -999;
+            }
         }
 
         public override void SendEvent()

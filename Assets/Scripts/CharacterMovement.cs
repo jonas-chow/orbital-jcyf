@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class CharacterMovement : MonoBehaviour
 {
+    public GameObject stealthedSprite;
     public GameObject friendlySprite;
     public GameObject enemySprite;
     public GameObject selection;
@@ -27,6 +28,7 @@ public abstract class CharacterMovement : MonoBehaviour
     public int defBuff = 0;
     public bool disabled;
     public bool stealthed;
+    public bool poisoned;
     public bool isAlive = true;
 
     private bool aiming = false;
@@ -42,6 +44,8 @@ public abstract class CharacterMovement : MonoBehaviour
     public int attack1Turn = -999;
     public int attack2Turn = -999;
     public int attack3Turn = -999;
+
+    public List<Buff> buffs = new List<Buff>();
 
     // Update is called once per frame
     void Update()
@@ -142,7 +146,9 @@ public abstract class CharacterMovement : MonoBehaviour
 
     public void Activate()
     {
-        isActive = true;
+        if (!disabled) {
+            isActive = true;
+        }
         hp.SetVisible(true);
         selection.SetActive(true);
     }
@@ -156,6 +162,12 @@ public abstract class CharacterMovement : MonoBehaviour
         // in case turn ends and player was in the middle of aiming
         DisableAiming();
         ActionQueue.Instance.Enable();
+    }
+
+    public void Disable()
+    {
+        disabled = true;
+        isActive = false;
     }
 
     public int GetX()
@@ -180,6 +192,13 @@ public abstract class CharacterMovement : MonoBehaviour
             .Instantiate(damageText, this.transform.position + Vector3.up * 0.8f, Quaternion.identity)
             .GetComponent<DamageText>()
             .SetText(damage.ToString());
+
+        if (stealthed) {
+            stealthed = false;
+            Buff stealthBuff = buffs.Find(buff => typeof(StealthBuff).IsInstanceOfType(buff));
+            stealthBuff.Remove();
+            buffs.Remove(stealthBuff);
+        }
 
         // if died
         if (hp.TakeDamage(damage, isEnemy ? -1 : charID)) {
@@ -307,12 +326,14 @@ public abstract class CharacterMovement : MonoBehaviour
         }
     }
 
-    public void ClearBuffs()
+    public void TurnPass()
     {
-        defBuff = 0;
-        atkBuff = 0;
-        invincible = false;
-        stealthed = false;
-        disabled = false;
+        buffs.RemoveAll(buff => buff.TurnPass());
+    }
+
+    public void AddBuff(Buff buff)
+    {
+        buff.Add(this);
+        buffs.Add(buff);
     }
 }
