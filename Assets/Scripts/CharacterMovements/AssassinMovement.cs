@@ -59,7 +59,7 @@ public class AssassinMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.range = 1;
-            this.damage = 25
+            this.damage = 25;
             this.cooldown = 5;
         }
 
