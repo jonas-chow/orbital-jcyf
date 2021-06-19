@@ -21,7 +21,7 @@ public class AssassinMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.range = 1;
-            this.damage = 25;
+            this.damage = 20;
             this.cooldown = 2;
         }
 
@@ -67,7 +67,7 @@ public class AssassinMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.range = 1;
-            this.cooldown = 5;
+            this.cooldown = 10;
         }
 
         public override void Execute()
@@ -75,19 +75,23 @@ public class AssassinMovement : CharacterMovement
             SendEvent();
             CharacterMovement target = FindTarget();
             if (target != null && target.isEnemy) {
-                target.TakeDamage(self.GetAttack(), damage);
+                target.AddBuff(new PoisonDebuff(3));
             }
         }
 
         public override void SendEvent()
         {
-            object[] extraData = null; // change this
+            object[] extraData = new object[] {InvertDirection(direction)};
             EventHandler.Instance.SendAttackEvent(self.charID, 2, extraData);
         }
 
         public override void EventExecute(object[] extraData)
         {
-            // ...
+            string dir = (string)extraData[0];
+            CharacterMovement target = FindEventTarget(dir);
+            if (target != null && !target.isEnemy) {
+                target.AddBuff(new PoisonDebuff(3));
+            }
         }
     }
 
@@ -99,7 +103,7 @@ public class AssassinMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
-            this.cooldown = 1;
+            this.cooldown = 20;
         }
 
         public override void Execute()

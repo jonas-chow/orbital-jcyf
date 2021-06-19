@@ -7,8 +7,10 @@ using UnityEngine;
     Needs: character, range ( =1 for melee )
 */
 public abstract class LinearAttack : Attack
-{ 
+{
+    protected int globalRange = 15;
     protected string direction = "none";
+    private bool global = false;
 
     public CharacterMovement FindTarget()
     {
@@ -16,7 +18,7 @@ public abstract class LinearAttack : Attack
         if (direction == "none") {
             direction = character.faceDirection;
         }
-
+        character.Face(direction);
         return GridManager.Instance
             .GetFirstCharacterInLine(GetX(), GetY(), range, direction);
     }
@@ -27,20 +29,50 @@ public abstract class LinearAttack : Attack
         if (direction == "none") {
             direction = character.faceDirection;
         }
-
+        character.Face(direction);
         return GridManager.Instance
             .GetFirstCharacterInLine(GetX(), GetY(), range, direction);
     }
 
     public override void InitialiseAim()
     {
-        Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range, character.faceDirection));
+        if (range != globalRange) {
+            Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range, 
+                character.faceDirection));
+        } else {
+            global = true;
+            if (character.faceDirection == "up") {
+                range = 15 - GetY();
+                Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range, 
+                    character.faceDirection));
+            }
+            if (character.faceDirection == "down") {
+                range = GetY();
+                Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range, 
+                    character.faceDirection));
+            }
+            if (character.faceDirection == "left") {
+                range = GetX();
+                Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range,
+                    character.faceDirection));
+            }
+            if (character.faceDirection == "right") {
+                range = 15 - GetX();
+                Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range, 
+                    character.faceDirection));
+            }
+        }   
     }
 
     public override void AimUp() 
     {
         if (this.direction != "up") {
             this.direction = "up";
+            // character.Face(this.direction);
+            if (global) {
+                Debug.Log("globalrange");
+                range = 15 - GetY();
+            }
             Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range, "up"));
         }
     }
@@ -49,6 +81,10 @@ public abstract class LinearAttack : Attack
     {
         if (this.direction != "down") {
             this.direction = "down";
+            // character.Face(this.direction);
+            if (global) {
+                range = GetY();
+            }
             Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range, "down"));
 
         }
@@ -58,6 +94,10 @@ public abstract class LinearAttack : Attack
     {
         if (this.direction != "left") {
             this.direction = "left";
+            // character.Face(this.direction);
+            if (global) {
+                range = GetX();
+            }
             Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range, "left"));
         }
     }
@@ -66,6 +106,10 @@ public abstract class LinearAttack : Attack
     {
         if (this.direction != "right") {
             this.direction = "right";
+            // character.Face(this.direction);
+            if (global) {
+                range = 15 - GetX();
+            }
             Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range, "right"));
         }
     }
