@@ -20,27 +20,37 @@ public class WizardMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
+            this.range = 5;
+            this.damage = 25;
+            this.cooldown = 2;
         }
 
         public override void Execute()
         {
             SendEvent();
-            // ...
+            CharacterMovement target = FindTarget();
+            if (target != null && target.isEnemy) {
+                target.TakeDamage(self.GetAttack(), damage);
+            }
         }
 
         public override void SendEvent()
         {
-            object[] extraData = null; // change this
+            object[] extraData = new object[] {InvertDirection(direction)};
             EventHandler.Instance.SendAttackEvent(self.charID, 1, extraData);
         }
 
         public override void EventExecute(object[] extraData)
         {
-            // ...
+            string dir = (string)extraData[0];
+            CharacterMovement target = FindEventTarget(dir);
+            if (target != null && !target.isEnemy) {
+                target.TakeDamage(self.GetAttack(), damage);
+            }
         }
     }
 
-    private class Attack2 : SelfAttack
+    private class Attack2 : RangedAOEAttack
     {
         public WizardMovement self;
 
@@ -48,27 +58,40 @@ public class WizardMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
+            this.range = 5;
+            this.damage = 25;
+            this.cooldown = 3;
         }
 
         public override void Execute()
         {
             SendEvent();
-            // ...
+            List<CharacterMovement> enemies = FindTargets().FindAll(cm => cm.isEnemy);
+            enemies.ForEach(cm => {
+                cm.TakeDamage(self.GetAttack(), damage);
+            });
         }
 
         public override void SendEvent()
         {
-            object[] extraData = null; // change this
+            object[] extraData = InvertOffsets();
             EventHandler.Instance.SendAttackEvent(self.charID, 2, extraData);
         }
 
         public override void EventExecute(object[] extraData)
         {
-            // ...
+            int offsetX = (int)extraData[0];
+            int offsetY = (int)extraData[1];
+            List<CharacterMovement> allies = FindEventTargets(offsetX, offsetY)
+                .FindAll(cm => !cm.isEnemy);
+            allies.ForEach(cm => {
+                cm.TakeDamage(self.GetAttack(), damage);
+            });
+            FaceTargetDirection(offsetX, offsetY);
         }
     }
 
-    private class Attack3 : MeleeAOEAttack
+    private class Attack3 : SelfAttack
     {
         public WizardMovement self;
 
@@ -76,12 +99,14 @@ public class WizardMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
+            this.cooldown = 20;
         }
 
         public override void Execute()
         {
             SendEvent();
-            // ...
+            self.attack1Turn = -999;
+            self.attack2Turn = -999;
         }
 
         public override void SendEvent()
@@ -92,7 +117,8 @@ public class WizardMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            // ...
+            self.attack1Turn = -999;
+            self.attack2Turn = -999;
         }
     }
 
