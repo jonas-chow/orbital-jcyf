@@ -20,27 +20,45 @@ public class AssassinMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
+            this.range = 1;
+            this.damage = 20;
+            this.cooldown = 2;
         }
 
         public override void Execute()
         {
             SendEvent();
-            // ...
+            CharacterMovement target = FindTarget();
+            if (target != null && target.isEnemy) {
+                if (target.faceDirection == self.faceDirection) {
+                    target.TakeDamage(self.GetAttack(), damage + 5);
+                } else {
+                    target.TakeDamage(self.GetAttack(), damage);
+                }            
+            }
         }
 
         public override void SendEvent()
         {
-            object[] extraData = null; // change this
+            object[] extraData = new object[] {InvertDirection(direction)};
             EventHandler.Instance.SendAttackEvent(self.charID, 1, extraData);
         }
 
         public override void EventExecute(object[] extraData)
         {
-            // ...
+            string dir = (string)extraData[0];
+            CharacterMovement target = FindEventTarget(dir);
+            if (target != null && !target.isEnemy) {
+                if (target.faceDirection == self.faceDirection) {
+                    target.TakeDamage(self.GetAttack(), damage + 5);
+                } else {
+                    target.TakeDamage(self.GetAttack(), damage);
+                }   
+            }
         }
     }
 
-    private class Attack2 : SelfAttack
+    private class Attack2 : LinearAttack
     {
         public AssassinMovement self;
 
@@ -48,23 +66,32 @@ public class AssassinMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
+            this.range = 1;
+            this.cooldown = 10;
         }
 
         public override void Execute()
         {
             SendEvent();
-            // ...
+            CharacterMovement target = FindTarget();
+            if (target != null && target.isEnemy) {
+                target.AddBuff(new PoisonDebuff(3));
+            }
         }
 
         public override void SendEvent()
         {
-            object[] extraData = null; // change this
+            object[] extraData = new object[] {InvertDirection(direction)};
             EventHandler.Instance.SendAttackEvent(self.charID, 2, extraData);
         }
 
         public override void EventExecute(object[] extraData)
         {
-            // ...
+            string dir = (string)extraData[0];
+            CharacterMovement target = FindEventTarget(dir);
+            if (target != null && !target.isEnemy) {
+                target.AddBuff(new PoisonDebuff(3));
+            }
         }
     }
 
@@ -76,7 +103,7 @@ public class AssassinMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
-            this.cooldown = 1;
+            this.cooldown = 20;
         }
 
         public override void Execute()

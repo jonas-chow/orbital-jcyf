@@ -20,27 +20,37 @@ public class HunterMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
+            this.range = 5;
+            this.damage = 15;
+            this.cooldown = 2;
         }
 
         public override void Execute()
         {
             SendEvent();
-            // ...
+            CharacterMovement target = FindTarget();
+            if (target != null && target.isEnemy) {
+                target.TakeDamage(self.GetAttack(), damage);
+            }
         }
 
         public override void SendEvent()
         {
-            object[] extraData = null; // change this
+            object[] extraData = new object[] {InvertDirection(direction)};
             EventHandler.Instance.SendAttackEvent(self.charID, 1, extraData);
         }
 
         public override void EventExecute(object[] extraData)
         {
-            // ...
+            string dir = (string)extraData[0];
+            CharacterMovement target = FindEventTarget(dir);
+            if (target != null && !target.isEnemy) {
+                target.TakeDamage(self.GetAttack(), damage);
+            }
         }
     }
 
-    private class Attack2 : SelfAttack
+    private class Attack2 : LinearAttack
     {
         public HunterMovement self;
 
@@ -48,27 +58,41 @@ public class HunterMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
+            this.range = globalRange;
+            this.damage = 5;
+            this.cooldown = 0;
         }
 
         public override void Execute()
         {
             SendEvent();
-            // ...
+            CharacterMovement target = FindTarget();
+            if (target != null && target.isEnemy) {
+                int distance = GridManager.Instance.DistanceFromChar(self, target);
+                int dmg = damage + distance * 3;
+                target.TakeDamage(self.GetAttack(), dmg);
+            }
         }
 
         public override void SendEvent()
         {
-            object[] extraData = null; // change this
+            object[] extraData = new object[] {InvertDirection(direction)};
             EventHandler.Instance.SendAttackEvent(self.charID, 2, extraData);
         }
 
         public override void EventExecute(object[] extraData)
         {
-            // ...
+            string dir = (string)extraData[0];
+            CharacterMovement target = FindEventTarget(dir);
+            if (target != null && !target.isEnemy) {
+                int distance = GridManager.Instance.DistanceFromChar(self, target);
+                int dmg = damage + distance * 3;
+                target.TakeDamage(self.GetAttack(), dmg);
+            }
         }
     }
 
-    private class Attack3 : MeleeAOEAttack
+    private class Attack3 : LinearAttack
     {
         public HunterMovement self;
 
@@ -76,23 +100,41 @@ public class HunterMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
+            this.range = 1;
+            this.damage = 15;
+            this.cooldown = 0;
         }
 
         public override void Execute()
         {
             SendEvent();
-            // ...
+            CharacterMovement target = FindTarget();
+            if (target != null && target.isEnemy) {
+                target.TakeDamage(self.GetAttack(), damage);
+                string targetDir = target.faceDirection;
+                target.Move(self.faceDirection);
+                target.Move(self.faceDirection);
+                target.Face(targetDir);
+            }
         }
 
         public override void SendEvent()
         {
-            object[] extraData = null; // change this
+            object[] extraData = new object[] {InvertDirection(direction)};
             EventHandler.Instance.SendAttackEvent(self.charID, 3, extraData);
         }
 
         public override void EventExecute(object[] extraData)
         {
-            // ...
+            string dir = (string)extraData[0];
+            CharacterMovement target = FindEventTarget(dir);
+            if (target != null && !target.isEnemy) {
+                target.TakeDamage(self.GetAttack(), damage);
+                string targetDir = target.faceDirection;
+                target.Move(self.faceDirection);
+                target.Move(self.faceDirection);
+                target.Face(targetDir);
+            }
         }
     }
 
@@ -118,7 +160,7 @@ public class HunterMovement : CharacterMovement
                 break;
             case 3:
                 attack = attack3;
-                attack2 = new Attack3(this);
+                attack3 = new Attack3(this);
                 break;
         }
 

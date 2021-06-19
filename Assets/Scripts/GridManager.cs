@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -116,6 +117,12 @@ public class GridManager : MonoBehaviour
             i++;
         }
         return cm;
+    }
+
+    public int DistanceFromChar(CharacterMovement self, CharacterMovement target)
+    {
+        return Math.Abs(self.GetX() - target.GetX()) + 
+            Math.Abs(self.GetY() - target.GetY());
     }
 
     public List<CharacterMovement> GetAllCharactersInAOE(int x, int y)
