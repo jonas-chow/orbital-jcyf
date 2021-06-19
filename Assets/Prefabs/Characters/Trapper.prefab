@@ -258,6 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33914cc7f57d94c6ba6d2f92bbea1d19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stealthedSprite: {fileID: 0}
   friendlySprite: {fileID: 6753814602799854779}
   enemySprite: {fileID: 2553022074642711033}
   selection: {fileID: 1489555396804505341}
@@ -275,6 +276,12 @@ MonoBehaviour:
   defBuff: 0
   disabled: 0
   stealthed: 0
+  poisoned: 0
+  isAlive: 1
+  attack1Turn: -999
+  attack2Turn: -999
+  attack3Turn: -999
+  trapPrefab: {fileID: 7945980701586485691, guid: c42daf4185c59480885cef015a7d2a7a, type: 3}
 --- !u!1 &8758147894124974135
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,6 +15,7 @@ public class AssassinMovement : CharacterMovement
     private class Attack1 : LinearAttack
     {
         public AssassinMovement self;
+        public int backstabBonus;
 
         public Attack1(AssassinMovement cm)
         {
@@ -22,6 +23,7 @@ public class AssassinMovement : CharacterMovement
             this.self = cm;
             this.range = 1;
             this.damage = 20;
+            this.backstabBonus = 10;
             this.cooldown = 2;
         }
 
@@ -29,9 +31,9 @@ public class AssassinMovement : CharacterMovement
         {
             SendEvent();
             CharacterMovement target = FindTarget();
-            if (target != null && target.isEnemy) {
+            if (target != null && target.IsEnemyOf(self)) {
                 if (target.faceDirection == self.faceDirection) {
-                    target.TakeDamage(self.GetAttack(), damage + 5);
+                    target.TakeDamage(self.GetAttack(), damage + backstabBonus);
                 } else {
                     target.TakeDamage(self.GetAttack(), damage);
                 }            
@@ -48,9 +50,9 @@ public class AssassinMovement : CharacterMovement
         {
             string dir = (string)extraData[0];
             CharacterMovement target = FindEventTarget(dir);
-            if (target != null && !target.isEnemy) {
+            if (target != null && target.IsEnemyOf(self)) {
                 if (target.faceDirection == self.faceDirection) {
-                    target.TakeDamage(self.GetAttack(), damage + 5);
+                    target.TakeDamage(self.GetAttack(), damage + backstabBonus);
                 } else {
                     target.TakeDamage(self.GetAttack(), damage);
                 }   
@@ -67,6 +69,7 @@ public class AssassinMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.range = 1;
+            this.damage = 10;
             this.cooldown = 10;
         }
 
@@ -74,8 +77,9 @@ public class AssassinMovement : CharacterMovement
         {
             SendEvent();
             CharacterMovement target = FindTarget();
-            if (target != null && target.isEnemy) {
+            if (target != null && target.IsEnemyOf(self)) {
                 target.AddBuff(new PoisonDebuff(3));
+                target.TakeDamage(self.GetAttack(), damage);
             }
         }
 
@@ -89,8 +93,9 @@ public class AssassinMovement : CharacterMovement
         {
             string dir = (string)extraData[0];
             CharacterMovement target = FindEventTarget(dir);
-            if (target != null && !target.isEnemy) {
+            if (target != null && target.IsEnemyOf(self)) {
                 target.AddBuff(new PoisonDebuff(3));
+                target.TakeDamage(self.GetAttack(), damage);
             }
         }
     }
@@ -114,7 +119,7 @@ public class AssassinMovement : CharacterMovement
 
         public override void SendEvent()
         {
-            object[] extraData = null; // change this
+            object[] extraData = null;
             EventHandler.Instance.SendAttackEvent(self.charID, 3, extraData);
         }
 

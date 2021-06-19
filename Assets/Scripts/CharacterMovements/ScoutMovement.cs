@@ -31,7 +31,7 @@ public class ScoutMovement : CharacterMovement
         {
             SendEvent();
             CharacterMovement target = FindTarget();
-            if (target != null && target.isEnemy) {
+            if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
         }
@@ -46,7 +46,7 @@ public class ScoutMovement : CharacterMovement
         {
             string dir = (string)extraData[0];
             CharacterMovement target = FindEventTarget(dir);
-            if (target != null && !target.isEnemy) {
+            if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
         }
@@ -73,7 +73,7 @@ public class ScoutMovement : CharacterMovement
                 GameObject ward = GameObject.Instantiate(self.ward, Vector3.zero, Quaternion.identity);
                 GridManager.Instance.MoveToAndInsert(ward, posX, posY);
                 ward.GetComponent<WardMovement>().init(false);
-            } else if (target.isEnemy) {
+            } else if (target.IsEnemyOf(self)) {
                 target.AddBuff(new VisibleDebuff(2));
                 target.TakeDamage(self.GetAttack(), damage);
             } else {
@@ -98,7 +98,7 @@ public class ScoutMovement : CharacterMovement
                 GameObject ward = GameObject.Instantiate(self.ward, Vector3.zero, Quaternion.identity);
                 GridManager.Instance.MoveToAndInsert(ward, posX, posY);
                 ward.GetComponent<WardMovement>().init(true);
-            } else if (!target.isEnemy) {
+            } else if (target.IsEnemyOf(self)) {
                 target.AddBuff(new VisibleDebuff(2));
                 target.TakeDamage(self.GetAttack(), damage);
             }
@@ -122,7 +122,7 @@ public class ScoutMovement : CharacterMovement
         public override void Execute()
         {
             SendEvent();
-            List<CharacterMovement> enemies = FindTargets().FindAll(cm => cm.isEnemy);
+            List<CharacterMovement> enemies = FindTargets().FindAll(cm => cm.IsEnemyOf(self));
             enemies.ForEach(cm => {
                 cm.TakeDamage(self.GetAttack(), damage);
             });
@@ -139,7 +139,7 @@ public class ScoutMovement : CharacterMovement
             int offsetX = (int)extraData[0];
             int offsetY = (int)extraData[1];
             List<CharacterMovement> allies = FindEventTargets(offsetX, offsetY)
-                .FindAll(cm => !cm.isEnemy);
+                .FindAll(cm => cm.IsEnemyOf(self));
             allies.ForEach(cm => {
                 cm.TakeDamage(self.GetAttack(), damage);
             });

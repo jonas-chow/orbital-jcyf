@@ -15,11 +15,13 @@ public class GridManager : MonoBehaviour
         } else {
             instance = this;
             grid = new GameObject[length, height];
+            traps = new Trap[length, height];
             for (int i = 0; i < length; i++)
             {
                 for (int j = 0; j < height; j++)
                 {
                     grid[i, j] = null;
+                    traps[i, j] = null;
                 }
             }
         }
@@ -28,6 +30,8 @@ public class GridManager : MonoBehaviour
     public int length = 16;
     public int height = 16;
     private GameObject[,] grid;
+    // Future development: could have multiple trap-like objects
+    public Trap[,] traps;
 
     // returns false if there is something in that space and you can't insert it
     public bool InsertObject(GameObject obj, int x, int y)
@@ -37,6 +41,13 @@ public class GridManager : MonoBehaviour
         }
         if (grid[x, y] == null) {
             grid[x, y] = obj;
+            if (traps[x, y] != null)
+            {
+                CharacterMovement cm = obj.GetComponent<CharacterMovement>();
+                if (cm != null) {
+                    traps[x, y].Trigger(cm);
+                }
+            }
             return true;
         } else {
             return false;
@@ -61,7 +72,7 @@ public class GridManager : MonoBehaviour
             return false;
         }
         if (grid[newX, newY] == null) {
-            grid[newX, newY] = RemoveObject(prevX, prevY);
+            InsertObject(RemoveObject(prevX, prevY), newX, newY);
             return true;
         } else {
             return false;
@@ -82,7 +93,7 @@ public class GridManager : MonoBehaviour
     {
         GameObject obj = GetObject(x, y);
         CharacterMovement cm = null;
-        if (obj != null && obj.tag == "Character") {
+        if (obj != null) {
             cm = obj.GetComponent<CharacterMovement>();
         }
         return cm;
@@ -153,6 +164,22 @@ public class GridManager : MonoBehaviour
         } else {
             return false;
         }
+    }
+
+    public bool InsertTrap(Trap trap, int x, int y)
+    {
+        if (IsValidCoords(x, y) && traps[x, y] == null) {
+            trap.transform.position = GetCoords(x, y);
+            traps[x, y] = trap;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void RemoveTrap(int x, int y)
+    {
+        traps[x, y] = null;
     }
 
     public Vector3 GetCoords(int x, int y)

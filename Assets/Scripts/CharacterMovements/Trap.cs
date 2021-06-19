@@ -12,14 +12,22 @@ TODO:
 
 public class Trap : MonoBehaviour
 {
+    public GameObject sprites;
     private int damage;
     TrapperMovement trapper;
+    private int x;
+    private int y;
 
     public void Init(TrapperMovement trapper, int damage)
     {
         this.trapper = trapper;
+        if (!trapper.isEnemy) {
+            sprites.SetActive(true);
+        }
         this.damage = damage;
-        // GridManager.Instance.InsertTrap(this);
+        this.x = trapper.GetX();
+        this.y = trapper.GetY();
+        GridManager.Instance.InsertTrap(this, x, y);
     }
 
     public void Trigger(CharacterMovement character)
@@ -28,7 +36,19 @@ public class Trap : MonoBehaviour
             character.TakeDamage(trapper.GetAttack(), damage);
             character.AddBuff(new DisabledDebuff(2));
             character.AddBuff(new VisibleDebuff(2));
+            GridManager.Instance.RemoveTrap(x, y);
+            GameObject.Destroy(this.gameObject);
+            trapper.RemoveTrap(this);
         }
     }
 
+    public void Explode(int damage)
+    {
+        GridManager.Instance.RemoveTrap(x, y);
+        List<CharacterMovement> enemies = GridManager.Instance.GetAllCharactersInAOE(x, y)
+            .FindAll(cm => cm.IsEnemyOf(trapper));
+
+        enemies.ForEach(cm => cm.TakeDamage(trapper.GetAttack(), damage));
+        GameObject.Destroy(this.gameObject);
+    }
 }

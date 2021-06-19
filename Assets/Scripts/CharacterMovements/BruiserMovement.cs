@@ -30,7 +30,7 @@ public class BruiserMovement : CharacterMovement
         {
             SendEvent();
             CharacterMovement target = FindTarget();
-            if (target != null && target.isEnemy) {
+            if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
         }
@@ -45,7 +45,7 @@ public class BruiserMovement : CharacterMovement
         {
             string dir = (string)extraData[0];
             CharacterMovement target = FindEventTarget(dir);
-            if (target != null && !target.isEnemy) {
+            if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
         }
@@ -67,7 +67,7 @@ public class BruiserMovement : CharacterMovement
         public override void Execute()
         {
             SendEvent();
-            List<CharacterMovement> enemies = FindTargets().FindAll(cm => cm.isEnemy);
+            List<CharacterMovement> enemies = FindTargets().FindAll(cm => cm.IsEnemyOf(self));
             enemies.ForEach(cm => {
                 cm.TakeDamage(self.GetAttack(), damage);
             });
@@ -83,7 +83,7 @@ public class BruiserMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            List<CharacterMovement> allies = FindEventTargets().FindAll(cm => !cm.isEnemy);
+            List<CharacterMovement> allies = FindEventTargets().FindAll(cm => cm.IsEnemyOf(self));
             allies.ForEach(cm => {
                 cm.TakeDamage(self.GetAttack(), damage);
             });
@@ -99,7 +99,7 @@ public class BruiserMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
-            this.cooldown = 10;
+            this.cooldown = 20;
         }
 
         public override void Execute()

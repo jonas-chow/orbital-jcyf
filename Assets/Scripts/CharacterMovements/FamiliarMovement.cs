@@ -32,7 +32,7 @@ public class FamiliarMovement : CharacterMovement
         {
             SendEvent();
             CharacterMovement target = FindTarget();
-            if (target != null && target.isEnemy) {
+            if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
         }
@@ -47,7 +47,7 @@ public class FamiliarMovement : CharacterMovement
         {
             string dir = (string)extraData[0];
             CharacterMovement target = FindEventTarget(dir);
-            if (target != null && !target.isEnemy) {
+            if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
         }
@@ -164,7 +164,7 @@ public class FamiliarMovement : CharacterMovement
         // find all characters that are in your opposing team
         List<CharacterMovement> enemies = GridManager.Instance
             .GetAllCharactersInAOE(GetX(), GetY())
-            .FindAll(cm => cm.isEnemy != isEnemy);
+            .FindAll(cm => cm.IsEnemyOf(this));
         // explode
         enemies.ForEach(cm => cm.TakeDamage(GetAttack(), attack2.damage));
         summoner.FamiliarDied();

@@ -12,6 +12,7 @@ TODO:
 
 public class TrapperMovement : CharacterMovement
 {
+    public GameObject trapPrefab;
     private List<Trap> traps = new List<Trap>();
 
     private class Attack1 : LinearAttack
@@ -31,7 +32,7 @@ public class TrapperMovement : CharacterMovement
         {
             SendEvent();
             CharacterMovement target = FindTarget();
-            if (target != null && target.isEnemy) {
+            if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
         }
@@ -46,13 +47,13 @@ public class TrapperMovement : CharacterMovement
         {
             string dir = (string)extraData[0];
             CharacterMovement target = FindEventTarget(dir);
-            if (target != null && !target.isEnemy) {
+            if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
         }
     }
 
-    private class Attack2 : LinearAttack
+    private class Attack2 : SelfAttack
     {
         public TrapperMovement self;
 
@@ -60,7 +61,7 @@ public class TrapperMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
-            this.range = 1;
+            this.range = 0;
             this.cooldown = 10;
             this.damage = 10;
         }
@@ -68,22 +69,34 @@ public class TrapperMovement : CharacterMovement
         public override void Execute()
         {
             SendEvent();
-            // ...
+            if (GridManager.Instance.traps[GetX(), GetY()] == null) {
+                GameObject trapObj = GameObject.Instantiate(self.trapPrefab, Vector3.zero, Quaternion.identity);
+                Trap trap = trapObj.GetComponent<Trap>();
+                self.traps.Add(trap);
+                trap.GetComponent<Trap>().Init(self, damage);
+            } else {
+                self.attack2Turn = -999;
+            }
         }
 
         public override void SendEvent()
         {
-            object[] extraData = null; // change this
+            object[] extraData = null; 
             EventHandler.Instance.SendAttackEvent(self.charID, 2, extraData);
         }
 
         public override void EventExecute(object[] extraData)
         {
-            // ...
+            if (GridManager.Instance.traps[GetX(), GetY()] == null) {
+                GameObject trapObj = GameObject.Instantiate(self.trapPrefab, Vector3.zero, Quaternion.identity);
+                Trap trap = trapObj.GetComponent<Trap>();
+                self.traps.Add(trap);
+                trap.GetComponent<Trap>().Init(self, damage);
+            }
         }
     }
 
-    private class Attack3 : MeleeAOEAttack
+    private class Attack3 : SelfAttack
     {
         public TrapperMovement self;
 
@@ -91,23 +104,28 @@ public class TrapperMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
+            this.range = 0;
+            this.damage = 30;
+            this.cooldown = 20;
         }
 
         public override void Execute()
         {
             SendEvent();
-            // ...
+            self.traps.ForEach(trap => trap.Explode(damage));
+            self.traps = new List<Trap>();
         }
 
         public override void SendEvent()
         {
-            object[] extraData = null; // change this
+            object[] extraData = null;
             EventHandler.Instance.SendAttackEvent(self.charID, 3, extraData);
         }
 
         public override void EventExecute(object[] extraData)
         {
-            // ...
+            self.traps.ForEach(trap => trap.Explode(damage));
+            self.traps = new List<Trap>();
         }
     }
 
@@ -138,5 +156,10 @@ public class TrapperMovement : CharacterMovement
         }
 
         attack.InitialiseAim();
+    }
+
+    public void RemoveTrap(Trap trap)
+    {
+        traps.Remove(trap);
     }
 }

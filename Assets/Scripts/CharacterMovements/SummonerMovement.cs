@@ -33,7 +33,7 @@ public class SummonerMovement : CharacterMovement
         {
             SendEvent();
             CharacterMovement target = FindTarget();
-            if (target != null && target.isEnemy) {
+            if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
         }
@@ -48,7 +48,7 @@ public class SummonerMovement : CharacterMovement
         {
             string dir = (string)extraData[0];
             CharacterMovement target = FindEventTarget(dir);
-            if (target != null && !target.isEnemy) {
+            if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
         }
@@ -81,7 +81,7 @@ public class SummonerMovement : CharacterMovement
                 GridManager.Instance.MoveToAndInsert(familiar, posX, posY);
                 self.familiarMovement = familiar.GetComponent<FamiliarMovement>();
                 self.familiarMovement.init(self);
-            } else if (target.isEnemy) {
+            } else if (target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             } else {
                 // refund cooldown if whiffed
@@ -110,7 +110,7 @@ public class SummonerMovement : CharacterMovement
                 GridManager.Instance.MoveToAndInsert(familiar, posX, posY);
                 self.familiarMovement = familiar.GetComponent<FamiliarMovement>();
                 self.familiarMovement.init(self);
-            } else if (!target.isEnemy) {
+            } else if (target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             } 
         }
@@ -198,7 +198,9 @@ public class SummonerMovement : CharacterMovement
     public override void Die()
     {
         // familiar also dies when summoner dies
-        familiarMovement.Die();
+        if (familiarMovement != null) {
+            familiarMovement.Die();
+        }
         base.Die();
     }
 

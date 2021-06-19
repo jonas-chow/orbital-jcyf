@@ -29,7 +29,7 @@ public class HunterMovement : CharacterMovement
         {
             SendEvent();
             CharacterMovement target = FindTarget();
-            if (target != null && target.isEnemy) {
+            if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
         }
@@ -44,7 +44,7 @@ public class HunterMovement : CharacterMovement
         {
             string dir = (string)extraData[0];
             CharacterMovement target = FindEventTarget(dir);
-            if (target != null && !target.isEnemy) {
+            if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
         }
@@ -53,6 +53,7 @@ public class HunterMovement : CharacterMovement
     private class Attack2 : LinearAttack
     {
         public HunterMovement self;
+        public int distanceScaling;
 
         public Attack2(HunterMovement cm)
         {
@@ -60,6 +61,7 @@ public class HunterMovement : CharacterMovement
             this.self = cm;
             this.range = globalRange;
             this.damage = 5;
+            this.distanceScaling = 3;
             this.cooldown = 0;
         }
 
@@ -67,9 +69,9 @@ public class HunterMovement : CharacterMovement
         {
             SendEvent();
             CharacterMovement target = FindTarget();
-            if (target != null && target.isEnemy) {
+            if (target != null && target.IsEnemyOf(self)) {
                 int distance = GridManager.Instance.DistanceFromChar(self, target);
-                int dmg = damage + distance * 3;
+                int dmg = damage + distance * distanceScaling;
                 target.TakeDamage(self.GetAttack(), dmg);
             }
         }
@@ -84,9 +86,9 @@ public class HunterMovement : CharacterMovement
         {
             string dir = (string)extraData[0];
             CharacterMovement target = FindEventTarget(dir);
-            if (target != null && !target.isEnemy) {
+            if (target != null && target.IsEnemyOf(self)) {
                 int distance = GridManager.Instance.DistanceFromChar(self, target);
-                int dmg = damage + distance * 3;
+                int dmg = damage + distance * distanceScaling;
                 target.TakeDamage(self.GetAttack(), dmg);
             }
         }
@@ -95,6 +97,7 @@ public class HunterMovement : CharacterMovement
     private class Attack3 : LinearAttack
     {
         public HunterMovement self;
+        public int knockback;
 
         public Attack3(HunterMovement cm)
         {
@@ -103,18 +106,23 @@ public class HunterMovement : CharacterMovement
             this.range = 1;
             this.damage = 15;
             this.cooldown = 0;
+            this.knockback = 2;
         }
 
         public override void Execute()
         {
             SendEvent();
             CharacterMovement target = FindTarget();
-            if (target != null && target.isEnemy) {
+            if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
-                string targetDir = target.faceDirection;
-                target.Move(self.faceDirection);
-                target.Move(self.faceDirection);
-                target.Face(targetDir);
+
+                if (target.isAlive) {
+                    string targetDir = target.faceDirection;
+                    for (int i = 0; i < knockback; i++) {
+                        target.Move(self.faceDirection);
+                    }
+                    target.Face(targetDir);
+                }
             }
         }
 
@@ -128,12 +136,16 @@ public class HunterMovement : CharacterMovement
         {
             string dir = (string)extraData[0];
             CharacterMovement target = FindEventTarget(dir);
-            if (target != null && !target.isEnemy) {
+            if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
-                string targetDir = target.faceDirection;
-                target.Move(self.faceDirection);
-                target.Move(self.faceDirection);
-                target.Face(targetDir);
+
+                if (target.isAlive) {
+                    string targetDir = target.faceDirection;
+                    for (int i = 0; i < knockback; i++) {
+                        target.Move(self.faceDirection);
+                    }
+                    target.Face(targetDir);
+                }
             }
         }
     }
