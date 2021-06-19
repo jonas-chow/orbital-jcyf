@@ -68,9 +68,7 @@ public abstract class LinearAttack : Attack
     {
         if (this.direction != "up") {
             this.direction = "up";
-            // character.Face(this.direction);
             if (global) {
-                Debug.Log("globalrange");
                 range = 15 - GetY();
             }
             Attack.SetIndicators(RangeSpawner.Instance.LinearIndicator(character, range, "up"));
@@ -81,7 +79,6 @@ public abstract class LinearAttack : Attack
     {
         if (this.direction != "down") {
             this.direction = "down";
-            // character.Face(this.direction);
             if (global) {
                 range = GetY();
             }
@@ -94,7 +91,6 @@ public abstract class LinearAttack : Attack
     {
         if (this.direction != "left") {
             this.direction = "left";
-            // character.Face(this.direction);
             if (global) {
                 range = GetX();
             }
@@ -106,7 +102,6 @@ public abstract class LinearAttack : Attack
     {
         if (this.direction != "right") {
             this.direction = "right";
-            // character.Face(this.direction);
             if (global) {
                 range = 15 - GetX();
             }
