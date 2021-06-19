@@ -12,6 +12,8 @@ TODO:
 
 public class TrapperMovement : CharacterMovement
 {
+    private List<Trap> traps = new List<Trap>();
+
     private class Attack1 : LinearAttack
     {
         public TrapperMovement self;
@@ -20,27 +22,37 @@ public class TrapperMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
+            this.range = 5;
+            this.damage = 20;
+            this.cooldown = 2;
         }
 
         public override void Execute()
         {
             SendEvent();
-            // ...
+            CharacterMovement target = FindTarget();
+            if (target != null && target.isEnemy) {
+                target.TakeDamage(self.GetAttack(), damage);
+            }
         }
 
         public override void SendEvent()
         {
-            object[] extraData = null; // change this
+            object[] extraData = new object[] {direction};
             EventHandler.Instance.SendAttackEvent(self.charID, 1, extraData);
         }
 
         public override void EventExecute(object[] extraData)
         {
-            // ...
+            string dir = (string)extraData[0];
+            CharacterMovement target = FindEventTarget(dir);
+            if (target != null && !target.isEnemy) {
+                target.TakeDamage(self.GetAttack(), damage);
+            }
         }
     }
 
-    private class Attack2 : SelfAttack
+    private class Attack2 : LinearAttack
     {
         public TrapperMovement self;
 
@@ -48,6 +60,9 @@ public class TrapperMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
+            this.range = 1;
+            this.cooldown = 10;
+            this.damage = 10;
         }
 
         public override void Execute()
