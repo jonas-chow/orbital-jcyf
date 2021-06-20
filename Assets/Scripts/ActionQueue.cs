@@ -78,7 +78,7 @@ public class ActionQueue : MonoBehaviour
         if (isEnabled) {
             Action next = actions.Dequeue();
             // only execute the action if the char didnt manage to die
-            if (next.character.isAlive) {
+            if (next.character.isAlive && !next.character.disabled) {
                 next.Execute();
             }
             // the key
