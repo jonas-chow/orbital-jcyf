@@ -77,7 +77,7 @@ public class TrapperMovement : CharacterMovement
                 GameObject trapObj = GameObject.Instantiate(self.trapPrefab, Vector3.zero, Quaternion.identity);
                 Trap trap = trapObj.GetComponent<Trap>();
                 self.traps.Add(trap);
-                trap.GetComponent<Trap>().Init(self, damage);
+                trap.Init(self, damage);
                 AudioManager.Instance.Play("Trap");
             } else {
                 self.attack2Turn = -999;
@@ -96,7 +96,7 @@ public class TrapperMovement : CharacterMovement
                 GameObject trapObj = GameObject.Instantiate(self.trapPrefab, Vector3.zero, Quaternion.identity);
                 Trap trap = trapObj.GetComponent<Trap>();
                 self.traps.Add(trap);
-                trap.GetComponent<Trap>().Init(self, damage);
+                trap.Init(self, damage);
                 AudioManager.Instance.Play("Trap");
             }
         }

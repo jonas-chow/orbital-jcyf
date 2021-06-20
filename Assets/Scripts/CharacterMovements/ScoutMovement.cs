@@ -75,8 +75,8 @@ public class ScoutMovement : CharacterMovement
             CharacterMovement target = FindTarget();
             if (target == null) {
                 GameObject ward = GameObject.Instantiate(self.ward, Vector3.zero, Quaternion.identity);
-                GridManager.Instance.MoveToAndInsert(ward, posX, posY);
                 ward.GetComponent<WardMovement>().init(false);
+                GridManager.Instance.MoveToAndInsert(ward, posX, posY);
                 AudioManager.Instance.Play("Ward");
             } else if (target.IsEnemyOf(self)) {
                 target.AddBuff(new VisibleDebuff(2));

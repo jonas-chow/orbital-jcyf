@@ -21,9 +21,7 @@ public class Trap : MonoBehaviour
     public void Init(TrapperMovement trapper, int damage)
     {
         this.trapper = trapper;
-        if (!trapper.isEnemy) {
-            sprites.SetActive(true);
-        }
+        sprites.SetActive(!trapper.isEnemy);
         this.damage = damage;
         this.x = trapper.GetX();
         this.y = trapper.GetY();
