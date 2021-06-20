@@ -219,7 +219,6 @@ public abstract class CharacterMovement : MonoBehaviour
     public virtual void Die()
     {
         GridManager.Instance.RemoveObject(GetX(), GetY());
-        GameObject.Destroy(gameObject);
         isAlive = false;
         if (isEnemy) {
             GameManager.Instance.RemoveEnemy();
@@ -227,6 +226,7 @@ public abstract class CharacterMovement : MonoBehaviour
             GameManager.Instance.RemoveFriendly(this);
         }
         AudioManager.Instance.Play("Death");
+        GameObject.Destroy(gameObject);
     }
 
     public void Move(string direction)
