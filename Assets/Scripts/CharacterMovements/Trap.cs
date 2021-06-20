@@ -14,6 +14,7 @@ public class Trap : MonoBehaviour
 {
     public GameObject sprites;
     private int damage;
+    private bool isEnemy;
     TrapperMovement trapper;
     private int x;
     private int y;
@@ -22,6 +23,7 @@ public class Trap : MonoBehaviour
     {
         this.trapper = trapper;
         sprites.SetActive(!trapper.isEnemy);
+        this.isEnemy = trapper.isEnemy;
         this.damage = damage;
         this.x = trapper.GetX();
         this.y = trapper.GetY();
@@ -30,13 +32,15 @@ public class Trap : MonoBehaviour
 
     public void Trigger(CharacterMovement character)
     {
-        if (character.IsEnemyOf(trapper)) {
-            character.TakeDamage(trapper.GetAttack(), damage);
+        if (character.isEnemy != isEnemy) {
+            character.TakeDamage(character.GetDefense(), damage);
             character.AddBuff(new DisabledDebuff(2));
             character.AddBuff(new VisibleDebuff(2));
             GridManager.Instance.RemoveTrap(x, y);
             GameObject.Destroy(this.gameObject);
-            trapper.RemoveTrap(this);
+            if (trapper != null) {
+                trapper.RemoveTrap(this);
+            }
             AudioManager.Instance.Play("TrapExplosion");
         }
     }
