@@ -270,7 +270,7 @@ MonoBehaviour:
   hp: {fileID: 904761765333952981}
   faceDirection: up
   atk: 15
-  def: 10
+  def: 15
   invincible: 0
   atkBuff: 0
   defBuff: 0

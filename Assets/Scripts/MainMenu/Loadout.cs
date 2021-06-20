@@ -41,6 +41,7 @@ public class Loadout : MonoBehaviour
 
     public void Save()
     {
+        // button click
         PlayerPrefs.SetInt("Melee", meleeDropdown.value);
         PlayerPrefs.SetInt("Ranged", rangedDropdown.value);
         PlayerPrefs.SetInt("Mage", mageDropdown.value);
@@ -50,6 +51,7 @@ public class Loadout : MonoBehaviour
 
     public void Cancel()
     {
+        // button click
         this.gameObject.SetActive(false);
     }
 }

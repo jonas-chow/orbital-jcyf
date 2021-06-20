@@ -64,7 +64,7 @@ public class HunterMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.range = globalRange;
-            this.damage = 5;
+            this.damage = 10;
             this.distanceScaling = 3;
             this.cooldown = 4;
         }

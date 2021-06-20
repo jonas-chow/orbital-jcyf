@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f71a935a3dc64f288a7555290fa0d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stealthedSprite: {fileID: 0}
   friendlySprite: {fileID: 3933851727021655124}
   enemySprite: {fileID: 5207198937833451798}
   selection: {fileID: 9189156787517496850}
@@ -23,12 +24,17 @@ MonoBehaviour:
   hp: {fileID: 7468054347725674810}
   faceDirection: up
   atk: 20
-  def: 5
+  def: 10
   invincible: 0
   atkBuff: 0
   defBuff: 0
   disabled: 0
   stealthed: 0
+  poisoned: 0
+  isAlive: 1
+  attack1Turn: -999
+  attack2Turn: -999
+  attack3Turn: -999
 --- !u!1 &4388231016738903658
 GameObject:
   m_ObjectHideFlags: 0

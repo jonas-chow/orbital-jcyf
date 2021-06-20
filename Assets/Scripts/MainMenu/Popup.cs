@@ -41,6 +41,7 @@ public class Popup : MonoBehaviour
 
     public void CloseNotification()
     {
+        // button click
         notification.SetActive(false);
     }
 }

@@ -105,13 +105,14 @@ MonoBehaviour:
   charID: 0
   hp: {fileID: 6292329914137773927}
   faceDirection: up
-  atk: 30
-  def: 5
+  atk: 20
+  def: 10
   invincible: 0
   atkBuff: 0
   defBuff: 0
   disabled: 0
   stealthed: 0
+  poisoned: 0
   isAlive: 1
   attack1Turn: -999
   attack2Turn: -999

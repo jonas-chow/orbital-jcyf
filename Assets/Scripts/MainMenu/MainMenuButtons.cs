@@ -13,6 +13,7 @@ public class MainMenuButtons : MonoBehaviourPunCallbacks
 
     public void OpenLoadout()
     {
+        // button click
         loadout.SetActive(true);
     }
 
@@ -28,6 +29,7 @@ public class MainMenuButtons : MonoBehaviourPunCallbacks
 
     public void Connect()
     {
+        // button click
         PhotonNetwork.NickName = PlayerPrefs.GetString("Username", "");
         if (PhotonNetwork.NickName != "") {
             PhotonNetwork.GameVersion = "v1";

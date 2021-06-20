@@ -76,12 +76,14 @@ public class RoomMenu : MonoBehaviourPunCallbacks
 
     public void LeaveRoom()
     {
+        // button click
         Popup.StartPopup("Leaving...");
         PhotonNetwork.LeaveRoom();
     }
 
     public void OpenLoadout()
     {
+        // button click
         loadout.SetActive(true);
     }
 
@@ -93,6 +95,7 @@ public class RoomMenu : MonoBehaviourPunCallbacks
 
     public void ClickReady()
     {
+        // button click
         PhotonNetwork.SetPlayerCustomProperties(p1Ready.activeSelf ? notReady : ready);
         PhotonNetwork.RaiseEvent(readyEvent, null, RaiseEventOptions.Default, SendOptions.SendReliable);
         p1Ready.SetActive(!p1Ready.activeSelf);
@@ -104,6 +107,7 @@ public class RoomMenu : MonoBehaviourPunCallbacks
 
     public void ClickStart()
     {
+        // button click
         PhotonNetwork.RaiseEvent(startEvent, null, RaiseEventOptions.Default, SendOptions.SendReliable);
         PhotonNetwork.SetPlayerCustomProperties(notReady);
         PhotonNetwork.LoadLevel(1);
