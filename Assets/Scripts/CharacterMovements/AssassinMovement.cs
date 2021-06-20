@@ -114,7 +114,7 @@ public class AssassinMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
-            this.cooldown = 20;
+            this.cooldown = 40;
         }
 
         public override void Execute()

@@ -62,7 +62,7 @@ public class HealerMovement : CharacterMovement
             this.self = cm;
             this.range = 5;
             this.damage = 40;
-            this.cooldown = 5;
+            this.cooldown = 15;
         }
 
         public override void Execute()
