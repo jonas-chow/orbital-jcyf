@@ -162,17 +162,19 @@ public class SummonerMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            Vector3 selfPos = self.transform.position;
-            self.transform.position = self.familiarMovement.transform.position;
-            self.familiarMovement.transform.position = selfPos;
-            GridManager.Instance.RemoveObject(self.GetX(), self.GetY());
-            GridManager.Instance.RemoveObject(self.familiarMovement.GetX(), self.familiarMovement.GetY());
-            GridManager.Instance.InsertObject(self.gameObject, self.GetX(), self.GetY());
-            GridManager.Instance.InsertObject(
-                self.familiarMovement.gameObject, 
-                self.familiarMovement.GetX(), 
-                self.familiarMovement.GetY());
-            AudioManager.Instance.Play("Swap");
+            if (self.familiarMovement != null) {
+                Vector3 selfPos = self.transform.position;
+                self.transform.position = self.familiarMovement.transform.position;
+                self.familiarMovement.transform.position = selfPos;
+                GridManager.Instance.RemoveObject(self.GetX(), self.GetY());
+                GridManager.Instance.RemoveObject(self.familiarMovement.GetX(), self.familiarMovement.GetY());
+                GridManager.Instance.InsertObject(self.gameObject, self.GetX(), self.GetY());
+                GridManager.Instance.InsertObject(
+                    self.familiarMovement.gameObject, 
+                    self.familiarMovement.GetX(), 
+                    self.familiarMovement.GetY());
+                AudioManager.Instance.Play("Swap");
+            }
         }
     }
 
