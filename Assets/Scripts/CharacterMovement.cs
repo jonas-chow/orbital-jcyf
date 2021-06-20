@@ -218,6 +218,8 @@ public abstract class CharacterMovement : MonoBehaviour
 
     public virtual void Die()
     {
+        // reset buffs so none try to remove themselves
+        buffs = new List<Buff>();
         GridManager.Instance.RemoveObject(GetX(), GetY());
         isAlive = false;
         if (isEnemy) {
