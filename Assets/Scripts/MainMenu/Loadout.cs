@@ -1,34 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Loadout : MonoBehaviour
 {
-    void Start()
+    public MeleeSelect meleeSelect;
+    public RangedSelect rangedSelect;
+    public MageSelect mageSelect;
+
+    public TMP_Dropdown meleeDropdown;
+    public TMP_Dropdown rangedDropdown;
+    public TMP_Dropdown mageDropdown;
+
+    void OnEnable()
     {
-        PlayerPrefs.GetString("Melee", "Melee1");
-        PlayerPrefs.GetString("Ranged", "Ranged1");
-        PlayerPrefs.GetString("Mage", "Mage1");
+        meleeDropdown.value = PlayerPrefs.GetInt("Melee", (int)Melees.Assassin);
+        rangedDropdown.value = PlayerPrefs.GetInt("Ranged", (int)Rangeds.Hunter);
+        mageDropdown.value = PlayerPrefs.GetInt("Mage", (int)Mages.Wizard);
+
+        SelectMelee();
+        SelectRanged();
+        SelectMage();
     }
 
     public void SelectMelee()
     {
-
+        meleeSelect.ChangeIcon((Melees)meleeDropdown.value);
     }
 
     public void SelectRanged()
     {
-
+        rangedSelect.ChangeIcon((Rangeds)rangedDropdown.value);
     }
 
     public void SelectMage()
     {
-
+        mageSelect.ChangeIcon((Mages)mageDropdown.value);
     }
 
     public void Save()
     {
-        // PlayerPrefs.SetString....
+        PlayerPrefs.SetInt("Melee", meleeDropdown.value);
+        PlayerPrefs.SetInt("Ranged", rangedDropdown.value);
+        PlayerPrefs.SetInt("Mage", mageDropdown.value);
+
         this.gameObject.SetActive(false);
     }
 
