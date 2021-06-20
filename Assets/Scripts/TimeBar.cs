@@ -18,7 +18,7 @@ public class TimeBar : MonoBehaviour
     }
 
     private float value = 0f;
-    private float turnTime = 3f;
+    private float turnTime = 4f;
     public Slider slider;
     public Gradient gradient;
     public Image fill;

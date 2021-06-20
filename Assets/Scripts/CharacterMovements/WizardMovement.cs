@@ -103,7 +103,7 @@ public class WizardMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
-            this.cooldown = 20;
+            this.cooldown = 50;
         }
 
         public override void Execute()
