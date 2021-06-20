@@ -257,6 +257,7 @@ public abstract class CharacterMovement : MonoBehaviour
                 Face("right");
                 break;
         }
+        AudioManager.Instance.Play("Movement");
     }
 
     public void Face(string direction)
