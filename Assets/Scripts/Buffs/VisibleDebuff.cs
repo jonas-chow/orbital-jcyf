@@ -13,7 +13,7 @@ public class VisibleDebuff : Buff
         this.character = character;
         if (character.isEnemy) {
             // refresh buff duration if character is already invincible
-            if (character.fog.active) {
+            if (character.fog.activeSelf) {
                 Buff existingBuff = character.buffs.Find(buff => typeof(VisibleDebuff).IsInstanceOfType(buff));
                 existingBuff.turnsLeft = existingBuff.turnsLeft > this.turnsLeft ? existingBuff.turnsLeft : this.turnsLeft;
             } else {

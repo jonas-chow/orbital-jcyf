@@ -95,15 +95,9 @@ public class EventHandler : MonoBehaviourPunCallbacks
     public void EventReceived(EventData eventData)
     {
         object[] data;
-        int charX;
-        int charY;
         string direction;
         bool isMove;
-        int range;
-        int damage;
         int charId;
-        int targetX;
-        int targetY;
         CharacterMovement cm;
         switch (eventData.Code)
         {
