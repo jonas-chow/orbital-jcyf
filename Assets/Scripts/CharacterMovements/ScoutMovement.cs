@@ -123,8 +123,8 @@ public class ScoutMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.range = globalRange;
-            this.damage = 15;
-            this.cooldown = 3;
+            this.damage = 20;
+            this.cooldown = 10;
         }
 
         public override void Execute()
@@ -133,6 +133,7 @@ public class ScoutMovement : CharacterMovement
             List<CharacterMovement> enemies = FindTargets().FindAll(cm => cm.IsEnemyOf(self));
             enemies.ForEach(cm => {
                 cm.TakeDamage(self.GetAttack(), damage);
+                cm.AddBuff(new VisibleDebuff(4));
             });
             AudioManager.Instance.Play("Scout3");
         }
@@ -151,6 +152,7 @@ public class ScoutMovement : CharacterMovement
                 .FindAll(cm => cm.IsEnemyOf(self));
             allies.ForEach(cm => {
                 cm.TakeDamage(self.GetAttack(), damage);
+                cm.AddBuff(new VisibleDebuff(4));
             });
             FaceTargetDirection(offsetX, offsetY);
             AudioManager.Instance.Play("Scout3");
