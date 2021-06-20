@@ -332,7 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff44f28995aba40d0aca4bf593337509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testing: 1
+  testing: 0
   defeatUI: {fileID: 996488427}
   victoryUI: {fileID: 982411403}
   loadingUI: {fileID: 1473468720}

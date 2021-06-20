@@ -110,23 +110,16 @@ public class GameManager : MonoBehaviour
     public void InstantiateSelf()
     {
         // instantiate melee character
-        GameObject melee = BuildChar(PlayerPrefs.GetString("Melee", "Bruiser"), false);
-        GridManager.Instance.MoveToAndInsert(
-            melee,
-            PlayerPrefs.GetInt("MeleeX", 0),
-            PlayerPrefs.GetInt("MeleeY", 0));
+        GameObject melee = BuildChar(((Melees)PlayerPrefs.GetInt("Melee", 0)).ToString(), false);
+        GridManager.Instance.MoveToAndInsert(melee, 0, 0);
+
         // instantiate ranged character
-        GameObject ranged = BuildChar(PlayerPrefs.GetString("Ranged", "Scout"), false);
-        GridManager.Instance.MoveToAndInsert(
-            ranged,
-            PlayerPrefs.GetInt("RangedX", 1),
-            PlayerPrefs.GetInt("RangedY", 0));
+        GameObject ranged = BuildChar(((Rangeds)PlayerPrefs.GetInt("Ranged", 0)).ToString(), false);
+        GridManager.Instance.MoveToAndInsert(ranged, 1, 0);
+
         // instantiate mage character
-        GameObject mage = BuildChar(PlayerPrefs.GetString("Mage", "Summoner"), false);
-        GridManager.Instance.MoveToAndInsert(
-            mage,
-            PlayerPrefs.GetInt("MageX", 2),
-            PlayerPrefs.GetInt("MageY", 0));
+        GameObject mage = BuildChar(((Mages)PlayerPrefs.GetInt("Mage", 0)).ToString(), false);
+        GridManager.Instance.MoveToAndInsert(mage, 2, 0);
 
         // set those characterMovements into the friendly array
         friendly = new CharacterMovement[] {
@@ -153,29 +146,23 @@ public class GameManager : MonoBehaviour
 
         // For single player mode
         if (EventHandler.Instance == null) {
-            InstantiateEnemies(
-                "Tank", 15, 15,
-                "Trapper", 14, 15,
-                "Wizard", 13, 15);
+            InstantiateEnemies(0, 0, 0);
         }
     }
 
-    public void InstantiateEnemies(
-        string meleeChar, int meleeX, int meleeY,
-        string rangedChar, int rangedX, int rangedY,
-        string mageChar, int mageX, int mageY)
+    public void InstantiateEnemies(int meleeChar, int rangedChar, int mageChar)
     {
         // instantiate melee character
-        GameObject melee = BuildChar(meleeChar, true);
-        GridManager.Instance.MoveToAndInsert(melee, meleeX, meleeY);
+        GameObject melee = BuildChar(((Melees)meleeChar).ToString(), true);
+        GridManager.Instance.MoveToAndInsert(melee, 15, 15);
 
         // instantiate ranged character
-        GameObject ranged = BuildChar(rangedChar, true);
-        GridManager.Instance.MoveToAndInsert(ranged, rangedX, rangedY);
+        GameObject ranged = BuildChar(((Rangeds)rangedChar).ToString(), true);
+        GridManager.Instance.MoveToAndInsert(ranged, 14, 15);
 
         // instantiate mage character
-        GameObject mage = BuildChar(mageChar, true);
-        GridManager.Instance.MoveToAndInsert(mage, mageX, mageY);
+        GameObject mage = BuildChar(((Mages)mageChar).ToString(), true);
+        GridManager.Instance.MoveToAndInsert(mage, 13, 15);
 
         // set those characterMovements into the friendly array
         enemies = new CharacterMovement[] {
@@ -183,12 +170,13 @@ public class GameManager : MonoBehaviour
             ranged.GetComponent<CharacterMovement>(),
             mage.GetComponent<CharacterMovement>()};
 
+        // they face "up" for the enemy, so "down" for us
         foreach (CharacterMovement enemy in enemies) {
             enemy.Face("down");
         }
 
         enemyLoaded = true;
-        Debug.Log("enemy loaded");
+
         CheckLoading();
         CheckBothReady();
     }

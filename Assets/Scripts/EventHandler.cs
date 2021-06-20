@@ -57,15 +57,9 @@ public class EventHandler : MonoBehaviourPunCallbacks
     void Start()
     {
         object[] data = new object[] {
-            PlayerPrefs.GetString("Melee", "Bruiser"),
-            InvertXCoord(PlayerPrefs.GetInt("MeleeX", 0)),
-            InvertYCoord(PlayerPrefs.GetInt("MeleeY", 0)),
-            PlayerPrefs.GetString("Ranged", "Scout"),
-            InvertXCoord(PlayerPrefs.GetInt("RangedX", 1)),
-            InvertYCoord(PlayerPrefs.GetInt("RangedY", 0)),
-            PlayerPrefs.GetString("Mage", "Summoner"),
-            InvertXCoord(PlayerPrefs.GetInt("MageX", 2)),
-            InvertYCoord(PlayerPrefs.GetInt("MageY", 0))
+            PlayerPrefs.GetInt("Melee", 0),
+            PlayerPrefs.GetInt("Ranged", 0),
+            PlayerPrefs.GetInt("Mage", 0),
         };
         
         PhotonNetwork.RaiseEvent(InstantiateEvent, data, RaiseEventOptions.Default,SendOptions.SendReliable);
@@ -90,10 +84,6 @@ public class EventHandler : MonoBehaviourPunCallbacks
     {
         base.OnEnable();
         PhotonNetwork.NetworkingClient.EventReceived += EventReceived;
-
-        // Get own player ID
-        // Setup the game manager and instantiate the characters at appropriate locations
-
     }
 
     public override void OnDisable()
@@ -144,10 +134,7 @@ public class EventHandler : MonoBehaviourPunCallbacks
             case InstantiateEvent:
                 data = (object[])eventData.CustomData;
                 
-                GameManager.Instance.InstantiateEnemies(
-                    (string)data[0], (int)data[1], (int)data[2], 
-                    (string)data[3], (int)data[4], (int)data[5], 
-                    (string)data[6], (int)data[7], (int)data[8]); 
+                GameManager.Instance.InstantiateEnemies((int)data[0], (int)data[1], (int)data[2]); 
                 break;
             case FirstTurnEvent:
                 bool enemyFirst = (bool)eventData.CustomData;
@@ -185,47 +172,4 @@ public class EventHandler : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.RaiseEvent(ReadyEvent, null, RaiseEventOptions.Default, SendOptions.SendReliable);
     }
-
-    private string InvertDirection(string direction)
-    {
-        switch (direction)
-        {
-            case "up":
-                return "down";
-            case "down": 
-                return "up";
-            case "left":
-                return "right";
-            case "right":
-                return "left";
-            default:
-                return direction;
-        }
-    }
-
-    private int InvertXCoord(int x)
-    {
-        return GridManager.Instance.length - 1 - x;
-    }
-
-    private int InvertYCoord(int y)
-    {
-        return GridManager.Instance.height - 1 - y;
-    }
 }
-
-
-
-/*
-Movement Event
-    payload: charX, charY, left/right/up/down, bool true if move (false if face)
-KIV in case we want some unique animations:
-Attack Event
-    payload: charX, charY, attackID (1/2/3/4), relevantProperties[]
-Linear Attack Event
-    payload: charX, charY, direction, range, damage
-AOE Attack Event
-    payload: targetX, targetY, damage
-Turn End Event
-    payload: null (just signifies that a turn ended)
-*/
