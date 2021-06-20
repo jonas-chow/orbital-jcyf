@@ -34,8 +34,8 @@ public class Trap : MonoBehaviour
     {
         if (character.isEnemy != isEnemy) {
             character.TakeDamage(character.GetDefense(), damage);
-            character.AddBuff(new DisabledDebuff(2));
-            character.AddBuff(new VisibleDebuff(2));
+            character.AddBuff(new DisabledDebuff(3));
+            character.AddBuff(new VisibleDebuff(3));
             GridManager.Instance.RemoveTrap(x, y);
             GameObject.Destroy(this.gameObject);
             if (trapper != null) {
