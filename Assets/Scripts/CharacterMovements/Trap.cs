@@ -41,7 +41,7 @@ public class Trap : MonoBehaviour
             if (trapper != null) {
                 trapper.RemoveTrap(this);
             }
-            AudioManager.Instance.Play("TrapExplosion");
+            AudioManager.Instance.Play("Trap");
         }
     }
 
