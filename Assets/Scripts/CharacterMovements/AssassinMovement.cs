@@ -22,7 +22,7 @@ public class AssassinMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.range = 1;
-            this.damage = 20;
+            this.damage = 10;
             this.backstabBonus = 10;
             this.cooldown = 2;
         }

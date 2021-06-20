@@ -66,7 +66,7 @@ public class HunterMovement : CharacterMovement
             this.range = globalRange;
             this.damage = 10;
             this.distanceScaling = 3;
-            this.cooldown = 4;
+            this.cooldown = 10;
         }
 
         public override void Execute()
