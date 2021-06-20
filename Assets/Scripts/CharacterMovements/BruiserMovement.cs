@@ -21,7 +21,7 @@ public class BruiserMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.range = 1;
-            this.damage = 20;
+            this.damage = 15;
             this.cooldown = 2;
         }
 
@@ -64,8 +64,8 @@ public class BruiserMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.range = 1;
-            this.damage = 30;
-            this.cooldown = 3;
+            this.damage = 25;
+            this.cooldown = 5;
         }
 
         public override void Execute()
@@ -106,7 +106,7 @@ public class BruiserMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
-            this.cooldown = 20;
+            this.cooldown = 30;
         }
 
         public override void Execute()

@@ -113,8 +113,8 @@ public class HealerMovement : CharacterMovement
             SendEvent();
             List<CharacterMovement> allies = FindTargets().FindAll(cm => !cm.isEnemy);
             allies.ForEach(cm => {
-                cm.AddBuff(new AttackBuff(damage, 3));
-                cm.AddBuff(new DefenseBuff(damage, 3));
+                cm.AddBuff(new AttackBuff(damage, 2));
+                cm.AddBuff(new DefenseBuff(damage, 2));
             });
             AudioManager.Instance.Play("AOEbuff");
         }
@@ -132,8 +132,8 @@ public class HealerMovement : CharacterMovement
             List<CharacterMovement> enemies = FindEventTargets(offsetX, offsetY)
                 .FindAll(cm => cm.isEnemy);
             enemies.ForEach(cm => {
-                cm.AddBuff(new AttackBuff(damage, 3));
-                cm.AddBuff(new DefenseBuff(damage, 3));
+                cm.AddBuff(new AttackBuff(damage, 2));
+                cm.AddBuff(new DefenseBuff(damage, 2));
             });
             FaceTargetDirection(offsetX, offsetY);
             AudioManager.Instance.Play("AOEbuff");
