@@ -37,6 +37,7 @@ public class Trap : MonoBehaviour
             GridManager.Instance.RemoveTrap(x, y);
             GameObject.Destroy(this.gameObject);
             trapper.RemoveTrap(this);
+            AudioManager.Instance.Play("TrapExplosion");
         }
     }
 
