@@ -80,7 +80,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!1 &4344433450906070301
 GameObject:
@@ -162,7 +162,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!1 &5306175607632135654
 GameObject:
@@ -244,7 +244,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!114 &792532707653513972
 MonoBehaviour:
@@ -258,6 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76cd1abb3709f471fa8625222e2639c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stealthedSprite: {fileID: 0}
   friendlySprite: {fileID: 8662403963446156986}
   enemySprite: {fileID: 496376824688847864}
   selection: {fileID: 3541696993964557564}
@@ -275,6 +276,7 @@ MonoBehaviour:
   defBuff: 0
   disabled: 0
   stealthed: 0
+  poisoned: 0
   isAlive: 1
   attack1Turn: -999
   attack2Turn: -999
@@ -359,7 +361,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
 --- !u!1001 &6325804202643182698
 PrefabInstance:

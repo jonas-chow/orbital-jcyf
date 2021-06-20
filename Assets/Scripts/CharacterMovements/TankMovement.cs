@@ -13,7 +13,7 @@ public class TankMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.range = 1;
-            this.damage = 10;
+            this.damage = 5;
             this.cooldown = 2;
         }
 
@@ -56,7 +56,7 @@ public class TankMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.damage = 30;
-            this.cooldown = 10;
+            this.cooldown = 15;
         }
 
         // self heal
