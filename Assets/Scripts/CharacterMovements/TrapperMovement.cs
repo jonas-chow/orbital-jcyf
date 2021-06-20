@@ -34,7 +34,9 @@ public class TrapperMovement : CharacterMovement
             CharacterMovement target = FindTarget();
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
+                AudioManager.Instance.Play("ArrowHit");
             }
+            AudioManager.Instance.Play("ArrowMiss");
         }
 
         public override void SendEvent()
@@ -49,7 +51,9 @@ public class TrapperMovement : CharacterMovement
             CharacterMovement target = FindEventTarget(dir);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
+                AudioManager.Instance.Play("ArrowHit");
             }
+            AudioManager.Instance.Play("ArrowMiss");
         }
     }
 
@@ -74,6 +78,7 @@ public class TrapperMovement : CharacterMovement
                 Trap trap = trapObj.GetComponent<Trap>();
                 self.traps.Add(trap);
                 trap.GetComponent<Trap>().Init(self, damage);
+                AudioManager.Instance.Play("Trap");
             } else {
                 self.attack2Turn = -999;
             }
@@ -92,6 +97,7 @@ public class TrapperMovement : CharacterMovement
                 Trap trap = trapObj.GetComponent<Trap>();
                 self.traps.Add(trap);
                 trap.GetComponent<Trap>().Init(self, damage);
+                AudioManager.Instance.Play("Trap");
             }
         }
     }
@@ -114,6 +120,7 @@ public class TrapperMovement : CharacterMovement
             SendEvent();
             self.traps.ForEach(trap => trap.Explode(damage));
             self.traps = new List<Trap>();
+            AudioManager.Instance.Play("TrapExplosion");
         }
 
         public override void SendEvent()
@@ -126,6 +133,7 @@ public class TrapperMovement : CharacterMovement
         {
             self.traps.ForEach(trap => trap.Explode(damage));
             self.traps = new List<Trap>();
+            AudioManager.Instance.Play("TrapExplosion");
         }
     }
 

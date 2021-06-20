@@ -34,6 +34,7 @@ public class FamiliarMovement : CharacterMovement
             CharacterMovement target = FindTarget();
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
+                AudioManager.Instance.Play("FamiliarAttack");
             }
         }
 
@@ -49,6 +50,7 @@ public class FamiliarMovement : CharacterMovement
             CharacterMovement target = FindEventTarget(dir);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
+                AudioManager.Instance.Play("FamiliarAttack");
             }
         }
     }
@@ -72,6 +74,7 @@ public class FamiliarMovement : CharacterMovement
             SendEvent();
             CharacterMenu.Instance.SetHealth(self.charID, 0f);
             self.Die();
+            AudioManager.Instance.Play("TrapExplosion");
         }
 
         public override void SendEvent()
@@ -82,6 +85,7 @@ public class FamiliarMovement : CharacterMovement
         public override void EventExecute(object[] extraData)
         {
             self.Die();
+            AudioManager.Instance.Play("TrapExplosion");
         }
     }
 
@@ -108,6 +112,7 @@ public class FamiliarMovement : CharacterMovement
                 self.summoner.gameObject, 
                 self.summoner.GetX(), 
                 self.summoner.GetY());
+                AudioManager.Instance.Play("Swap");
         }
 
         public override void SendEvent()
@@ -127,6 +132,7 @@ public class FamiliarMovement : CharacterMovement
                 self.summoner.gameObject, 
                 self.summoner.GetX(), 
                 self.summoner.GetY());
+                AudioManager.Instance.Play("Swap");
         }
     }
 

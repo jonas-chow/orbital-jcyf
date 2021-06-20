@@ -32,6 +32,7 @@ public class WizardMovement : CharacterMovement
             if (target != null && target.isEnemy) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
+            AudioManager.Instance.Play("MagicAttack");
         }
 
         public override void SendEvent()
@@ -47,6 +48,7 @@ public class WizardMovement : CharacterMovement
             if (target != null && !target.isEnemy) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
+            AudioManager.Instance.Play("MagicAttack");
         }
     }
 
@@ -70,6 +72,7 @@ public class WizardMovement : CharacterMovement
             enemies.ForEach(cm => {
                 cm.TakeDamage(self.GetAttack(), damage);
             });
+            AudioManager.Instance.Play("AOEMagicAttack");
         }
 
         public override void SendEvent()
@@ -88,6 +91,7 @@ public class WizardMovement : CharacterMovement
                 cm.TakeDamage(self.GetAttack(), damage);
             });
             FaceTargetDirection(offsetX, offsetY);
+            AudioManager.Instance.Play("AOEMagicAttack");
         }
     }
 
@@ -107,6 +111,7 @@ public class WizardMovement : CharacterMovement
             SendEvent();
             self.attack1Turn = -999;
             self.attack2Turn = -999;
+            AudioManager.Instance.Play("ResetCD");
         }
 
         public override void SendEvent()
@@ -119,6 +124,7 @@ public class WizardMovement : CharacterMovement
         {
             self.attack1Turn = -999;
             self.attack2Turn = -999;
+            AudioManager.Instance.Play("ResetCD");
         }
     }
 

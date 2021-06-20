@@ -33,7 +33,9 @@ public class ScoutMovement : CharacterMovement
             CharacterMovement target = FindTarget();
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
+                AudioManager.Instance.Play("ArrowHit");
             }
+            AudioManager.Instance.Play("ArrowMiss");
         }
 
         public override void SendEvent()
@@ -48,7 +50,9 @@ public class ScoutMovement : CharacterMovement
             CharacterMovement target = FindEventTarget(dir);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
+                AudioManager.Instance.Play("ArrowHit");
             }
+            AudioManager.Instance.Play("ArrowMiss");
         }
     }
 
@@ -73,9 +77,11 @@ public class ScoutMovement : CharacterMovement
                 GameObject ward = GameObject.Instantiate(self.ward, Vector3.zero, Quaternion.identity);
                 GridManager.Instance.MoveToAndInsert(ward, posX, posY);
                 ward.GetComponent<WardMovement>().init(false);
+                AudioManager.Instance.Play("Ward");
             } else if (target.IsEnemyOf(self)) {
                 target.AddBuff(new VisibleDebuff(2));
                 target.TakeDamage(self.GetAttack(), damage);
+                AudioManager.Instance.Play("Ward");
             } else {
                 // refund cooldown if it whiffed
                 self.attack2Turn = -999;
@@ -98,9 +104,11 @@ public class ScoutMovement : CharacterMovement
                 GameObject ward = GameObject.Instantiate(self.ward, Vector3.zero, Quaternion.identity);
                 GridManager.Instance.MoveToAndInsert(ward, posX, posY);
                 ward.GetComponent<WardMovement>().init(true);
+                AudioManager.Instance.Play("Ward");
             } else if (target.IsEnemyOf(self)) {
                 target.AddBuff(new VisibleDebuff(2));
                 target.TakeDamage(self.GetAttack(), damage);
+                AudioManager.Instance.Play("Ward");
             }
             FaceTargetDirection(offsetX, offsetY);
         }
@@ -126,6 +134,7 @@ public class ScoutMovement : CharacterMovement
             enemies.ForEach(cm => {
                 cm.TakeDamage(self.GetAttack(), damage);
             });
+            AudioManager.Instance.Play("Scout3");
         }
 
         public override void SendEvent()
@@ -144,6 +153,7 @@ public class ScoutMovement : CharacterMovement
                 cm.TakeDamage(self.GetAttack(), damage);
             });
             FaceTargetDirection(offsetX, offsetY);
+            AudioManager.Instance.Play("Scout3");
         }
     }
 

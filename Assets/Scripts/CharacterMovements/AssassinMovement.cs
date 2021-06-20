@@ -36,8 +36,10 @@ public class AssassinMovement : CharacterMovement
                     target.TakeDamage(self.GetAttack(), damage + backstabBonus);
                 } else {
                     target.TakeDamage(self.GetAttack(), damage);
-                }            
+                }
+                AudioManager.Instance.Play("MeleeHit");            
             }
+            AudioManager.Instance.Play("MeleeMiss");
         }
 
         public override void SendEvent()
@@ -55,8 +57,10 @@ public class AssassinMovement : CharacterMovement
                     target.TakeDamage(self.GetAttack(), damage + backstabBonus);
                 } else {
                     target.TakeDamage(self.GetAttack(), damage);
-                }   
+                }
+                AudioManager.Instance.Play("MeleeHit");   
             }
+            AudioManager.Instance.Play("MeleeMiss");
         }
     }
 
@@ -80,6 +84,7 @@ public class AssassinMovement : CharacterMovement
             if (target != null && target.IsEnemyOf(self)) {
                 target.AddBuff(new PoisonDebuff(3));
                 target.TakeDamage(self.GetAttack(), damage);
+                AudioManager.Instance.Play("Poison");
             }
         }
 
@@ -96,6 +101,7 @@ public class AssassinMovement : CharacterMovement
             if (target != null && target.IsEnemyOf(self)) {
                 target.AddBuff(new PoisonDebuff(3));
                 target.TakeDamage(self.GetAttack(), damage);
+                AudioManager.Instance.Play("Poison");
             }
         }
     }
@@ -115,6 +121,7 @@ public class AssassinMovement : CharacterMovement
         {
             SendEvent();
             self.AddBuff(new StealthBuff(2));
+            AudioManager.Instance.Play("Stealth");
         }
 
         public override void SendEvent()
@@ -126,6 +133,7 @@ public class AssassinMovement : CharacterMovement
         public override void EventExecute(object[] extraData)
         {
             self.AddBuff(new StealthBuff(2));
+            AudioManager.Instance.Play("Stealth");
         }
     }
 

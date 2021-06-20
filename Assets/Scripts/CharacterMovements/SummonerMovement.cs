@@ -36,6 +36,7 @@ public class SummonerMovement : CharacterMovement
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
+            AudioManager.Instance.Play("MagicAttack");
         }
 
         public override void SendEvent()
@@ -51,6 +52,7 @@ public class SummonerMovement : CharacterMovement
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
+            AudioManager.Instance.Play("MagicAttack");
         }
     }
 
@@ -75,14 +77,17 @@ public class SummonerMovement : CharacterMovement
                 // currently existing familiar explodes
                 if (self.familiarMovement != null) {
                     self.familiarMovement.Die();
+                    AudioManager.Instance.Play("TrapExplosion");
                 }
 
                 GameObject familiar = GameObject.Instantiate(self.familiarPrefab, Vector3.zero, Quaternion.identity);
                 GridManager.Instance.MoveToAndInsert(familiar, posX, posY);
                 self.familiarMovement = familiar.GetComponent<FamiliarMovement>();
                 self.familiarMovement.init(self);
+                AudioManager.Instance.Play("Summon");
             } else if (target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
+                AudioManager.Instance.Play("FamiliarAttack");
             } else {
                 // refund cooldown if whiffed
                 self.attack2Turn = -999;
@@ -104,14 +109,17 @@ public class SummonerMovement : CharacterMovement
                 // currently existing familiar explodes
                 if (self.familiarMovement != null) {
                     self.familiarMovement.Die();
+                    AudioManager.Instance.Play("TrapExplosion");
                 }
 
                 GameObject familiar = GameObject.Instantiate(self.familiarPrefab, Vector3.zero, Quaternion.identity);
                 GridManager.Instance.MoveToAndInsert(familiar, posX, posY);
                 self.familiarMovement = familiar.GetComponent<FamiliarMovement>();
                 self.familiarMovement.init(self);
+                AudioManager.Instance.Play("Summon");
             } else if (target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
+                AudioManager.Instance.Play("FamiliarAttack");
             } 
         }
     }
@@ -140,6 +148,7 @@ public class SummonerMovement : CharacterMovement
                     self.familiarMovement.gameObject, 
                     self.familiarMovement.GetX(), 
                     self.familiarMovement.GetY());
+                AudioManager.Instance.Play("Swap");
             } else {
                 // refund cooldown if whiffed
                 self.attack3Turn = -999;
@@ -163,6 +172,7 @@ public class SummonerMovement : CharacterMovement
                 self.familiarMovement.gameObject, 
                 self.familiarMovement.GetX(), 
                 self.familiarMovement.GetY());
+            AudioManager.Instance.Play("Swap");
         }
     }
 

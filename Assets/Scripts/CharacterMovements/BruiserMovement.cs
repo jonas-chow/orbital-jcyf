@@ -32,7 +32,9 @@ public class BruiserMovement : CharacterMovement
             CharacterMovement target = FindTarget();
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
+                AudioManager.Instance.Play("MeleeHit");  
             }
+            AudioManager.Instance.Play("MeleeMiss");  
         }
 
         public override void SendEvent()
@@ -47,7 +49,9 @@ public class BruiserMovement : CharacterMovement
             CharacterMovement target = FindEventTarget(dir);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
+                AudioManager.Instance.Play("MeleeHit");  
             }
+            AudioManager.Instance.Play("MeleeMiss");  
         }
     }
 
@@ -74,6 +78,7 @@ public class BruiserMovement : CharacterMovement
 
             // use defense as the attack so that always take 20 fixed damage
             self.TakeDamage(self.GetDefense(), 20);
+            AudioManager.Instance.Play("BruiserAOE");  
         }
 
         public override void SendEvent()
@@ -87,7 +92,9 @@ public class BruiserMovement : CharacterMovement
             allies.ForEach(cm => {
                 cm.TakeDamage(self.GetAttack(), damage);
             });
+
             self.TakeDamage(self.GetDefense(), 20);
+            AudioManager.Instance.Play("BruiserAOE");  
         }
     }
 
@@ -106,6 +113,7 @@ public class BruiserMovement : CharacterMovement
         {
             SendEvent();
             self.AddBuff(new InvincibleBuff(2));
+            AudioManager.Instance.Play("BruiserInvincible");  
         }
 
         public override void SendEvent()
@@ -116,6 +124,7 @@ public class BruiserMovement : CharacterMovement
         public override void EventExecute(object[] extraData)
         {
             self.AddBuff(new InvincibleBuff(2));
+            AudioManager.Instance.Play("BruiserInvincible");  
         }
     }
 

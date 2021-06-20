@@ -24,7 +24,9 @@ public class TankMovement : CharacterMovement
             CharacterMovement target = FindTarget();
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
+                AudioManager.Instance.Play("MeleeHit");
             }
+            AudioManager.Instance.Play("MeleeMiss");
         }
 
         public override void SendEvent()
@@ -39,7 +41,9 @@ public class TankMovement : CharacterMovement
             CharacterMovement target = FindEventTarget(dir);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
+                AudioManager.Instance.Play("MeleeHit");
             }
+            AudioManager.Instance.Play("MeleeMiss");
         }
     }
 
@@ -60,6 +64,7 @@ public class TankMovement : CharacterMovement
         {
             SendEvent();
             self.Heal(damage);
+            AudioManager.Instance.Play("Heal");
         }
 
         public override void SendEvent()
@@ -70,6 +75,7 @@ public class TankMovement : CharacterMovement
         public override void EventExecute(object[] extraData)
         {
             self.Heal(damage);
+            AudioManager.Instance.Play("Heal");
         }
     }
 
@@ -98,6 +104,7 @@ public class TankMovement : CharacterMovement
                     cm.AddBuff(new InvincibleBuff(2));
                 }
             });
+            AudioManager.Instance.Play("Taunt");
         }
 
         public override void SendEvent()
@@ -115,6 +122,7 @@ public class TankMovement : CharacterMovement
                     cm.AddBuff(new InvincibleBuff(2));
                 }
             });
+            AudioManager.Instance.Play("Taunt");
         }
     }
 

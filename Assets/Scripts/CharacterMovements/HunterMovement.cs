@@ -31,7 +31,9 @@ public class HunterMovement : CharacterMovement
             CharacterMovement target = FindTarget();
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
+                AudioManager.Instance.Play("ArrowHit");
             }
+            AudioManager.Instance.Play("ArrowMiss");
         }
 
         public override void SendEvent()
@@ -46,7 +48,9 @@ public class HunterMovement : CharacterMovement
             CharacterMovement target = FindEventTarget(dir);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
+                AudioManager.Instance.Play("ArrowHit");
             }
+            AudioManager.Instance.Play("ArrowMiss");
         }
     }
 
@@ -73,7 +77,9 @@ public class HunterMovement : CharacterMovement
                 int distance = GridManager.Instance.DistanceFromChar(self, target);
                 int dmg = damage + distance * distanceScaling;
                 target.TakeDamage(self.GetAttack(), dmg);
+                AudioManager.Instance.Play("ArrowHit");
             }
+            AudioManager.Instance.Play("ArrowMiss");
         }
 
         public override void SendEvent()
@@ -90,7 +96,9 @@ public class HunterMovement : CharacterMovement
                 int distance = GridManager.Instance.DistanceFromChar(self, target);
                 int dmg = damage + distance * distanceScaling;
                 target.TakeDamage(self.GetAttack(), dmg);
+                AudioManager.Instance.Play("ArrowHit");
             }
+            AudioManager.Instance.Play("ArrowMiss");
         }
     }
 
@@ -123,6 +131,7 @@ public class HunterMovement : CharacterMovement
                     }
                     target.Face(targetDir);
                 }
+                AudioManager.Instance.Play("Knockback");
             }
         }
 
@@ -146,6 +155,7 @@ public class HunterMovement : CharacterMovement
                     }
                     target.Face(targetDir);
                 }
+                AudioManager.Instance.Play("Knockback");
             }
         }
     }

@@ -32,6 +32,7 @@ public class HealerMovement : CharacterMovement
             if (target != null && target.isEnemy) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
+            AudioManager.Instance.Play("MagicAttack");
         }
 
         public override void SendEvent()
@@ -47,6 +48,7 @@ public class HealerMovement : CharacterMovement
             if (target != null && !target.isEnemy) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
+            AudioManager.Instance.Play("MagicAttack");
         }
     }
 
@@ -70,6 +72,7 @@ public class HealerMovement : CharacterMovement
             allies.ForEach(cm => {
                 cm.Heal(damage);
             });
+            AudioManager.Instance.Play("Heal");
         }
 
         public override void SendEvent()
@@ -88,6 +91,7 @@ public class HealerMovement : CharacterMovement
                 cm.Heal(damage);
             });
             FaceTargetDirection(offsetX, offsetY);
+            AudioManager.Instance.Play("Heal");
         }
     }
 
@@ -112,6 +116,7 @@ public class HealerMovement : CharacterMovement
                 cm.AddBuff(new AttackBuff(damage, 3));
                 cm.AddBuff(new DefenseBuff(damage, 3));
             });
+            AudioManager.Instance.Play("AOEbuff");
         }
 
         public override void SendEvent()
@@ -131,6 +136,7 @@ public class HealerMovement : CharacterMovement
                 cm.AddBuff(new DefenseBuff(damage, 3));
             });
             FaceTargetDirection(offsetX, offsetY);
+            AudioManager.Instance.Play("AOEbuff");
         }
     }
 

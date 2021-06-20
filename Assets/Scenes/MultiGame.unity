@@ -3684,6 +3684,106 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
     volume: 1
     source: {fileID: 0}
+  - name: Heal
+    clip: {fileID: 8300000, guid: c9886386d6526d04da64358bbe4a8be5, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: Taunt
+    clip: {fileID: 8300000, guid: 97da94c2e4c43e24eabff41a686f5983, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: Stealth
+    clip: {fileID: 8300000, guid: 820a8bc19fcdcd64f8b262b25137151f, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: Poison
+    clip: {fileID: 8300000, guid: 9222376c8a5b18e4d9e9734148965593, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: BruiserAOE
+    clip: {fileID: 8300000, guid: dcb3a467e6d260f4f8ea8a35b6608c4a, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: BruiserInvincible
+    clip: {fileID: 8300000, guid: 7171f39c4a42d8b4cb643d3daa573612, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
+  - name: MagicAttack
+    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+    volume: 1
+    source: {fileID: 0}
 --- !u!4 &831564452
 Transform:
   m_ObjectHideFlags: 0
