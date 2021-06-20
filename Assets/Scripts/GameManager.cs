@@ -253,12 +253,14 @@ public class GameManager : MonoBehaviour
                     DeactivateCurrent();
                     currentChar = (currentChar + 1) % numFriendly;
                     ActivateCurrent();
+                    AudioManager.Instance.Play("SwitchCharacters");
                 }
 
                 if (Input.GetButtonDown("Previous Character")) {
                     DeactivateCurrent();
                     currentChar = (currentChar + numFriendly - 1) % numFriendly;
                     ActivateCurrent();
+                    AudioManager.Instance.Play("SwitchCharacters");
                 }
             }
 
@@ -321,10 +323,12 @@ public class GameManager : MonoBehaviour
 
     private void Lose() {
         defeatUI.SetActive(true);
+        AudioManager.Instance.Play("Lose");
     }
 
     private void Win() {
         victoryUI.SetActive(true);
+        AudioManager.Instance.Play("Win");
     }
     
 

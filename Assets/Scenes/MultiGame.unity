@@ -332,7 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff44f28995aba40d0aca4bf593337509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testing: 0
+  testing: 1
   defeatUI: {fileID: 996488427}
   victoryUI: {fileID: 982411403}
   loadingUI: {fileID: 1473468720}
@@ -3760,20 +3760,20 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 477ebd330fb9a444ea9c86e20df16dac, type: 3}
     volume: 1
     source: {fileID: 0}
-  - name: MagicAttack
-    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+  - name: SwitchCharacters
+    clip: {fileID: 8300000, guid: 2070173ecf98d204fb7bbf552c708d08, type: 3}
     volume: 1
     source: {fileID: 0}
-  - name: MagicAttack
-    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+  - name: Death
+    clip: {fileID: 8300000, guid: 4ce0e6da0a4f79c42bb10ec8337e0a2e, type: 3}
     volume: 1
     source: {fileID: 0}
-  - name: MagicAttack
-    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+  - name: Win
+    clip: {fileID: 8300000, guid: 543b2e0708f61c84d94388e861fbb1b3, type: 3}
     volume: 1
     source: {fileID: 0}
-  - name: MagicAttack
-    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+  - name: Lose
+    clip: {fileID: 8300000, guid: 485c01f330d2ff24d974505b804115ba, type: 3}
     volume: 1
     source: {fileID: 0}
   - name: MagicAttack

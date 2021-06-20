@@ -226,6 +226,7 @@ public abstract class CharacterMovement : MonoBehaviour
         } else {
             GameManager.Instance.RemoveFriendly(this);
         }
+        AudioManager.Instance.Play("Death");
     }
 
     public void Move(string direction)
