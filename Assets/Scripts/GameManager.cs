@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
 
     public bool testing;
     [SerializeField]
-    private GameObject defeatUI, victoryUI, loadingUI, yourTurnUI, enemyTurnUI;
+    private GameObject defeatUI, victoryUI, loadingUI, yourTurnUI, enemyTurnUI, pauseUI;
 
     [SerializeField]
     private GameObject Tank, Bruiser, Assassin;
@@ -262,6 +262,10 @@ public class GameManager : MonoBehaviour
                     ActivateCurrent();
                     AudioManager.Instance.Play("SwitchCharacters");
                 }
+            }
+
+            if (Input.GetButtonDown("Pause")) {
+
             }
 
             if (animationPhase && !animating) {
