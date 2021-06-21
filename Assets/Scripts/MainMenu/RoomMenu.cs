@@ -88,6 +88,7 @@ public class RoomMenu : MonoBehaviourPunCallbacks
             PhotonNetwork.SetPlayerCustomProperties(notReady);
             PhotonNetwork.RaiseEvent(readyEvent, null, RaiseEventOptions.Default, SendOptions.SendReliable);
             p1Ready.SetActive(false);
+            startButton.SetActive(false);
         }
         loadout.SetActive(true);
     }

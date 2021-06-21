@@ -21,7 +21,7 @@ public class TankMovement : CharacterMovement
         public override void Execute()
         {
             SendEvent();
-            CharacterMovement target = FindTarget();
+            CharacterMovement target = FindTarget(direction);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
                 AudioManager.Instance.Play("MeleeHit");
@@ -38,7 +38,7 @@ public class TankMovement : CharacterMovement
         public override void EventExecute(object[] extraData)
         {
             string dir = (string)extraData[0];
-            CharacterMovement target = FindEventTarget(dir);
+            CharacterMovement target = FindTarget(dir);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
                 AudioManager.Instance.Play("MeleeHit");
@@ -114,7 +114,7 @@ public class TankMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            List<CharacterMovement> enemies = FindEventTargets().FindAll(cm => !cm.IsEnemyOf(self));
+            List<CharacterMovement> enemies = FindTargets().FindAll(cm => !cm.IsEnemyOf(self));
             enemies.ForEach(cm => {
                 if (cm.Equals(self)) {
                     cm.AddBuff(new DefenseBuff(-5, 2));

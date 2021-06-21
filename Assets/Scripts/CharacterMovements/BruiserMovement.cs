@@ -29,7 +29,7 @@ public class BruiserMovement : CharacterMovement
         public override void Execute()
         {
             SendEvent();
-            CharacterMovement target = FindTarget();
+            CharacterMovement target = FindTarget(direction);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
                 AudioManager.Instance.Play("MeleeHit");  
@@ -46,7 +46,7 @@ public class BruiserMovement : CharacterMovement
         public override void EventExecute(object[] extraData)
         {
             string dir = (string)extraData[0];
-            CharacterMovement target = FindEventTarget(dir);
+            CharacterMovement target = FindTarget(dir);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
                 AudioManager.Instance.Play("MeleeHit");  
@@ -88,7 +88,7 @@ public class BruiserMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            List<CharacterMovement> allies = FindEventTargets().FindAll(cm => cm.IsEnemyOf(self));
+            List<CharacterMovement> allies = FindTargets().FindAll(cm => cm.IsEnemyOf(self));
             allies.ForEach(cm => {
                 cm.TakeDamage(self.GetAttack(), damage);
             });
@@ -106,7 +106,7 @@ public class BruiserMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
-            this.cooldown = 30;
+            this.cooldown = 40;
         }
 
         public override void Execute()

@@ -10,7 +10,7 @@ public abstract class SelfAttack : Attack
     public override void InitialiseAim()
     {
         Attack.SetIndicators(
-          RangeSpawner.Instance.CharacterIndicator(new CharacterMovement[] {character}));
+            RangeSpawner.Instance.CharacterIndicator(new CharacterMovement[] {character}));
     }
 
     public override void AimUp() {}

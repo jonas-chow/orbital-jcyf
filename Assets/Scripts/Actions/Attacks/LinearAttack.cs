@@ -12,18 +12,7 @@ public abstract class LinearAttack : Attack
     protected string direction = "none";
     private bool global = false;
 
-    public CharacterMovement FindTarget()
-    {
-        // If user did not input a direction, the final direction used will be where the player faces on executing the attack
-        if (direction == "none") {
-            direction = character.faceDirection;
-        }
-        character.Face(direction);
-        return GridManager.Instance
-            .GetFirstCharacterInLine(GetX(), GetY(), range, direction);
-    }
-
-    public CharacterMovement FindEventTarget(string direction)
+    public CharacterMovement FindTarget(string direction)
     {
         // If user did not input a direction, the final direction used will be where the player faces on executing the attack
         if (direction == "none") {

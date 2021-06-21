@@ -222,13 +222,18 @@ public abstract class CharacterMovement : MonoBehaviour
         buffs = new List<Buff>();
         GridManager.Instance.RemoveObject(GetX(), GetY());
         isAlive = false;
+        isActive = false;
         if (isEnemy) {
             GameManager.Instance.RemoveEnemy();
         } else {
             GameManager.Instance.RemoveFriendly(this);
         }
         AudioManager.Instance.Play("Death");
-        GameObject.Destroy(gameObject);
+        // become invisible, nothing will interact with you
+        overallSprites.SetActive(false);
+        fog.SetActive(false);
+        hp.SetVisible(false);
+        // GameObject.Destroy(gameObject);
     }
 
     public void Move(string direction)

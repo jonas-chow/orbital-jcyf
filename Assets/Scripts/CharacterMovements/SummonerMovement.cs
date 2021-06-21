@@ -24,7 +24,7 @@ public class SummonerMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.range = 5;
-            this.damage = 20;
+            this.damage = 15;
             this.cooldown = 2;
         }
 
@@ -32,7 +32,7 @@ public class SummonerMovement : CharacterMovement
         public override void Execute()
         {
             SendEvent();
-            CharacterMovement target = FindTarget();
+            CharacterMovement target = FindTarget(direction);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
@@ -48,7 +48,7 @@ public class SummonerMovement : CharacterMovement
         public override void EventExecute(object[] extraData)
         {
             string dir = (string)extraData[0];
-            CharacterMovement target = FindEventTarget(dir);
+            CharacterMovement target = FindTarget(dir);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
@@ -66,13 +66,13 @@ public class SummonerMovement : CharacterMovement
             this.self = cm;
             this.range = 5;
             this.cooldown = 5;
-            this.damage = 20;
+            this.damage = 30;
         }
 
         public override void Execute()
         {
             SendEvent();
-            CharacterMovement target = FindTarget();
+            CharacterMovement target = FindTarget(offsetX, offsetY);
             if (target == null) {
                 // currently existing familiar explodes
                 if (self.familiarMovement != null) {
@@ -81,9 +81,9 @@ public class SummonerMovement : CharacterMovement
                 }
 
                 GameObject familiar = GameObject.Instantiate(self.familiarPrefab, Vector3.zero, Quaternion.identity);
-                GridManager.Instance.MoveToAndInsert(familiar, posX, posY);
+                GridManager.Instance.MoveToAndInsert(familiar, GetX() + offsetX, GetY() + offsetY);
                 self.familiarMovement = familiar.GetComponent<FamiliarMovement>();
-                self.familiarMovement.init(self);
+                self.familiarMovement.Init(self);
                 AudioManager.Instance.Play("Summon");
             } else if (target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
@@ -104,7 +104,7 @@ public class SummonerMovement : CharacterMovement
         {
             int offsetX = (int)extraData[0];
             int offsetY = (int)extraData[1];
-            CharacterMovement target = FindEventTarget(offsetX, offsetY);
+            CharacterMovement target = FindTarget(offsetX, offsetY);
             if (target == null) {
                 // currently existing familiar explodes
                 if (self.familiarMovement != null) {
@@ -113,9 +113,9 @@ public class SummonerMovement : CharacterMovement
                 }
 
                 GameObject familiar = GameObject.Instantiate(self.familiarPrefab, Vector3.zero, Quaternion.identity);
-                GridManager.Instance.MoveToAndInsert(familiar, posX, posY);
+                GridManager.Instance.MoveToAndInsert(familiar, GetX() + offsetX, GetY() + offsetY);
                 self.familiarMovement = familiar.GetComponent<FamiliarMovement>();
-                self.familiarMovement.init(self);
+                self.familiarMovement.Init(self);
                 AudioManager.Instance.Play("Summon");
             } else if (target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
@@ -132,6 +132,7 @@ public class SummonerMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
+            this.cooldown = 5;
         }
 
         public override void Execute()

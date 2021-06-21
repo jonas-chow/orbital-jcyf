@@ -28,8 +28,8 @@ public class HealerMovement : CharacterMovement
         public override void Execute()
         {
             SendEvent();
-            CharacterMovement target = FindTarget();
-            if (target != null && target.isEnemy) {
+            CharacterMovement target = FindTarget(direction);
+            if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
             AudioManager.Instance.Play("MagicAttack");
@@ -44,8 +44,8 @@ public class HealerMovement : CharacterMovement
         public override void EventExecute(object[] extraData)
         {
             string dir = (string)extraData[0];
-            CharacterMovement target = FindEventTarget(dir);
-            if (target != null && !target.isEnemy) {
+            CharacterMovement target = FindTarget(dir);
+            if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
             AudioManager.Instance.Play("MagicAttack");
@@ -68,7 +68,8 @@ public class HealerMovement : CharacterMovement
         public override void Execute()
         {
             SendEvent();
-            List<CharacterMovement> allies = FindTargets().FindAll(cm => !cm.isEnemy);
+            List<CharacterMovement> allies = FindTargets(offsetX, offsetY)
+                .FindAll(cm => !cm.IsEnemyOf(self));
             allies.ForEach(cm => {
                 cm.Heal(damage);
             });
@@ -85,12 +86,11 @@ public class HealerMovement : CharacterMovement
         {
             int offsetX = (int)extraData[0];
             int offsetY = (int)extraData[1];
-            List<CharacterMovement> enemies = FindEventTargets(offsetX, offsetY)
-                .FindAll(cm => cm.isEnemy);
+            List<CharacterMovement> enemies = FindTargets(offsetX, offsetY)
+                .FindAll(cm => !cm.IsEnemyOf(self));
             enemies.ForEach(cm => {
                 cm.Heal(damage);
             });
-            FaceTargetDirection(offsetX, offsetY);
             AudioManager.Instance.Play("Heal");
         }
     }
@@ -111,7 +111,8 @@ public class HealerMovement : CharacterMovement
         public override void Execute()
         {
             SendEvent();
-            List<CharacterMovement> allies = FindTargets().FindAll(cm => !cm.isEnemy);
+            List<CharacterMovement> allies = FindTargets(offsetX, offsetY)
+                .FindAll(cm => !cm.IsEnemyOf(self));
             allies.ForEach(cm => {
                 cm.AddBuff(new AttackBuff(damage, 2));
                 cm.AddBuff(new DefenseBuff(damage, 2));
@@ -129,13 +130,12 @@ public class HealerMovement : CharacterMovement
         {
             int offsetX = (int)extraData[0];
             int offsetY = (int)extraData[1];
-            List<CharacterMovement> enemies = FindEventTargets(offsetX, offsetY)
-                .FindAll(cm => cm.isEnemy);
-            enemies.ForEach(cm => {
+            List<CharacterMovement> allies = FindTargets(offsetX, offsetY)
+                .FindAll(cm => !cm.IsEnemyOf(self));
+            allies.ForEach(cm => {
                 cm.AddBuff(new AttackBuff(damage, 2));
                 cm.AddBuff(new DefenseBuff(damage, 2));
             });
-            FaceTargetDirection(offsetX, offsetY);
             AudioManager.Instance.Play("AOEbuff");
         }
     }
