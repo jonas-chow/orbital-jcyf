@@ -75,4 +75,9 @@ public class CharacterMenu : MonoBehaviour
             cooldownObjs[i + 9].SetActive(false);
         }
     }
+
+    public void ResetCD(int charID, int skillID)
+    {
+        cooldownObjs[charID * 3 + skillID].SetActive(false);
+    }
 }

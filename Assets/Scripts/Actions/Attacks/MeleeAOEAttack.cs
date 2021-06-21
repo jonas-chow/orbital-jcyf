@@ -13,12 +13,6 @@ public abstract class MeleeAOEAttack : Attack
         return GridManager.Instance.GetAllCharactersInAOE(GetX(), GetY());
     }
 
-    public List<CharacterMovement> FindEventTargets()
-    {
-        // Get all enemy characters in the AOE centred at character
-        return GridManager.Instance.GetAllCharactersInAOE(GetX(), GetY());
-    }
-
     // Melee AOE attacks can't be aimed, but will still make you face that direction
     public override void InitialiseAim()
     {

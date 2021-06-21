@@ -35,6 +35,7 @@ public class EventHandler : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player player)
     {
+        // creates the victory screen if opponent leaves before you
         GameManager.Instance.OpponentDisconnect();
     }
 

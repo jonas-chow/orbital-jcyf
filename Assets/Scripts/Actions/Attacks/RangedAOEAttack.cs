@@ -13,13 +13,9 @@ public abstract class RangedAOEAttack : Attack
     protected int offsetX = 0;
     protected int offsetY = 0;
 
-    public List<CharacterMovement> FindTargets()
+    public List<CharacterMovement> FindTargets(int offsetX, int offsetY)
     {
-        return GridManager.Instance.GetAllCharactersInAOE(GetX() + offsetX, GetY() + offsetY);
-    }
-
-    public List<CharacterMovement> FindEventTargets(int offsetX, int offsetY)
-    {
+        FaceTargetDirection(offsetX, offsetY);
         return GridManager.Instance.GetAllCharactersInAOE(GetX() + offsetX, GetY() + offsetY);
     }
 

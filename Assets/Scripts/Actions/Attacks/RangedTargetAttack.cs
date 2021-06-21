@@ -6,22 +6,12 @@ using UnityEngine;
 public abstract class RangedTargetAttack : Attack
 {
     protected const int globalRange = 30;
-    protected int posX = 0;
-    protected int posY = 0;
     protected int offsetX = 0;
     protected int offsetY = 0;
 
-    public CharacterMovement FindTarget()
+    public CharacterMovement FindTarget(int offsetX, int offsetY)
     {
-        posX = GetX() + offsetX;
-        posY = GetY() + offsetY;
-        return GridManager.Instance.GetCharacter(posX, posY);
-    }
-
-    public CharacterMovement FindEventTarget(int offsetX, int offsetY)
-    {
-        posX = GetX() + offsetX;
-        posY = GetY() + offsetY;
+        FaceTargetDirection(offsetX, offsetY);
         return GridManager.Instance.GetCharacter(GetX() + offsetX, GetY() + offsetY);
     }
 

@@ -30,7 +30,7 @@ public class ScoutMovement : CharacterMovement
         public override void Execute()
         {
             SendEvent();
-            CharacterMovement target = FindTarget();
+            CharacterMovement target = FindTarget(direction);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
                 AudioManager.Instance.Play("ArrowHit");
@@ -47,7 +47,7 @@ public class ScoutMovement : CharacterMovement
         public override void EventExecute(object[] extraData)
         {
             string dir = (string)extraData[0];
-            CharacterMovement target = FindEventTarget(dir);
+            CharacterMovement target = FindTarget(dir);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
                 AudioManager.Instance.Play("ArrowHit");
@@ -65,18 +65,18 @@ public class ScoutMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.range = globalRange;
-            this.cooldown = 10; // change this
-            this.damage = 5;
+            this.cooldown = 10;
+            this.damage = 10;
         }
 
         public override void Execute()
         {
             SendEvent();
-            CharacterMovement target = FindTarget();
+            CharacterMovement target = FindTarget(offsetX, offsetY);
             if (target == null) {
                 GameObject ward = GameObject.Instantiate(self.ward, Vector3.zero, Quaternion.identity);
                 ward.GetComponent<WardMovement>().init(false);
-                GridManager.Instance.MoveToAndInsert(ward, posX, posY);
+                GridManager.Instance.MoveToAndInsert(ward, GetX() + offsetX, GetY() + offsetY);
                 AudioManager.Instance.Play("Ward");
             } else if (target.IsEnemyOf(self)) {
                 target.AddBuff(new VisibleDebuff(2));
@@ -86,7 +86,6 @@ public class ScoutMovement : CharacterMovement
                 // refund cooldown if it whiffed
                 self.attack2Turn = -999;
             }
-            FaceTargetDirection(offsetX, offsetY);
         }
 
         public override void SendEvent()
@@ -99,18 +98,17 @@ public class ScoutMovement : CharacterMovement
         {
             int offsetX = (int)extraData[0];
             int offsetY = (int)extraData[1];
-            CharacterMovement target = FindEventTarget(offsetX, offsetY);
+            CharacterMovement target = FindTarget(offsetX, offsetY);
             if (target == null) {
                 GameObject ward = GameObject.Instantiate(self.ward, Vector3.zero, Quaternion.identity);
                 ward.GetComponent<WardMovement>().init(true);
-                GridManager.Instance.MoveToAndInsert(ward, posX, posY);
+                GridManager.Instance.MoveToAndInsert(ward, GetX() + offsetX, GetY() + offsetY);
                 AudioManager.Instance.Play("Ward");
             } else if (target.IsEnemyOf(self)) {
                 target.AddBuff(new VisibleDebuff(2));
                 target.TakeDamage(self.GetAttack(), damage);
                 AudioManager.Instance.Play("Ward");
             }
-            FaceTargetDirection(offsetX, offsetY);
         }
     }
 
@@ -130,7 +128,8 @@ public class ScoutMovement : CharacterMovement
         public override void Execute()
         {
             SendEvent();
-            List<CharacterMovement> enemies = FindTargets().FindAll(cm => cm.IsEnemyOf(self));
+            List<CharacterMovement> enemies = FindTargets(offsetX, offsetY)
+                .FindAll(cm => cm.IsEnemyOf(self));
             enemies.ForEach(cm => {
                 cm.TakeDamage(self.GetAttack(), damage);
                 cm.AddBuff(new VisibleDebuff(4));
@@ -148,13 +147,12 @@ public class ScoutMovement : CharacterMovement
         {
             int offsetX = (int)extraData[0];
             int offsetY = (int)extraData[1];
-            List<CharacterMovement> allies = FindEventTargets(offsetX, offsetY)
+            List<CharacterMovement> enemies = FindTargets(offsetX, offsetY)
                 .FindAll(cm => cm.IsEnemyOf(self));
-            allies.ForEach(cm => {
+            enemies.ForEach(cm => {
                 cm.TakeDamage(self.GetAttack(), damage);
                 cm.AddBuff(new VisibleDebuff(4));
             });
-            FaceTargetDirection(offsetX, offsetY);
             AudioManager.Instance.Play("Scout3");
         }
     }

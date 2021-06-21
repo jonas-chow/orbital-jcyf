@@ -28,7 +28,7 @@ public class HunterMovement : CharacterMovement
         public override void Execute()
         {
             SendEvent();
-            CharacterMovement target = FindTarget();
+            CharacterMovement target = FindTarget(direction);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
                 AudioManager.Instance.Play("ArrowHit");
@@ -45,7 +45,7 @@ public class HunterMovement : CharacterMovement
         public override void EventExecute(object[] extraData)
         {
             string dir = (string)extraData[0];
-            CharacterMovement target = FindEventTarget(dir);
+            CharacterMovement target = FindTarget(dir);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
                 AudioManager.Instance.Play("ArrowHit");
@@ -72,7 +72,7 @@ public class HunterMovement : CharacterMovement
         public override void Execute()
         {
             SendEvent();
-            CharacterMovement target = FindTarget();
+            CharacterMovement target = FindTarget(direction);
             if (target != null && target.IsEnemyOf(self)) {
                 int distance = GridManager.Instance.DistanceFromChar(self, target);
                 int dmg = damage + distance * distanceScaling;
@@ -91,7 +91,7 @@ public class HunterMovement : CharacterMovement
         public override void EventExecute(object[] extraData)
         {
             string dir = (string)extraData[0];
-            CharacterMovement target = FindEventTarget(dir);
+            CharacterMovement target = FindTarget(dir);
             if (target != null && target.IsEnemyOf(self)) {
                 int distance = GridManager.Instance.DistanceFromChar(self, target);
                 int dmg = damage + distance * distanceScaling;
@@ -120,7 +120,7 @@ public class HunterMovement : CharacterMovement
         public override void Execute()
         {
             SendEvent();
-            CharacterMovement target = FindTarget();
+            CharacterMovement target = FindTarget(direction);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
 
@@ -144,7 +144,7 @@ public class HunterMovement : CharacterMovement
         public override void EventExecute(object[] extraData)
         {
             string dir = (string)extraData[0];
-            CharacterMovement target = FindEventTarget(dir);
+            CharacterMovement target = FindTarget(dir);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
 

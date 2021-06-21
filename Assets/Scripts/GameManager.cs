@@ -420,13 +420,24 @@ public class GameManager : MonoBehaviour
     public void InsertChar(CharacterMovement cm)
     {
         if (cm.isEnemy) {
-            CharacterMovement[] newEnemies = new CharacterMovement[numEnemy + 1];
-            for (int i = 0; i < numEnemy; i++) {
-                newEnemies[i] = enemies[i];
+            Debug.Log(enemies.Length);
+            // want to maintain enemies as a way to index enemies
+            if (enemies.Length == 3) {
+                CharacterMovement[] newEnemies = new CharacterMovement[4];
+                for (int i = 0; i < 3; i++) {
+                    newEnemies[i] = enemies[i];
+                }
+                newEnemies[3] = cm;
+                numEnemy++;
+                enemies = newEnemies;
+            } else {
+                // ensure that only one char of that index is alive
+                if (enemies[3].isAlive) {
+                    enemies[3].Die();
+                }
+                enemies[3] = cm;
+                numEnemy++;
             }
-            newEnemies[numEnemy] = cm;
-            numEnemy++;
-            enemies = newEnemies;
         } else {
             CharacterMovement[] newFriendlies = new CharacterMovement[numFriendly + 1];
             for (int i = 0; i < numFriendly; i++) {

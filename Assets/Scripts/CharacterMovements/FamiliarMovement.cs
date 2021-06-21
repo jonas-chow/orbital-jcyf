@@ -31,7 +31,7 @@ public class FamiliarMovement : CharacterMovement
         public override void Execute()
         {
             SendEvent();
-            CharacterMovement target = FindTarget();
+            CharacterMovement target = FindTarget(direction);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
                 AudioManager.Instance.Play("FamiliarAttack");
@@ -47,7 +47,7 @@ public class FamiliarMovement : CharacterMovement
         public override void EventExecute(object[] extraData)
         {
             string dir = (string)extraData[0];
-            CharacterMovement target = FindEventTarget(dir);
+            CharacterMovement target = FindTarget(dir);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
                 AudioManager.Instance.Play("FamiliarAttack");
@@ -74,6 +74,7 @@ public class FamiliarMovement : CharacterMovement
             SendEvent();
             CharacterMenu.Instance.SetHealth(self.charID, 0f);
             self.Die();
+            self.hp.SetVisible(false);
             AudioManager.Instance.Play("TrapExplosion");
         }
 
@@ -97,6 +98,7 @@ public class FamiliarMovement : CharacterMovement
         {
             this.character = cm;
             this.self = cm;
+            this.cooldown = 5;
         }
 
         public override void Execute()
@@ -177,9 +179,12 @@ public class FamiliarMovement : CharacterMovement
         base.Die();
     }
 
-    public void init(SummonerMovement summoner)
+    public void Init(SummonerMovement summoner)
     {
         SetEnemy(summoner.isEnemy);
+        if (summoner.isEnemy) {
+            this.Face("down");
+        }
         this.summoner = summoner;
         // familiar inherits summoner's attack at time of summon
         this.atk = summoner.atk;
