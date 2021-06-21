@@ -84,7 +84,8 @@ public class GameManager : MonoBehaviour
 
     public bool testing;
     [SerializeField]
-    private GameObject defeatUI, victoryUI, loadingUI, yourTurnUI, enemyTurnUI, pauseUI;
+    private GameObject defeatUI, victoryUI, loadingUI, yourTurnUI, enemyTurnUI, pauseUI, 
+        opponentConcedeUI, opponentDisconnectUI;
 
     [SerializeField]
     private GameObject Tank, Bruiser, Assassin;
@@ -101,6 +102,7 @@ public class GameManager : MonoBehaviour
     private bool enemyLoaded = false;
     public bool enemyReady = false;
     
+    private bool conceded = false;
     private bool animationPhase = true;
     private bool animating = false;
     public bool readyForTurn = false;
@@ -265,7 +267,7 @@ public class GameManager : MonoBehaviour
             }
 
             if (Input.GetButtonDown("Pause")) {
-
+                pauseUI.SetActive(true);
             }
 
             if (animationPhase && !animating) {
@@ -325,12 +327,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Lose() {
+    public void Resume() {
+        pauseUI.SetActive(false);
+    }
+
+    public void Concede() {
+        conceded = true;
+        pauseUI.SetActive(false);
+        Lose();
+        EventHandler.Instance.SendConcedeEvent();
+    }
+    
+    public void OpponentConcede() {
+        conceded = true;
+        opponentConcedeUI.SetActive(true);
+    }
+
+    public void Lose() {
         defeatUI.SetActive(true);
         AudioManager.Instance.Play("Lose");
     }
 
-    private void Win() {
+    public void Win() {
+        opponentConcedeUI.SetActive(false);
+        opponentDisconnectUI.SetActive(false);
         victoryUI.SetActive(true);
         AudioManager.Instance.Play("Win");
     }
@@ -410,8 +430,8 @@ public class GameManager : MonoBehaviour
 
     public void OpponentDisconnect()
     {
-        if (numEnemy > 0 && numFriendly > 0) {
-            Win();
+        if (numEnemy > 0 && numFriendly > 0 && !conceded) {
+            opponentDisconnectUI.SetActive(true);
         }
     }
 

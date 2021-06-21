@@ -17,6 +17,7 @@ public class EventHandler : MonoBehaviourPunCallbacks
     private const byte InstantiateEvent = 4;
     private const byte FirstTurnEvent = 5;
     private const byte ReadyEvent = 6;
+    private const byte ConcedeEvent = 7;
 
     public void MainMenu()
     {
@@ -143,6 +144,9 @@ public class EventHandler : MonoBehaviourPunCallbacks
                 GameManager.Instance.enemyReady = true;
                 GameManager.Instance.CheckBothReady();
                 break;
+            case ConcedeEvent:
+                GameManager.Instance.OpponentConcede();
+                break;
         }
     }
 
@@ -166,5 +170,10 @@ public class EventHandler : MonoBehaviourPunCallbacks
     public void SendReady()
     {
         PhotonNetwork.RaiseEvent(ReadyEvent, null, RaiseEventOptions.Default, SendOptions.SendReliable);
+    }
+
+    public void SendConcedeEvent()
+    {
+        PhotonNetwork.RaiseEvent(ConcedeEvent, null, RaiseEventOptions.Default, SendOptions.SendReliable);
     }
 }
