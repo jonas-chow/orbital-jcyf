@@ -267,10 +267,8 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            if (Input.GetButtonDown("Pause")) {
-                paused = !paused;
-                friendly[currentChar].isActive = !paused;
-                pauseUI.SetActive(paused);
+            if (Input.GetButtonDown("Pause") && !conceded) {
+                Pause();
             }
 
             if (animationPhase && !animating) {
@@ -330,20 +328,33 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void Resume() {
-        pauseUI.SetActive(false);
+    // Pausing brings up the UI and prevents any actions until you resume
+    public void Pause() {
+        paused = !paused;
+        if (TimeBar.Instance.IsTurn()) {
+            friendly[currentChar].isActive = !paused;
+        }
+        pauseUI.SetActive(paused);
     }
 
     public void Concede() {
-        conceded = true;
-        pauseUI.SetActive(false);
-        Lose();
         EventHandler.Instance.SendConcedeEvent();
+        StopGame();
+        conceded = true;
+        Lose();
     }
     
     public void OpponentConcede() {
         conceded = true;
         opponentConcedeUI.SetActive(true);
+        StopGame();
+    }
+
+    private void StopGame() {
+        paused = true;
+        friendly[currentChar].isActive = false;
+        pauseUI.SetActive(false);
+        TimeBar.Instance.Stop();
     }
 
     public void Lose() {
@@ -352,8 +363,6 @@ public class GameManager : MonoBehaviour
     }
 
     public void Win() {
-        opponentConcedeUI.SetActive(false);
-        opponentDisconnectUI.SetActive(false);
         victoryUI.SetActive(true);
         AudioManager.Instance.Play("Win");
     }
@@ -368,6 +377,9 @@ public class GameManager : MonoBehaviour
     {
         friendly[currentChar].Activate();
         CharacterMenu.Instance.SelectChar(friendly[currentChar].charID);
+        if (paused) {
+            friendly[currentChar].isActive = false;
+        }
     }
 
     IEnumerator StartTurn()
@@ -435,6 +447,7 @@ public class GameManager : MonoBehaviour
     {
         if (numEnemy > 0 && numFriendly > 0 && !conceded) {
             opponentDisconnectUI.SetActive(true);
+            StopGame();
         }
     }
 
