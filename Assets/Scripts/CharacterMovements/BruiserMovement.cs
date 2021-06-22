@@ -12,7 +12,11 @@ TODO:
 
 public class BruiserMovement : CharacterMovement
 {
-    private class Attack1 : LinearAttack
+    public static int _hp = 100;
+    public static int _attack = 15;
+    public static int _defense = 15;
+
+    public class Attack1 : LinearAttack
     {
         public BruiserMovement self;
 
@@ -53,9 +57,18 @@ public class BruiserMovement : CharacterMovement
             }
             AudioManager.Instance.Play("MeleeMiss");  
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Deals {damage} damage to the target in front of you. 
+
+            Cooldown: {cooldown}
+            Range: {range}";
+        }
     }
 
-    private class Attack2 : MeleeAOEAttack
+    public class Attack2 : MeleeAOEAttack
     {
         public BruiserMovement self;
 
@@ -96,9 +109,19 @@ public class BruiserMovement : CharacterMovement
             self.TakeDamage(self.GetDefense(), 20);
             AudioManager.Instance.Play("BruiserAOE");  
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Deals {damage} damage to all enemies around you.
+
+            You take {damage} damage as recoil.
+
+            Cooldown: {cooldown}";
+        }
     }
 
-    private class Attack3 : SelfAttack
+    public class Attack3 : SelfAttack
     {
         public BruiserMovement self;
 
@@ -126,6 +149,16 @@ public class BruiserMovement : CharacterMovement
             self.AddBuff(new InvincibleBuff(2));
             AudioManager.Instance.Play("BruiserInvincible");  
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Become invincible until the start of your next turn.
+
+            You cannot take any damage when invincible.
+
+            Cooldown: {cooldown}";
+        }
     }
 
     void Awake()
@@ -133,6 +166,9 @@ public class BruiserMovement : CharacterMovement
         attack1 = new Attack1(this);
         attack2 = new Attack2(this);
         attack3 = new Attack3(this);
+        hp.maxHp = _hp;
+        atk = _attack;
+        def = _defense;
     }
 
     public override void SetupAttack(int attackNumber)

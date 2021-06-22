@@ -12,7 +12,11 @@ TODO:
 
 public class WizardMovement : CharacterMovement
 {
-    private class Attack1 : LinearAttack
+    public static int _hp = 100;
+    public static int _attack = 20;
+    public static int _defense = 10;
+
+    public class Attack1 : LinearAttack
     {
         public WizardMovement self;
 
@@ -50,9 +54,18 @@ public class WizardMovement : CharacterMovement
             }
             AudioManager.Instance.Play("MagicAttack");
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Deals {damage} damage to the first target in front of you. 
+
+            Cooldown: {cooldown}
+            Range: {range}";
+        }
     }
 
-    private class Attack2 : RangedAOEAttack
+    public class Attack2 : RangedAOEAttack
     {
         public WizardMovement self;
 
@@ -94,9 +107,18 @@ public class WizardMovement : CharacterMovement
             FaceTargetDirection(offsetX, offsetY);
             AudioManager.Instance.Play("AOEMagicAttack");
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Deals {damage} damage in an area of effect.
+
+            Cooldown: {cooldown}
+            Range: {range}";
+        }
     }
 
-    private class Attack3 : SelfAttack
+    public class Attack3 : SelfAttack
     {
         public WizardMovement self;
 
@@ -127,6 +149,14 @@ public class WizardMovement : CharacterMovement
         {
             AudioManager.Instance.Play("ResetCD");
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            End the cooldown of your other skills.
+
+            Cooldown: {cooldown}";
+        }
     }
 
     void Awake()
@@ -134,6 +164,9 @@ public class WizardMovement : CharacterMovement
         attack1 = new Attack1(this);
         attack2 = new Attack2(this);
         attack3 = new Attack3(this);
+        hp.maxHp = _hp;
+        atk = _attack;
+        def = _defense;
     }
 
     public override void SetupAttack(int attackNumber)

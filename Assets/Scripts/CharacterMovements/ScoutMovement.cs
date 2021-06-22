@@ -12,9 +12,13 @@ TODO:
 
 public class ScoutMovement : CharacterMovement
 {
+    public static int _hp = 100;
+    public static int _attack = 15;
+    public static int _defense = 15;
+
     public GameObject ward;
 
-    private class Attack1 : LinearAttack
+    public class Attack1 : LinearAttack
     {
         public ScoutMovement self;
 
@@ -54,9 +58,19 @@ public class ScoutMovement : CharacterMovement
             }
             AudioManager.Instance.Play("ArrowMiss");
         }
+
+
+        public override string GetDescription()
+        {
+            return $@"
+            Deals {damage} damage to the first target in front of you. 
+
+            Cooldown: {cooldown}
+            Range: {range}";
+        }
     }
 
-    private class Attack2 : RangedTargetAttack
+    public class Attack2 : RangedTargetAttack
     {
         public ScoutMovement self;
 
@@ -110,9 +124,21 @@ public class ScoutMovement : CharacterMovement
                 AudioManager.Instance.Play("Ward");
             }
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Places a ward at the target position that grants vision.
+
+            If cast on an enemy, will deal {damage} to the target instead.
+            Will also grant vision of the target until the start of the next turn.
+
+            Cooldown: {cooldown}
+            Range: {range}";
+        }
     }
 
-    private class Attack3 : RangedAOEAttack
+    public class Attack3 : RangedAOEAttack
     {
         public ScoutMovement self;
 
@@ -155,6 +181,17 @@ public class ScoutMovement : CharacterMovement
             });
             AudioManager.Instance.Play("Scout3");
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Deals {damage} to all enemies in an area of effect.
+
+            Also grants vision of every enemy hit for 4 turns.
+
+            Cooldown: {cooldown}
+            Range: {range}";
+        }
     }
 
     void Awake()
@@ -162,6 +199,9 @@ public class ScoutMovement : CharacterMovement
         attack1 = new Attack1(this);
         attack2 = new Attack2(this);
         attack3 = new Attack3(this);
+        hp.maxHp = _hp;
+        atk = _attack;
+        def = _defense;
     }
 
     public override void SetupAttack(int attackNumber)

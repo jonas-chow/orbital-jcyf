@@ -12,10 +12,14 @@ TODO:
 
 public class SummonerMovement : CharacterMovement
 {
+    public static int _hp = 100;
+    public static int _attack = 15;
+    public static int _defense = 15;
+
     public GameObject familiarPrefab;
     private FamiliarMovement familiarMovement = null;
 
-    private class Attack1 : LinearAttack
+    public class Attack1 : LinearAttack
     {
         public SummonerMovement self;
 
@@ -54,9 +58,18 @@ public class SummonerMovement : CharacterMovement
             }
             AudioManager.Instance.Play("MagicAttack");
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Deals {damage} damage to the first target in front of you. 
+
+            Cooldown: {cooldown}
+            Range: {range}";
+        }
     }
 
-    private class Attack2 : RangedTargetAttack
+    public class Attack2 : RangedTargetAttack
     {
         public SummonerMovement self;
 
@@ -122,9 +135,20 @@ public class SummonerMovement : CharacterMovement
                 AudioManager.Instance.Play("FamiliarAttack");
             } 
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Summon a controllable familiar at the target position which explodes on death, dealing {damage} damage to all enemies around it.
+
+            If cast on an enemy, will instead deal {damage} to the target.
+
+            Cooldown: {cooldown}
+            Range: {range}";
+        }
     }
 
-    private class Attack3 : SelfAttack
+    public class Attack3 : SelfAttack
     {
         public SummonerMovement self;
 
@@ -177,6 +201,14 @@ public class SummonerMovement : CharacterMovement
                 AudioManager.Instance.Play("Swap");
             }
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Swap places with the familiar.
+
+            Cooldown: {cooldown}";
+        }
     }
 
     void Awake()
@@ -184,6 +216,9 @@ public class SummonerMovement : CharacterMovement
         attack1 = new Attack1(this);
         attack2 = new Attack2(this);
         attack3 = new Attack3(this);
+        hp.maxHp = _hp;
+        atk = _attack;
+        def = _defense;
     }
 
     public override void SetupAttack(int attackNumber)

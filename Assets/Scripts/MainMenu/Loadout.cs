@@ -13,6 +13,8 @@ public class Loadout : MonoBehaviour
     public TMP_Dropdown rangedDropdown;
     public TMP_Dropdown mageDropdown;
 
+    public GameObject characterDetails;
+
     void OnEnable()
     {
         meleeDropdown.value = PlayerPrefs.GetInt("Melee", (int)Melees.Assassin);
@@ -53,5 +55,26 @@ public class Loadout : MonoBehaviour
     {
         // button click
         this.gameObject.SetActive(false);
+    }
+
+    public void MeleeDetails()
+    {
+        characterDetails.SetActive(true);
+        CharacterDetails details = characterDetails.GetComponent<CharacterDetails>();
+        details.Init(((Melees)meleeDropdown.value).ToString());
+    }
+
+    public void RangedDetails()
+    {
+        characterDetails.SetActive(true);
+        CharacterDetails details = characterDetails.GetComponent<CharacterDetails>();
+        details.Init(((Rangeds)rangedDropdown.value).ToString());
+    }
+
+    public void MageDetails()
+    {
+        characterDetails.SetActive(true);
+        CharacterDetails details = characterDetails.GetComponent<CharacterDetails>();
+        details.Init(((Mages)mageDropdown.value).ToString());
     }
 }

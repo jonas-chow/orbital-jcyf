@@ -10,11 +10,22 @@ public class MainMenuButtons : MonoBehaviourPunCallbacks
     public GameObject multiplayerLobby;
     public GameObject multiplayerRoom;
     public GameObject loadout;
+    public GameObject controls;
 
     public void OpenLoadout()
     {
         // button click
         loadout.SetActive(true);
+    }
+
+    public void OpenControls()
+    {
+        controls.SetActive(true);
+    }
+
+    public void CloseControls()
+    {
+        controls.SetActive(false);
     }
 
     void Start()

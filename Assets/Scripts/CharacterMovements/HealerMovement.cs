@@ -12,7 +12,11 @@ TODO:
 
 public class HealerMovement : CharacterMovement
 {
-    private class Attack1 : LinearAttack
+    public static int _hp = 100;
+    public static int _attack = 5;
+    public static int _defense = 15;
+
+    public class Attack1 : LinearAttack
     {
         public HealerMovement self;
 
@@ -50,9 +54,18 @@ public class HealerMovement : CharacterMovement
             }
             AudioManager.Instance.Play("MagicAttack");
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Deals {damage} damage to the first target in front of you. 
+
+            Cooldown: {cooldown}
+            Range: {range}";
+        }
     }
 
-    private class Attack2 : RangedAOEAttack
+    public class Attack2 : RangedAOEAttack
     {
         public HealerMovement self;
 
@@ -93,9 +106,18 @@ public class HealerMovement : CharacterMovement
             });
             AudioManager.Instance.Play("Heal");
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Heals all allies for {damage} HP in an area of effect.
+
+            Cooldown: {cooldown}
+            Range: {range}";
+        }
     }
 
-    private class Attack3 : RangedAOEAttack
+    public class Attack3 : RangedAOEAttack
     {
         public HealerMovement self;
 
@@ -138,6 +160,17 @@ public class HealerMovement : CharacterMovement
             });
             AudioManager.Instance.Play("AOEbuff");
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Buffs all allies in an area of effect until the start of next turn.
+
+            Affected allies have {damage} higher attack and defense.
+
+            Cooldown: {cooldown}
+            Range: {range}";
+        }
     }
 
     void Awake()
@@ -145,6 +178,9 @@ public class HealerMovement : CharacterMovement
         attack1 = new Attack1(this);
         attack2 = new Attack2(this);
         attack3 = new Attack3(this);
+        hp.maxHp = _hp;
+        atk = _attack;
+        def = _defense;
     }
 
     public override void SetupAttack(int attackNumber)

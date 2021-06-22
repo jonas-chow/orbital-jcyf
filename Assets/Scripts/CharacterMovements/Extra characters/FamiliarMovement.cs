@@ -14,7 +14,7 @@ public class FamiliarMovement : CharacterMovement
 {
     SummonerMovement summoner;
 
-    private class Attack1 : LinearAttack
+    public class Attack1 : LinearAttack
     {
         public FamiliarMovement self;
 
@@ -53,9 +53,18 @@ public class FamiliarMovement : CharacterMovement
                 AudioManager.Instance.Play("FamiliarAttack");
             }
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Deals {damage} damage to the target in front of you. 
+
+            Cooldown: {cooldown}
+            Range: {range}";
+        }
     }
 
-    private class Attack2 : MeleeAOEAttack
+    public class Attack2 : MeleeAOEAttack
     {
         public FamiliarMovement self;
 
@@ -88,9 +97,17 @@ public class FamiliarMovement : CharacterMovement
             self.Die();
             AudioManager.Instance.Play("TrapExplosion");
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Explode and deal {damage} to all enemies in an area of effect.
+
+            Cooldown: {cooldown}";
+        }
     }
 
-    private class Attack3 : SelfAttack
+    public class Attack3 : SelfAttack
     {
         public FamiliarMovement self;
 
@@ -135,6 +152,14 @@ public class FamiliarMovement : CharacterMovement
                 self.summoner.GetX(), 
                 self.summoner.GetY());
                 AudioManager.Instance.Play("Swap");
+        }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Swap positions with the summoner.
+
+            Cooldown: {cooldown}";
         }
     }
 

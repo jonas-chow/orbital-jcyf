@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class TankMovement : CharacterMovement
 {
-    private class Attack1 : LinearAttack
+    public static int _hp = 100;
+    public static int _attack = 10;
+    public static int _defense = 20;
+
+    public class Attack1 : LinearAttack
     {
         public TankMovement self;
 
@@ -45,9 +49,18 @@ public class TankMovement : CharacterMovement
             }
             AudioManager.Instance.Play("MeleeMiss");
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Deals {damage} damage to the target in front of you. 
+
+            Cooldown: {cooldown}
+            Range: {range}";
+        }
     }
 
-    private class Attack2 : SelfAttack
+    public class Attack2 : SelfAttack
     {
         public TankMovement self;
 
@@ -77,9 +90,17 @@ public class TankMovement : CharacterMovement
             self.Heal(damage);
             AudioManager.Instance.Play("Heal");
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Heal yourself for {damage} HP.
+
+            Cooldown: {cooldown}";
+        }
     }
 
-    private class Attack3 : MeleeAOEAttack
+    public class Attack3 : MeleeAOEAttack
     {
         public TankMovement self;
 
@@ -99,7 +120,7 @@ public class TankMovement : CharacterMovement
             List<CharacterMovement> allies = FindTargets().FindAll(cm => !cm.IsEnemyOf(self));
             allies.ForEach(cm => {
                 if (cm.Equals(self)) {
-                    cm.AddBuff(new DefenseBuff(-5, 2));
+                    cm.AddBuff(new DefenseBuff(-10, 2));
                 } else {
                     cm.AddBuff(new InvincibleBuff(2));
                 }
@@ -117,12 +138,22 @@ public class TankMovement : CharacterMovement
             List<CharacterMovement> enemies = FindTargets().FindAll(cm => !cm.IsEnemyOf(self));
             enemies.ForEach(cm => {
                 if (cm.Equals(self)) {
-                    cm.AddBuff(new DefenseBuff(-5, 2));
+                    cm.AddBuff(new DefenseBuff(-10, 2));
                 } else {
                     cm.AddBuff(new InvincibleBuff(2));
                 }
             });
             AudioManager.Instance.Play("Taunt");
+        }
+
+        public override string GetDescription()
+        {
+            return $@"
+            All allies around you become invincible until the start of your next turn.
+
+            You lose 10 defense until the start of your next turn
+
+            Cooldown: {cooldown}";
         }
     }
 
@@ -131,6 +162,9 @@ public class TankMovement : CharacterMovement
         attack1 = new Attack1(this);
         attack2 = new Attack2(this);
         attack3 = new Attack3(this);
+        hp.maxHp = _hp;
+        atk = _attack;
+        def = _defense;
     }
 
     public override void SetupAttack(int attackNumber)

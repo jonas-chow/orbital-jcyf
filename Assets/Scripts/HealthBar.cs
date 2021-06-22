@@ -8,8 +8,7 @@ public class HealthBar : MonoBehaviour
     private int hp;
     private float tempTime = 1.5f;
 
-    [SerializeField]
-    private int maxHp = 100;
+    public int maxHp = 100;
 
     [SerializeField]
     private GameObject greenBar, redBar;

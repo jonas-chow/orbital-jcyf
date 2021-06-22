@@ -12,10 +12,14 @@ TODO:
 
 public class TrapperMovement : CharacterMovement
 {
+    public static int _hp = 100;
+    public static int _attack = 15;
+    public static int _defense = 15;
+
     public GameObject trapPrefab;
     private List<Trap> traps = new List<Trap>();
 
-    private class Attack1 : LinearAttack
+    public class Attack1 : LinearAttack
     {
         public TrapperMovement self;
 
@@ -55,9 +59,18 @@ public class TrapperMovement : CharacterMovement
             }
             AudioManager.Instance.Play("ArrowMiss");
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Deals {damage} damage to the first target in front of you. 
+
+            Cooldown: {cooldown}
+            Range: {range}";
+        }
     }
 
-    private class Attack2 : SelfAttack
+    public class Attack2 : SelfAttack
     {
         public TrapperMovement self;
 
@@ -100,9 +113,21 @@ public class TrapperMovement : CharacterMovement
                 AudioManager.Instance.Play("Trap");
             }
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Sets a trap at your position. 
+            
+            Traps do {damage} damage when an enemy steps on them.
+
+            Traps also disable the enemy and grants you vision of them for 3 turns.
+
+            Cooldown: {cooldown}";
+        }
     }
 
-    private class Attack3 : SelfAttack
+    public class Attack3 : SelfAttack
     {
         public TrapperMovement self;
 
@@ -135,6 +160,14 @@ public class TrapperMovement : CharacterMovement
             self.traps = new List<Trap>();
             AudioManager.Instance.Play("TrapExplosion");
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            All traps explode, dealing {damage} damage in an area of effect.
+
+            Cooldown: {cooldown}";
+        }
     }
 
     void Awake()
@@ -142,6 +175,9 @@ public class TrapperMovement : CharacterMovement
         attack1 = new Attack1(this);
         attack2 = new Attack2(this);
         attack3 = new Attack3(this);
+        hp.maxHp = _hp;
+        atk = _attack;
+        def = _defense;
     }
 
     public override void SetupAttack(int attackNumber)

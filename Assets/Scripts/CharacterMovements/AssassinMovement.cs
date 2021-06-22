@@ -12,7 +12,11 @@ TODO:
 
 public class AssassinMovement : CharacterMovement
 {
-    private class Attack1 : LinearAttack
+    public static int _hp = 100;
+    public static int _attack = 20;
+    public static int _defense = 10;
+
+    public class Attack1 : LinearAttack
     {
         public AssassinMovement self;
         public int backstabBonus;
@@ -62,9 +66,20 @@ public class AssassinMovement : CharacterMovement
             }
             AudioManager.Instance.Play("MeleeMiss");
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Deals {damage} damage to the target in front of you. 
+
+            Does an extra {backstabBonus} damage if you attack the target from the back.
+
+            Cooldown: {cooldown}
+            Range: {range}";
+        }
     }
 
-    private class Attack2 : LinearAttack
+    public class Attack2 : LinearAttack
     {
         public AssassinMovement self;
 
@@ -106,9 +121,20 @@ public class AssassinMovement : CharacterMovement
             }
             AudioManager.Instance.Play("MeleeMiss");
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Deals {damage} damage to the target in front of you. 
+
+            Also poisons the target, dealing 10 damage at the end of each turn.
+            
+            Cooldown: {cooldown}
+            Range: {range}";
+        }
     }
 
-    private class Attack3 : SelfAttack
+    public class Attack3 : SelfAttack
     {
         public AssassinMovement self;
 
@@ -137,6 +163,16 @@ public class AssassinMovement : CharacterMovement
             self.AddBuff(new StealthBuff(2));
             AudioManager.Instance.Play("Stealth");
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Go into stealth until the start of your next turn.
+
+            Enemies cannot see you when you are stealthed, but you will be revealed if you take damage.
+            
+            Cooldown: {cooldown}";
+        }
     }
 
     void Awake()
@@ -144,6 +180,9 @@ public class AssassinMovement : CharacterMovement
         attack1 = new Attack1(this);
         attack2 = new Attack2(this);
         attack3 = new Attack3(this);
+        hp.maxHp = _hp;
+        atk = _attack;
+        def = _defense;
     }
 
     public override void SetupAttack(int attackNumber)

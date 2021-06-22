@@ -12,7 +12,11 @@ TODO:
 
 public class HunterMovement : CharacterMovement
 {
-    private class Attack1 : LinearAttack
+    public static int _hp = 100;
+    public static int _attack = 20;
+    public static int _defense = 10;
+
+    public class Attack1 : LinearAttack
     {
         public HunterMovement self;
 
@@ -52,9 +56,18 @@ public class HunterMovement : CharacterMovement
             }
             AudioManager.Instance.Play("ArrowMiss");
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Deals {damage} damage to the first target in front of you. 
+
+            Cooldown: {cooldown}
+            Range: {range}";
+        }
     }
 
-    private class Attack2 : LinearAttack
+    public class Attack2 : LinearAttack
     {
         public HunterMovement self;
         public int distanceScaling;
@@ -100,9 +113,20 @@ public class HunterMovement : CharacterMovement
             }
             AudioManager.Instance.Play("ArrowMiss");
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Deals {damage} damage to the first target in front of you. 
+
+            Deals an additional {distanceScaling} damage for each tile between you and the target.
+
+            Cooldown: {cooldown}
+            Range: {range}";
+        }
     }
 
-    private class Attack3 : LinearAttack
+    public class Attack3 : LinearAttack
     {
         public HunterMovement self;
         public int knockback;
@@ -158,6 +182,17 @@ public class HunterMovement : CharacterMovement
                 AudioManager.Instance.Play("Knockback");
             }
         }
+
+        public override string GetDescription()
+        {
+            return $@"
+            Deals {damage} damage to the target in front of you.
+
+            Also knocks the target back {knockback} tiles.
+
+            Cooldown: {cooldown}
+            Range: {range}";
+        }
     }
 
     void Awake()
@@ -165,6 +200,9 @@ public class HunterMovement : CharacterMovement
         attack1 = new Attack1(this);
         attack2 = new Attack2(this);
         attack3 = new Attack3(this);
+        hp.maxHp = _hp;
+        atk = _attack;
+        def = _defense;
     }
 
     public override void SetupAttack(int attackNumber)

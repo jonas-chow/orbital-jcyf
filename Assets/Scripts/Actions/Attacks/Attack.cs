@@ -46,6 +46,7 @@ public abstract class Attack : Action
   public abstract void AimRight();
 
   public abstract void EventExecute(object[] extraData);
+  public virtual string GetDescription() {return "";}
 
   public int GetX()
   {
