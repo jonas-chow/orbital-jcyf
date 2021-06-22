@@ -17,7 +17,7 @@ public abstract class CharacterMovement : MonoBehaviour
 
     // 0 for warrior, 1 for ranged, 2 for mage
     public int charID;
-    private bool isActive = false;
+    public bool isActive = false;
     public HealthBar hp;
     public string faceDirection = "up";
 

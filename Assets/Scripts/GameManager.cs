@@ -108,6 +108,7 @@ public class GameManager : MonoBehaviour
     public bool readyForTurn = false;
     private float animationGap = .1f;
     public int actionCount = 0;
+    private bool paused = false;
 
     public void InstantiateSelf()
     {
@@ -250,7 +251,7 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(StartTurn());
             }
 
-            if (TimeBar.Instance.IsTurn()) {
+            if (TimeBar.Instance.IsTurn() && !paused) {
                 if (Input.GetButtonDown("Next Character")) {
                     DeactivateCurrent();
                     currentChar = (currentChar + 1) % numFriendly;
@@ -267,7 +268,9 @@ public class GameManager : MonoBehaviour
             }
 
             if (Input.GetButtonDown("Pause")) {
-                pauseUI.SetActive(true);
+                paused = !paused;
+                friendly[currentChar].isActive = !paused;
+                pauseUI.SetActive(paused);
             }
 
             if (animationPhase && !animating) {

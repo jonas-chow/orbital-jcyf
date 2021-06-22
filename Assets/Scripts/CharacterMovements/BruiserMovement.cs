@@ -76,8 +76,8 @@ public class BruiserMovement : CharacterMovement
                 cm.TakeDamage(self.GetAttack(), damage);
             });
 
-            // use defense as the attack so that always take 20 fixed damage
-            self.TakeDamage(self.GetDefense(), 20);
+            // use defense as the attack so that always take fixed damage
+            self.TakeDamage(self.GetDefense(), damage);
             AudioManager.Instance.Play("BruiserAOE");  
         }
 
