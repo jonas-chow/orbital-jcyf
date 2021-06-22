@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -109,6 +110,7 @@ public class GameManager : MonoBehaviour
     private float animationGap = .1f;
     public int actionCount = 0;
     private bool paused = false;
+    public TextMeshProUGUI tooltipText;
 
     public void InstantiateSelf()
     {
@@ -431,7 +433,6 @@ public class GameManager : MonoBehaviour
             }
             yield return new WaitForSeconds(animationGap);
         }
-        ActionQueue.Instance.ResetQueue();
         animationPhase = false;
         animating = false;
     }
@@ -511,5 +512,10 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public void SetTooltip(string text)
+    {
+        tooltipText.text = text;
     }
 }

@@ -133,6 +133,7 @@ public abstract class CharacterMovement : MonoBehaviour
         aiming = true;
         ActionQueue.Instance.Disable();
         SetupAttack(attackNumber);
+        GameManager.Instance.SetTooltip(attack.GetDescription());
     }
 
     public abstract void SetupAttack(int attackNumber);
@@ -142,6 +143,7 @@ public abstract class CharacterMovement : MonoBehaviour
         aiming = false;
         Attack.ClearIndicators();
         Attack.ClearLimits();
+        GameManager.Instance.SetTooltip("");
     }
 
     public void Activate()
