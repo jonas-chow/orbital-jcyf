@@ -428,6 +428,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(.5f);
             readyForTurn = true;
         }
+        AudioManager.Instance.Play("Turn");
     }
 
     public void EnemyTurn()

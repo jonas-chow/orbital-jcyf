@@ -6,7 +6,6 @@ public class AudioManager : MonoBehaviour
 {
     private static AudioManager instance;
     public static AudioManager Instance { get { return instance; } }
-    public AudioMixer audioMixer;
 
     public Sound[] sounds;
     
@@ -48,8 +47,21 @@ public class AudioManager : MonoBehaviour
         s.source.Stop();
     }
 
-    public void SetVolume(float volume)
+    public void SetBGMVolume(float volume)
     {
-        audioMixer.SetFloat("MyExposedParam", volume);
+        Sound[] soundArray = Array.FindAll(sounds, sound => !sound.soundEffect);
+        foreach (Sound s in soundArray)
+        {
+            s.source.volume = volume;
+        }
+    }
+
+    public void SetSoundEffectVolume(float volume)
+    {
+        Sound[] soundArray = Array.FindAll(sounds, sound => sound.soundEffect);
+        foreach (Sound s in soundArray)
+        {
+            s.source.volume = volume;
+        }
     }
 }
