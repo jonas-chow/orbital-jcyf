@@ -30,6 +30,7 @@ public class SummonerMovement : CharacterMovement
             this.range = 5;
             this.damage = 15;
             this.cooldown = 2;
+            this.type = "attack";
         }
 
         // basic melee attack
@@ -80,6 +81,7 @@ public class SummonerMovement : CharacterMovement
             this.range = 5;
             this.cooldown = 5;
             this.damage = 30;
+            this.type = "other";
         }
 
         public override void Execute()
@@ -157,6 +159,7 @@ public class SummonerMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.cooldown = 5;
+            this.type = "other";
         }
 
         public override void Execute()

@@ -30,6 +30,7 @@ public class TrapperMovement : CharacterMovement
             this.range = 5;
             this.damage = 20;
             this.cooldown = 2;
+            this.type = "attack";
         }
 
         public override void Execute()
@@ -81,6 +82,7 @@ public class TrapperMovement : CharacterMovement
             this.range = 0;
             this.cooldown = 10;
             this.damage = 10;
+            this.type = "other";
         }
 
         public override void Execute()
@@ -138,6 +140,7 @@ public class TrapperMovement : CharacterMovement
             this.range = 0;
             this.damage = 30;
             this.cooldown = 20;
+            this.type = "attack";
         }
 
         public override void Execute()

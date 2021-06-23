@@ -27,6 +27,7 @@ public class HealerMovement : CharacterMovement
             this.range = 5;
             this.damage = 15;
             this.cooldown = 2;
+            this.type = "attack";
         }
 
         public override void Execute()
@@ -76,6 +77,7 @@ public class HealerMovement : CharacterMovement
             this.range = 5;
             this.damage = 40;
             this.cooldown = 15;
+            this.type = "heal";
         }
 
         public override void Execute()
@@ -127,7 +129,8 @@ public class HealerMovement : CharacterMovement
             this.self = cm;
             this.range = 5;
             this.cooldown = 5;
-            this.damage = 10; // dk how strong numbers are for atk/def buffs prob need adjustments
+            this.damage = 10;
+            this.type = "buff";
         }
 
         public override void Execute()

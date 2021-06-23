@@ -27,6 +27,7 @@ public class HunterMovement : CharacterMovement
             this.range = 5;
             this.damage = 15;
             this.cooldown = 2;
+            this.type = "attack";
         }
 
         public override void Execute()
@@ -80,6 +81,7 @@ public class HunterMovement : CharacterMovement
             this.damage = 10;
             this.distanceScaling = 3;
             this.cooldown = 10;
+            this.type = "attack";
         }
 
         public override void Execute()
@@ -139,6 +141,7 @@ public class HunterMovement : CharacterMovement
             this.damage = 15;
             this.knockback = 2;
             this.cooldown = 5;
+            this.type = "attack";
         }
 
         public override void Execute()

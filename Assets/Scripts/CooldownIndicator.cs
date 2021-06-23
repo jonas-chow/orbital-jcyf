@@ -9,14 +9,29 @@ public class CooldownIndicator : MonoBehaviour
     private int counter;
     private string description;
     public TextMeshPro text;
-    public SpriteRenderer sprite;
+    public SpriteRenderer cdOverlay;
+    public SpriteRenderer icon;
 
     public void Init(Attack attack)
     {
         this.cooldown = attack.cooldown;
         this.description = attack.GetDescription();
+        switch (attack.type)
+        {
+            case "attack":
+                icon.sprite = CharacterMenu.Instance.attack;
+                break;
+            case "buff":
+                icon.sprite = CharacterMenu.Instance.buff;
+                break;
+            case "heal":
+                icon.sprite = CharacterMenu.Instance.heal;
+                break;
+            default:
+                icon.sprite = CharacterMenu.Instance.other;
+                break;
+        }
         ResetCD();
-        // gameObject.SetActive(false);
     }
 
     public void TurnPass()
@@ -27,7 +42,6 @@ public class CooldownIndicator : MonoBehaviour
                 text.text = counter.ToString();
             } else {
                 ResetCD();
-                // gameObject.SetActive(false);
             }
         }
     }
@@ -36,12 +50,12 @@ public class CooldownIndicator : MonoBehaviour
     {
         counter = cooldown;
         text.text = counter.ToString();
-        sprite.enabled = true;
+        cdOverlay.enabled = true;
     }
 
     public void ResetCD()
     {
-        sprite.enabled = false;
+        cdOverlay.enabled = false;
         text.text = "";
     }
 

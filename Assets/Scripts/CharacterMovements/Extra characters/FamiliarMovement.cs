@@ -25,6 +25,7 @@ public class FamiliarMovement : CharacterMovement
             this.range = 1;
             this.damage = 20;
             this.cooldown = 2;
+            this.type = "attack";
         }
 
         // basic melee attack
@@ -75,6 +76,7 @@ public class FamiliarMovement : CharacterMovement
             this.range = 1;
             this.damage = 30;
             this.cooldown = 99;
+            this.type = "other";
         }
 
         // explode and die
@@ -116,6 +118,7 @@ public class FamiliarMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.cooldown = 5;
+            this.type = "other";
         }
 
         public override void Execute()
