@@ -4814,12 +4814,12 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: MenuTheme
     clip: {fileID: 8300000, guid: 7e97c33bc3ded814a833358ea255a514, type: 3}
-    volume: 1
+    volume: 0.1
     loop: 1
     source: {fileID: 0}
   - name: BattleTheme
     clip: {fileID: 8300000, guid: 0f619a545d7188b45934152cf6c83b86, type: 3}
-    volume: 1
+    volume: 0.1
     loop: 1
     source: {fileID: 0}
 --- !u!4 &831564452
