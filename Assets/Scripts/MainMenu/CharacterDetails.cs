@@ -13,6 +13,7 @@ public class CharacterDetails : MonoBehaviour
 
     public void BackButton()
     {
+        AudioManager.Instance.Play("Click");
         this.gameObject.SetActive(false);
     }
 

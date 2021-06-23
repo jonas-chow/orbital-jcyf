@@ -14,17 +14,19 @@ public class MainMenuButtons : MonoBehaviourPunCallbacks
 
     public void OpenLoadout()
     {
-        // button click
+        AudioManager.Instance.Play("Click");
         loadout.SetActive(true);
     }
 
     public void OpenControls()
     {
+        AudioManager.Instance.Play("Click");
         controls.SetActive(true);
     }
 
     public void CloseControls()
     {
+        AudioManager.Instance.Play("Click");
         controls.SetActive(false);
     }
 
@@ -40,7 +42,7 @@ public class MainMenuButtons : MonoBehaviourPunCallbacks
 
     public void Connect()
     {
-        // button click
+        AudioManager.Instance.Play("Click");
         PhotonNetwork.NickName = PlayerPrefs.GetString("Username", "");
         if (PhotonNetwork.NickName != "") {
             PhotonNetwork.GameVersion = "v1";

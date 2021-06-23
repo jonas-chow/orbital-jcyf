@@ -14,14 +14,14 @@ public class MultiplayerLobby : MonoBehaviourPunCallbacks
 
     public void BackButton()
     {
-        // button click
+        AudioManager.Instance.Play("Click");
         Popup.StartPopup("Disconnecting...");
         PhotonNetwork.Disconnect();
     }
 
     public void CreateGame()
     {
-        // button click
+        AudioManager.Instance.Play("Click");
         if (roomName.text != "") {
             Popup.StartPopup("Creating room...");
             RoomOptions options = new RoomOptions();
@@ -34,7 +34,7 @@ public class MultiplayerLobby : MonoBehaviourPunCallbacks
 
     public void JoinGame()
     {
-        // button click
+        AudioManager.Instance.Play("Click");
         if (roomName.text != "") {
             Popup.StartPopup("Joining room...");
             PhotonNetwork.JoinRoom(roomName.text);
@@ -52,7 +52,7 @@ public class MultiplayerLobby : MonoBehaviourPunCallbacks
 
     public void RandomGame()
     {
-        // button click
+        AudioManager.Instance.Play("Click");
         Popup.StartPopup("Joining room...");
         PhotonNetwork.JoinRandomRoom();
     }

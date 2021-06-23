@@ -41,7 +41,7 @@ public class Popup : MonoBehaviour
 
     public void CloseNotification()
     {
-        // button click
+        AudioManager.Instance.Play("Click");
         notification.SetActive(false);
     }
 }

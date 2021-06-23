@@ -28,22 +28,25 @@ public class Loadout : MonoBehaviour
 
     public void SelectMelee()
     {
+        AudioManager.Instance.Play("Click");
         meleeSelect.ChangeIcon((Melees)meleeDropdown.value);
     }
 
     public void SelectRanged()
     {
+        AudioManager.Instance.Play("Click");
         rangedSelect.ChangeIcon((Rangeds)rangedDropdown.value);
     }
 
     public void SelectMage()
     {
+        AudioManager.Instance.Play("Click");
         mageSelect.ChangeIcon((Mages)mageDropdown.value);
     }
 
     public void Save()
     {
-        // button click
+        AudioManager.Instance.Play("Click");
         PlayerPrefs.SetInt("Melee", meleeDropdown.value);
         PlayerPrefs.SetInt("Ranged", rangedDropdown.value);
         PlayerPrefs.SetInt("Mage", mageDropdown.value);
@@ -53,12 +56,13 @@ public class Loadout : MonoBehaviour
 
     public void Cancel()
     {
-        // button click
+        AudioManager.Instance.Play("Click");
         this.gameObject.SetActive(false);
     }
 
     public void MeleeDetails()
     {
+        AudioManager.Instance.Play("Click");
         characterDetails.SetActive(true);
         CharacterDetails details = characterDetails.GetComponent<CharacterDetails>();
         details.Init(((Melees)meleeDropdown.value).ToString());
@@ -66,6 +70,7 @@ public class Loadout : MonoBehaviour
 
     public void RangedDetails()
     {
+        AudioManager.Instance.Play("Click");
         characterDetails.SetActive(true);
         CharacterDetails details = characterDetails.GetComponent<CharacterDetails>();
         details.Init(((Rangeds)rangedDropdown.value).ToString());
@@ -73,6 +78,7 @@ public class Loadout : MonoBehaviour
 
     public void MageDetails()
     {
+        AudioManager.Instance.Play("Click");
         characterDetails.SetActive(true);
         CharacterDetails details = characterDetails.GetComponent<CharacterDetails>();
         details.Init(((Mages)mageDropdown.value).ToString());

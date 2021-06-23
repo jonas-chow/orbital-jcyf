@@ -21,6 +21,7 @@ public class EventHandler : MonoBehaviourPunCallbacks
 
     public void MainMenu()
     {
+        AudioManager.Instance.Play("Click");
         PhotonNetwork.LeaveRoom();
     }
 
@@ -42,6 +43,7 @@ public class EventHandler : MonoBehaviourPunCallbacks
 
     public void Rematch()
     {
+        AudioManager.Instance.Play("Click");
         PhotonNetwork.LoadLevel(0);
     }
     

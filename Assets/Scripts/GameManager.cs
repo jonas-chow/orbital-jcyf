@@ -342,6 +342,7 @@ public class GameManager : MonoBehaviour
 
     // Pausing brings up the UI and prevents any actions until you resume
     public void Pause() {
+        AudioManager.Instance.Play("Click");
         paused = !paused;
         if (TimeBar.Instance.IsTurn()) {
             friendly[currentChar].isActive = !paused;
@@ -350,6 +351,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void Concede() {
+        AudioManager.Instance.Play("Click");
         EventHandler.Instance.SendConcedeEvent();
         StopGame();
         conceded = true;
