@@ -99,10 +99,12 @@ MonoBehaviour:
   enemySprite: {fileID: 6548035701645833669}
   selection: {fileID: 0}
   overallSprites: {fileID: 1582193739476674760}
-  damageText: {fileID: 0}
+  damageText: {fileID: 1159168646705591353, guid: daca40db4ce494cf0ab0af755c51145e, type: 3}
+  healText: {fileID: 1132091536140044234, guid: 5cd63148771ad4778ad14387d8b2dfea, type: 3}
   isEnemy: 0
   fog: {fileID: 4735033303337649550}
   charID: 0
+  isActive: 0
   hp: {fileID: 0}
   faceDirection: up
   atk: 0

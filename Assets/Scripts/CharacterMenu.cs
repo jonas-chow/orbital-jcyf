@@ -19,7 +19,6 @@ public class CharacterMenu : MonoBehaviour
         }
     }
 
-    public GameObject[] cooldownObjs = new GameObject[12];
     public CooldownIndicator[] cooldowns = new CooldownIndicator[12];
     
     public GameObject[] greenHps = new GameObject[4];
@@ -37,7 +36,7 @@ public class CharacterMenu : MonoBehaviour
     }
 
     public void UseSkill(int charId, int skillId) {
-        cooldownObjs[charId * 3 + skillId].SetActive(true);
+        cooldowns[charId * 3 + skillId].SkillUsed();
     }
 
     public void SelectChar(int charId) {
@@ -59,25 +58,23 @@ public class CharacterMenu : MonoBehaviour
         }
     }
 
-    public void init(int[] cds) {
+    public void Init(Attack[] attacks) {
         for (int i = 0; i < 9; i++) {
-            cooldowns[i].init(cds[i]);
-            cooldownObjs[i].SetActive(false);
+            cooldowns[i].Init(attacks[i]);
         }
     }
 
-    public void Set4thChar(int[] cds) {
+    public void Set4thChar(Attack[] attacks) {
         fourthChar.SetActive(true);
         SetHealth(3, 1f);
         deadIndicators[3].SetActive(false);
         for (int i = 0; i < 3; i++) {
-            cooldowns[i + 9].init(cds[i]);
-            cooldownObjs[i + 9].SetActive(false);
+            cooldowns[i + 9].Init(attacks[i]);
         }
     }
 
     public void ResetCD(int charID, int skillID)
     {
-        cooldownObjs[charID * 3 + skillID].SetActive(false);
+        cooldowns[charID * 3 + skillID - 1].ResetCD();
     }
 }

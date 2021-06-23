@@ -332,7 +332,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff44f28995aba40d0aca4bf593337509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testing: 1
+  testing: 0
   defeatUI: {fileID: 996488427}
   victoryUI: {fileID: 982411403}
   loadingUI: {fileID: 1473468720}
@@ -2042,19 +2042,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 360f18e4865f54a89980a70c41cbd3aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownObjs:
-  - {fileID: 1876907584}
-  - {fileID: 2042191620}
-  - {fileID: 1866315865}
-  - {fileID: 1737925530}
-  - {fileID: 1721355986}
-  - {fileID: 644715533}
-  - {fileID: 430225151}
-  - {fileID: 2099421826}
-  - {fileID: 1325146717}
-  - {fileID: 446093066}
-  - {fileID: 1307559669}
-  - {fileID: 482740876}
   cooldowns:
   - {fileID: 1876907586}
   - {fileID: 2042191623}
@@ -2917,6 +2904,7 @@ GameObject:
   - component: {fileID: 430225152}
   - component: {fileID: 430225153}
   - component: {fileID: 430225154}
+  - component: {fileID: 430225155}
   m_Layer: 0
   m_Name: Cooldown
   m_TagString: Untagged
@@ -3003,6 +2991,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 86803167}
+  sprite: {fileID: 430225153}
+--- !u!61 &430225155
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430225151}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &446093066
 GameObject:
   m_ObjectHideFlags: 0
@@ -3014,6 +3029,7 @@ GameObject:
   - component: {fileID: 446093067}
   - component: {fileID: 446093069}
   - component: {fileID: 446093068}
+  - component: {fileID: 446093070}
   m_Layer: 0
   m_Name: Cooldown
   m_TagString: Untagged
@@ -3049,6 +3065,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1287213147}
+  sprite: {fileID: 446093069}
 --- !u!212 &446093069
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3100,6 +3117,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &446093070
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446093066}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &482740876
 GameObject:
   m_ObjectHideFlags: 0
@@ -3111,6 +3154,7 @@ GameObject:
   - component: {fileID: 482740877}
   - component: {fileID: 482740879}
   - component: {fileID: 482740878}
+  - component: {fileID: 482740880}
   m_Layer: 0
   m_Name: Cooldown
   m_TagString: Untagged
@@ -3146,6 +3190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1521293397}
+  sprite: {fileID: 482740879}
 --- !u!212 &482740879
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3197,6 +3242,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &482740880
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482740876}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1001 &499568265
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3540,10 +3611,10 @@ RectTransform:
   - {fileID: 1004296849}
   - {fileID: 1348574247}
   - {fileID: 1473468721}
+  - {fileID: 1143671859}
   - {fileID: 1301429124}
   - {fileID: 982411404}
   - {fileID: 996488428}
-  - {fileID: 1143671859}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3624,6 +3695,7 @@ GameObject:
   - component: {fileID: 644715534}
   - component: {fileID: 644715535}
   - component: {fileID: 644715536}
+  - component: {fileID: 644715537}
   m_Layer: 0
   m_Name: Cooldown
   m_TagString: Untagged
@@ -3710,6 +3782,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1619977244}
+  sprite: {fileID: 644715535}
+--- !u!61 &644715537
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644715533}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1001 &652451285
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5219,7 +5318,7 @@ RectTransform:
   - {fileID: 1910024927}
   - {fileID: 1341777620}
   m_Father: {fileID: 613867580}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5317,7 +5416,7 @@ RectTransform:
   - {fileID: 1777458407}
   - {fileID: 776154671}
   m_Father: {fileID: 613867580}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5907,7 +6006,7 @@ RectTransform:
   - {fileID: 147819941}
   - {fileID: 339841281}
   m_Father: {fileID: 613867580}
-  m_RootOrder: 9
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -6950,7 +7049,7 @@ RectTransform:
   - {fileID: 1158552457}
   - {fileID: 957498933}
   m_Father: {fileID: 613867580}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -7006,6 +7105,7 @@ GameObject:
   - component: {fileID: 1307559670}
   - component: {fileID: 1307559672}
   - component: {fileID: 1307559671}
+  - component: {fileID: 1307559673}
   m_Layer: 0
   m_Name: Cooldown
   m_TagString: Untagged
@@ -7041,6 +7141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1425980683}
+  sprite: {fileID: 1307559672}
 --- !u!212 &1307559672
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7092,6 +7193,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1307559673
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1307559669}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1325146717
 GameObject:
   m_ObjectHideFlags: 0
@@ -7103,6 +7230,7 @@ GameObject:
   - component: {fileID: 1325146718}
   - component: {fileID: 1325146719}
   - component: {fileID: 1325146720}
+  - component: {fileID: 1325146721}
   m_Layer: 0
   m_Name: Cooldown
   m_TagString: Untagged
@@ -7189,6 +7317,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1420935455}
+  sprite: {fileID: 1325146719}
+--- !u!61 &1325146721
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1325146717}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1341777619
 GameObject:
   m_ObjectHideFlags: 0
@@ -18894,6 +19049,7 @@ GameObject:
   - component: {fileID: 1721355987}
   - component: {fileID: 1721355988}
   - component: {fileID: 1721355989}
+  - component: {fileID: 1721355990}
   m_Layer: 0
   m_Name: Cooldown
   m_TagString: Untagged
@@ -18980,6 +19136,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 359054122}
+  sprite: {fileID: 1721355988}
+--- !u!61 &1721355990
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1721355986}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1737925530
 GameObject:
   m_ObjectHideFlags: 0
@@ -18991,6 +19174,7 @@ GameObject:
   - component: {fileID: 1737925531}
   - component: {fileID: 1737925532}
   - component: {fileID: 1737925533}
+  - component: {fileID: 1737925534}
   m_Layer: 0
   m_Name: Cooldown
   m_TagString: Untagged
@@ -19077,6 +19261,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1917384995}
+  sprite: {fileID: 1737925532}
+--- !u!61 &1737925534
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737925530}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1001 &1738697631
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19721,6 +19932,7 @@ GameObject:
   - component: {fileID: 1866315866}
   - component: {fileID: 1866315867}
   - component: {fileID: 1866315868}
+  - component: {fileID: 1866315869}
   m_Layer: 0
   m_Name: Cooldown
   m_TagString: Untagged
@@ -19807,6 +20019,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 2046911447}
+  sprite: {fileID: 1866315867}
+--- !u!61 &1866315869
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866315865}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1876907584
 GameObject:
   m_ObjectHideFlags: 0
@@ -19818,6 +20057,7 @@ GameObject:
   - component: {fileID: 1876907585}
   - component: {fileID: 1876907587}
   - component: {fileID: 1876907586}
+  - component: {fileID: 1876907588}
   m_Layer: 0
   m_Name: Cooldown
   m_TagString: Untagged
@@ -19853,6 +20093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1292724128}
+  sprite: {fileID: 1876907587}
 --- !u!212 &1876907587
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -19904,6 +20145,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1876907588
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1876907584}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1880786215
 GameObject:
   m_ObjectHideFlags: 0
@@ -20672,6 +20939,7 @@ GameObject:
   - component: {fileID: 2042191621}
   - component: {fileID: 2042191622}
   - component: {fileID: 2042191623}
+  - component: {fileID: 2042191624}
   m_Layer: 0
   m_Name: Cooldown
   m_TagString: Untagged
@@ -20758,6 +21026,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 398569270}
+  sprite: {fileID: 2042191622}
+--- !u!61 &2042191624
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042191620}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &2046911445
 GameObject:
   m_ObjectHideFlags: 0
@@ -21073,6 +21368,7 @@ GameObject:
   - component: {fileID: 2099421827}
   - component: {fileID: 2099421828}
   - component: {fileID: 2099421829}
+  - component: {fileID: 2099421830}
   m_Layer: 0
   m_Name: Cooldown
   m_TagString: Untagged
@@ -21159,6 +21455,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1532209591}
+  sprite: {fileID: 2099421828}
+--- !u!61 &2099421830
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099421826}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &2120716835
 GameObject:
   m_ObjectHideFlags: 0

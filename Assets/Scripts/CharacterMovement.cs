@@ -12,6 +12,7 @@ public abstract class CharacterMovement : MonoBehaviour
     public GameObject overallSprites;
 
     public GameObject damageText;
+    public GameObject healText;
     public bool isEnemy;
     public GameObject fog;
 
@@ -52,33 +53,29 @@ public abstract class CharacterMovement : MonoBehaviour
     {
         if (isActive) {
             if (!aiming) {
-                if (Input.GetButtonDown("Horizontal")) {
-                    if (Input.GetAxis("Horizontal") > 0) {
-                        if (Input.GetButton("Stay Still")) {
-                            ActionQueue.Instance.EnqueueAction(new FaceRight(this));
-                        } else {
-                            ActionQueue.Instance.EnqueueAction(new MoveRight(this));
-                        }
+                if (Input.GetButtonDown("Up")) {
+                    if (Input.GetButton("Stay Still")) {
+                        ActionQueue.Instance.EnqueueAction(new FaceUp(this));
                     } else {
-                        if (Input.GetButton("Stay Still")) {
-                            ActionQueue.Instance.EnqueueAction(new FaceLeft(this));
-                        } else {
-                            ActionQueue.Instance.EnqueueAction(new MoveLeft(this));
-                        }
+                        ActionQueue.Instance.EnqueueAction(new MoveUp(this));
                     }
-                } else if (Input.GetButtonDown("Vertical")) {
-                    if (Input.GetAxis("Vertical") > 0) {
-                        if (Input.GetButton("Stay Still")) {
-                            ActionQueue.Instance.EnqueueAction(new FaceUp(this));
-                        } else {
-                            ActionQueue.Instance.EnqueueAction(new MoveUp(this));
-                        }
+                } else if (Input.GetButtonDown("Down")) {
+                    if (Input.GetButton("Stay Still")) {
+                        ActionQueue.Instance.EnqueueAction(new FaceDown(this));
                     } else {
-                        if (Input.GetButton("Stay Still")) {
-                            ActionQueue.Instance.EnqueueAction(new FaceDown(this));
-                        } else {
-                            ActionQueue.Instance.EnqueueAction(new MoveDown(this));
-                        }
+                        ActionQueue.Instance.EnqueueAction(new MoveDown(this));
+                    }
+                } else if (Input.GetButtonDown("Left")) {
+                    if (Input.GetButton("Stay Still")) {
+                        ActionQueue.Instance.EnqueueAction(new FaceLeft(this));
+                    } else {
+                        ActionQueue.Instance.EnqueueAction(new MoveLeft(this));
+                    }
+                } else if (Input.GetButtonDown("Right")) {
+                    if (Input.GetButton("Stay Still")) {
+                        ActionQueue.Instance.EnqueueAction(new FaceRight(this));
+                    } else {
+                        ActionQueue.Instance.EnqueueAction(new MoveRight(this));
                     }
                 } else if (Input.GetButtonDown("Attack1") && 
                     GameManager.Instance.actionCount - attack1Turn > attack1.cooldown) {
@@ -111,18 +108,14 @@ public abstract class CharacterMovement : MonoBehaviour
                     ActionQueue.Instance.EnqueueAction(attack);
                     CharacterMenu.Instance.UseSkill(charID, attackNum - 1);
                     ActionQueue.Instance.Enable();
-                } else if (Input.GetButtonDown("Horizontal")) {
-                    if (Input.GetAxis("Horizontal") > 0) {
-                        attack.AimRight();
-                    } else {
-                        attack.AimLeft();
-                    }
-                } else if (Input.GetButtonDown("Vertical")) {
-                    if (Input.GetAxis("Vertical") > 0) {
-                        attack.AimUp();
-                    } else {
-                        attack.AimDown();
-                    }
+                } else if (Input.GetButtonDown("Up")) {
+                    attack.AimUp();
+                } else if (Input.GetButtonDown("Down")) {
+                    attack.AimDown();
+                } else if (Input.GetButtonDown("Left")) {
+                    attack.AimLeft();
+                } else if (Input.GetButtonDown("Right")) {
+                    attack.AimRight();
                 }
             }
         }
@@ -191,7 +184,11 @@ public abstract class CharacterMovement : MonoBehaviour
         }
 
         GameObject
-            .Instantiate(damageText, this.transform.position + Vector3.up * 0.8f, Quaternion.identity)
+            .Instantiate(
+                damageText, 
+                this.transform.position + Vector3.up * 0.8f + 
+                    new Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f), 0), 
+                Quaternion.identity)
             .GetComponent<DamageText>()
             .SetText(damage.ToString());
 
@@ -211,7 +208,11 @@ public abstract class CharacterMovement : MonoBehaviour
     public void Heal(int healAmount)
     {
         GameObject
-            .Instantiate(damageText, this.transform.position + Vector3.up * 0.8f, Quaternion.identity)
+            .Instantiate(
+                healText, 
+                this.transform.position + Vector3.up * 0.8f + 
+                    new Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f), 0), 
+                Quaternion.identity)
             .GetComponent<DamageText>()
             .SetText(healAmount.ToString());
 
@@ -351,5 +352,23 @@ public abstract class CharacterMovement : MonoBehaviour
     public bool IsEnemyOf(CharacterMovement other)
     {
         return this.isEnemy != other.isEnemy;
+    }
+
+    public void ResetCD(int attackNum)
+    {
+        switch (attackNum)
+        {
+            case 1:
+                attack1Turn = -999;
+                break;
+            case 2:
+                attack2Turn = -999;
+                break;
+            case 3:
+                attack3Turn = -999;
+                break;
+        }
+
+        CharacterMenu.Instance.ResetCD(charID, attackNum);
     }
 }

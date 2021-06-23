@@ -93,7 +93,7 @@ public class TrapperMovement : CharacterMovement
                 trap.Init(self, damage);
                 AudioManager.Instance.Play("Trap");
             } else {
-                self.attack2Turn = -999;
+                self.ResetCD(2);
             }
         }
 

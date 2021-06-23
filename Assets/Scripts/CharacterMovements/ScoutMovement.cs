@@ -98,7 +98,7 @@ public class ScoutMovement : CharacterMovement
                 AudioManager.Instance.Play("Ward");
             } else {
                 // refund cooldown if it whiffed
-                self.attack2Turn = -999;
+                self.ResetCD(2);
             }
         }
 

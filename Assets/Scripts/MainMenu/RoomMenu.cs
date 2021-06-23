@@ -106,8 +106,10 @@ public class RoomMenu : MonoBehaviourPunCallbacks
         PhotonNetwork.RaiseEvent(readyEvent, null, RaiseEventOptions.Default, SendOptions.SendReliable);
         p1Ready.SetActive(!p1Ready.activeSelf);
 
-        if (p1Ready.activeSelf && p2Ready.activeSelf && PhotonNetwork.IsMasterClient) {
+        if (PhotonNetwork.IsMasterClient && p1Ready.activeSelf && p2Ready.activeSelf) {
             startButton.SetActive(true);
+        } else {
+            startButton.SetActive(false);
         }
     }
 
@@ -125,8 +127,10 @@ public class RoomMenu : MonoBehaviourPunCallbacks
         {
             case readyEvent:
                 p2Ready.SetActive(!p2Ready.activeSelf);
-                if (p1Ready.activeSelf && p2Ready.activeSelf && PhotonNetwork.IsMasterClient) {
+                if (PhotonNetwork.IsMasterClient && p1Ready.activeSelf && p2Ready.activeSelf) {
                     startButton.SetActive(true);
+                } else {
+                    startButton.SetActive(false);
                 }
                 break;
             case startEvent:

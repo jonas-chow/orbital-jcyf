@@ -103,7 +103,7 @@ public class SummonerMovement : CharacterMovement
                 AudioManager.Instance.Play("FamiliarAttack");
             } else {
                 // refund cooldown if whiffed
-                self.attack2Turn = -999;
+                self.ResetCD(2);
             }
         }
 
@@ -176,7 +176,7 @@ public class SummonerMovement : CharacterMovement
                 AudioManager.Instance.Play("Swap");
             } else {
                 // refund cooldown if whiffed
-                self.attack3Turn = -999;
+                self.ResetCD(3);
             }
         }
 

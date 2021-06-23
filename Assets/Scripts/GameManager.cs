@@ -78,6 +78,16 @@ public class GameManager : MonoBehaviour
             numEnemy = 9;
             loadingUI.SetActive(false);
             readyForTurn = true;
+            CharacterMenu.Instance.Init(new Attack[] {
+            friendly[0].attack1, 
+            friendly[0].attack2, 
+            friendly[0].attack3, 
+            friendly[3].attack1, 
+            friendly[3].attack2, 
+            friendly[3].attack3, 
+            friendly[6].attack1, 
+            friendly[6].attack2, 
+            friendly[6].attack3});
         } else {
             InstantiateSelf();
         }
@@ -132,16 +142,16 @@ public class GameManager : MonoBehaviour
             ranged.GetComponent<CharacterMovement>(),
             mage.GetComponent<CharacterMovement>()};
 
-        CharacterMenu.Instance.init(new int[] {
-            friendly[0].attack1.cooldown, 
-            friendly[0].attack2.cooldown, 
-            friendly[0].attack3.cooldown, 
-            friendly[1].attack1.cooldown, 
-            friendly[1].attack2.cooldown, 
-            friendly[1].attack3.cooldown, 
-            friendly[2].attack1.cooldown, 
-            friendly[2].attack2.cooldown, 
-            friendly[2].attack3.cooldown});
+        CharacterMenu.Instance.Init(new Attack[] {
+            friendly[0].attack1, 
+            friendly[0].attack2, 
+            friendly[0].attack3, 
+            friendly[1].attack1, 
+            friendly[1].attack2, 
+            friendly[1].attack3, 
+            friendly[2].attack1, 
+            friendly[2].attack2, 
+            friendly[2].attack3});
 
         CharacterMenu.Instance.SelectChar(0);
 
@@ -393,17 +403,13 @@ public class GameManager : MonoBehaviour
         animationPhase = true;
         // start turn and wait for turn
         TimeBar.Instance.Reset();
-        while (TimeBar.Instance.IsTurn()) {
+        while (TimeBar.Instance.IsTurn() || conceded) {
             yield return new WaitForSeconds(0.1f);
         }
         DeactivateCurrent();
 
-        while (true) {
-            if (!animationPhase) {
-                break;
-            } else {
-                yield return new WaitForSeconds(.1f);
-            }
+        while (animationPhase) {
+            yield return new WaitForSeconds(.1f);
         }
 
         EventHandler.Instance.SendTurnEndEvent();
@@ -487,8 +493,8 @@ public class GameManager : MonoBehaviour
             newFriendlies[numFriendly] = cm;
             numFriendly++;
             friendly = newFriendlies;
-            CharacterMenu.Instance.Set4thChar(new int[] {
-                cm.attack1.cooldown, cm.attack2.cooldown, cm.attack3.cooldown
+            CharacterMenu.Instance.Set4thChar(new Attack[] {
+                cm.attack1, cm.attack2, cm.attack3
             });
         }
     }

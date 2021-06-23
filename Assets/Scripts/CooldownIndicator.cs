@@ -7,18 +7,16 @@ public class CooldownIndicator : MonoBehaviour
 {
     private int cooldown = 0;
     private int counter;
+    private string description;
     public TextMeshPro text;
+    public SpriteRenderer sprite;
 
-    public void init(int cooldown)
+    public void Init(Attack attack)
     {
-        this.cooldown = cooldown;
-        gameObject.SetActive(false);
-    }
-
-    void OnEnable()
-    {
-        counter = cooldown;
-        text.text = counter.ToString();
+        this.cooldown = attack.cooldown;
+        this.description = attack.GetDescription();
+        ResetCD();
+        // gameObject.SetActive(false);
     }
 
     public void TurnPass()
@@ -28,8 +26,32 @@ public class CooldownIndicator : MonoBehaviour
             if (counter > 0) {
                 text.text = counter.ToString();
             } else {
-                gameObject.SetActive(false);
+                ResetCD();
+                // gameObject.SetActive(false);
             }
         }
+    }
+
+    public void SkillUsed()
+    {
+        counter = cooldown;
+        text.text = counter.ToString();
+        sprite.enabled = true;
+    }
+
+    public void ResetCD()
+    {
+        sprite.enabled = false;
+        text.text = "";
+    }
+
+    void OnMouseEnter()
+    {
+        GameManager.Instance.SetTooltip(description);
+    }
+
+    void OnMouseExit()
+    {
+        GameManager.Instance.SetTooltip("");
     }
 }

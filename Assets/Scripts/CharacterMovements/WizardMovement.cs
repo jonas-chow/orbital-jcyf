@@ -132,10 +132,8 @@ public class WizardMovement : CharacterMovement
         public override void Execute()
         {
             SendEvent();
-            self.attack1Turn = -999;
-            self.attack2Turn = -999;
-            CharacterMenu.Instance.ResetCD(2, 0);
-            CharacterMenu.Instance.ResetCD(2, 1);
+            self.ResetCD(1);
+            self.ResetCD(2);
             AudioManager.Instance.Play("ResetCD");
         }
 

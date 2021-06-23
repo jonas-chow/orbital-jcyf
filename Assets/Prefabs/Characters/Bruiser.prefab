@@ -176,14 +176,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fbc80849be70470eb2fbd428df0a025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stealthedSprite: {fileID: 0}
   friendlySprite: {fileID: 2731569821083757787}
   enemySprite: {fileID: 6574141454466914713}
   selection: {fileID: 7852540949072230045}
   overallSprites: {fileID: 1447438647641883796}
   damageText: {fileID: 1159168646705591353, guid: daca40db4ce494cf0ab0af755c51145e, type: 3}
+  healText: {fileID: 1132091536140044234, guid: 5cd63148771ad4778ad14387d8b2dfea, type: 3}
   isEnemy: 0
   fog: {fileID: 4635741850954803666}
   charID: 0
+  isActive: 0
   hp: {fileID: 8420744863471972789}
   faceDirection: up
   atk: 15
@@ -193,6 +196,11 @@ MonoBehaviour:
   defBuff: 0
   disabled: 0
   stealthed: 0
+  poisoned: 0
+  isAlive: 1
+  attack1Turn: -999
+  attack2Turn: -999
+  attack3Turn: -999
 --- !u!1 &3790909249942983436
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,9 +18,11 @@ MonoBehaviour:
   selection: {fileID: 7885348576729010768}
   overallSprites: {fileID: 1549769765586067545}
   damageText: {fileID: 1159168646705591353, guid: daca40db4ce494cf0ab0af755c51145e, type: 3}
+  healText: {fileID: 1132091536140044234, guid: 5cd63148771ad4778ad14387d8b2dfea, type: 3}
   isEnemy: 0
   fog: {fileID: 4738560885841890591}
   charID: 2
+  isActive: 0
   hp: {fileID: 8452069532285605240}
   faceDirection: up
   atk: 20
