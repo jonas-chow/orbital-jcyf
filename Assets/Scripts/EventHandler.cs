@@ -60,6 +60,8 @@ public class EventHandler : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        AudioManager.Instance.Stop("MenuTheme");
+        AudioManager.Instance.Play("BattleTheme");
         object[] data = new object[] {
             PlayerPrefs.GetInt("Melee", 0),
             PlayerPrefs.GetInt("Ranged", 0),

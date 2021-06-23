@@ -414,7 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff44f28995aba40d0aca4bf593337509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testing: 1
+  testing: 0
   defeatUI: {fileID: 996488427}
   victoryUI: {fileID: 982411403}
   loadingUI: {fileID: 1473468720}
@@ -4558,122 +4558,157 @@ MonoBehaviour:
   - name: MeleeHit
     clip: {fileID: 8300000, guid: 31664a7f83c73b44ba10101166b537c6, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: MeleeMiss
     clip: {fileID: 8300000, guid: 7c11b7110e652d0458991a57c6b7f25f, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: ArrowHit
     clip: {fileID: 8300000, guid: efa642c396a3b4e49a5fbb70d74b0b2d, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: ArrowMiss
     clip: {fileID: 8300000, guid: a95b71d676ed67444b831c4b101f9dcc, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: MagicAttack
     clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: Heal
     clip: {fileID: 8300000, guid: c9886386d6526d04da64358bbe4a8be5, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: Taunt
     clip: {fileID: 8300000, guid: 97da94c2e4c43e24eabff41a686f5983, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: Stealth
     clip: {fileID: 8300000, guid: 820a8bc19fcdcd64f8b262b25137151f, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: MagicAttack
     clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: Poison
     clip: {fileID: 8300000, guid: 9222376c8a5b18e4d9e9734148965593, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: BruiserAOE
     clip: {fileID: 8300000, guid: dcb3a467e6d260f4f8ea8a35b6608c4a, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: BruiserInvincible
     clip: {fileID: 8300000, guid: 7171f39c4a42d8b4cb643d3daa573612, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: Ward
     clip: {fileID: 8300000, guid: e9509e419f8cd5445bd18a6b4a616947, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: Scout3
     clip: {fileID: 8300000, guid: 6cf8fac8b0610af45973afc8d0826233, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: Trap
     clip: {fileID: 8300000, guid: d1fb09f9170b1304b8f67e903cc951a4, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: TrapExplosion
     clip: {fileID: 8300000, guid: 5f40c2606773b8445886d9a45793ebf8, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: Knockback
     clip: {fileID: 8300000, guid: b1cb2d6316113c846a343c0148132cac, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: AOEbuff
     clip: {fileID: 8300000, guid: cd8af594b318aeb44880f475e8fc75e1, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: AOEMagicAttack
     clip: {fileID: 8300000, guid: bbd7b1fb9afab714292e40fb8e53b158, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: ResetCD
     clip: {fileID: 8300000, guid: a92d1c3dcde0c0f439aa840aa453cb29, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: Swap
     clip: {fileID: 8300000, guid: 85228f62e262d7b4fb5cf29d7df9693f, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: Summon
     clip: {fileID: 8300000, guid: c07228868caf48d4f9e2a4404ed84796, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: FamiliarAttack
     clip: {fileID: 8300000, guid: 911c400ba4f5c114a96586f91cf8c7fe, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: Movement
     clip: {fileID: 8300000, guid: 477ebd330fb9a444ea9c86e20df16dac, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: SwitchCharacters
     clip: {fileID: 8300000, guid: 2070173ecf98d204fb7bbf552c708d08, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: Death
     clip: {fileID: 8300000, guid: 4ce0e6da0a4f79c42bb10ec8337e0a2e, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
   - name: Win
     clip: {fileID: 8300000, guid: 543b2e0708f61c84d94388e861fbb1b3, type: 3}
     volume: 0.65
+    loop: 0
     source: {fileID: 0}
   - name: Lose
     clip: {fileID: 8300000, guid: 485c01f330d2ff24d974505b804115ba, type: 3}
     volume: 0.65
+    loop: 0
     source: {fileID: 0}
   - name: Click
     clip: {fileID: 8300000, guid: 17b7283b0090dc546842d257975d2da3, type: 3}
     volume: 1
+    loop: 0
     source: {fileID: 0}
-  - name: MagicAttack
-    clip: {fileID: 8300000, guid: 28c94b4d34e2fa14bb49bc1c6ad66513, type: 3}
+  - name: MenuTheme
+    clip: {fileID: 8300000, guid: 7e97c33bc3ded814a833358ea255a514, type: 3}
     volume: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: BattleTheme
+    clip: {fileID: 8300000, guid: 0f619a545d7188b45934152cf6c83b86, type: 3}
+    volume: 1
+    loop: 1
     source: {fileID: 0}
 --- !u!4 &831564452
 Transform:

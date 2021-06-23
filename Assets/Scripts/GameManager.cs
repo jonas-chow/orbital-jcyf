@@ -373,11 +373,13 @@ public class GameManager : MonoBehaviour
 
     public void Lose() {
         defeatUI.SetActive(true);
+        AudioManager.Instance.Stop("BattleTheme");
         AudioManager.Instance.Play("Lose");
     }
 
     public void Win() {
         victoryUI.SetActive(true);
+        AudioManager.Instance.Stop("BattleTheme");
         AudioManager.Instance.Play("Win");
     }
     
