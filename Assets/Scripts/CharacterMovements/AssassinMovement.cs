@@ -29,6 +29,7 @@ public class AssassinMovement : CharacterMovement
             this.damage = 10;
             this.backstabBonus = 10;
             this.cooldown = 2;
+            this.type = "attack";
         }
 
         public override void Execute()
@@ -90,6 +91,7 @@ public class AssassinMovement : CharacterMovement
             this.range = 1;
             this.damage = 10;
             this.cooldown = 10;
+            this.type = "attack";
         }
 
         public override void Execute()
@@ -143,6 +145,7 @@ public class AssassinMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.cooldown = 40;
+            this.type = "buff";
         }
 
         public override void Execute()

@@ -27,6 +27,7 @@ public class BruiserMovement : CharacterMovement
             this.range = 1;
             this.damage = 15;
             this.cooldown = 2;
+            this.type = "attack";
         }
 
         // basic melee attack with med damage
@@ -79,6 +80,7 @@ public class BruiserMovement : CharacterMovement
             this.range = 1;
             this.damage = 25;
             this.cooldown = 5;
+            this.type = "attack";
         }
 
         public override void Execute()
@@ -130,6 +132,7 @@ public class BruiserMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.cooldown = 40;
+            this.type = "buff";
         }
 
         public override void Execute()

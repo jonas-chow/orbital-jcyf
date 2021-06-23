@@ -25,7 +25,10 @@ public class CharacterMenu : MonoBehaviour
     public GameObject[] selectionIndicators = new GameObject[4];
     public GameObject[] deadIndicators = new GameObject[4];
     public GameObject fourthChar;
-
+    public Sprite attack;
+    public Sprite buff;
+    public Sprite heal;
+    public Sprite other;
 
 
     public void TurnPass()

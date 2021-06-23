@@ -19,6 +19,7 @@ public class TankMovement : CharacterMovement
             this.range = 1;
             this.damage = 5;
             this.cooldown = 2;
+            this.type = "attack";
         }
 
         // basic melee attack with low damage
@@ -70,6 +71,7 @@ public class TankMovement : CharacterMovement
             this.self = cm;
             this.damage = 30;
             this.cooldown = 15;
+            this.type = "heal";
         }
 
         // self heal
@@ -111,6 +113,7 @@ public class TankMovement : CharacterMovement
             this.range = 0;
             this.damage = 0;
             this.cooldown = 10;
+            this.type = "buff";
         }
 
         // aoe invincible, self def debuff

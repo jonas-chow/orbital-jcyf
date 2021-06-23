@@ -7,6 +7,7 @@ public abstract class Attack : Action
   public int cooldown;
   public int range;
   public int damage;
+  public string type;
 
   private static GameObject[] rangeIndicators = new GameObject[] {};
   private static GameObject[] rangeLimits = new GameObject[] {};

@@ -27,6 +27,7 @@ public class WizardMovement : CharacterMovement
             this.range = 5;
             this.damage = 15;
             this.cooldown = 2;
+            this.type = "attack";
         }
 
         public override void Execute()
@@ -76,6 +77,7 @@ public class WizardMovement : CharacterMovement
             this.range = 5;
             this.damage = 20;
             this.cooldown = 10;
+            this.type = "attack";
         }
 
         public override void Execute()
@@ -127,6 +129,7 @@ public class WizardMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.cooldown = 50;
+            this.type = "other";
         }
 
         public override void Execute()
