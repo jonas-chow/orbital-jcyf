@@ -8865,6 +8865,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 257ec99c6fe869647b83b2d2bd6600f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioMixer: {fileID: 0}
   sounds:
   - name: MeleeHit
     clip: {fileID: 8300000, guid: 31664a7f83c73b44ba10101166b537c6, type: 3}
@@ -9013,13 +9014,13 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: MenuTheme
     clip: {fileID: 8300000, guid: 7e97c33bc3ded814a833358ea255a514, type: 3}
-    volume: 1
-    loop: 0
+    volume: 0.1
+    loop: 1
     source: {fileID: 0}
   - name: BattleTheme
     clip: {fileID: 8300000, guid: 0f619a545d7188b45934152cf6c83b86, type: 3}
-    volume: 1
-    loop: 0
+    volume: 0.1
+    loop: 1
     source: {fileID: 0}
 --- !u!4 &1165048142
 Transform:
