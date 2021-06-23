@@ -4823,14 +4823,14 @@ MonoBehaviour:
     soundEffect: 1
     source: {fileID: 0}
   - name: Win
-    clip: {fileID: 8300000, guid: 543b2e0708f61c84d94388e861fbb1b3, type: 3}
-    volume: 0.65
+    clip: {fileID: 8300000, guid: b0f52fe496f8c0a4d92fd62d0bf85555, type: 3}
+    volume: 1
     loop: 0
     soundEffect: 1
     source: {fileID: 0}
   - name: Lose
-    clip: {fileID: 8300000, guid: 485c01f330d2ff24d974505b804115ba, type: 3}
-    volume: 0.65
+    clip: {fileID: 8300000, guid: c995c27e9131ddb4fb9b806ecbac3fb5, type: 3}
+    volume: 1
     loop: 0
     soundEffect: 1
     source: {fileID: 0}
