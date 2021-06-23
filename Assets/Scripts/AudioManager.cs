@@ -49,6 +49,7 @@ public class AudioManager : MonoBehaviour
 
     public void SetBGMVolume(float volume)
     {
+        PlayerPrefs.SetFloat("BGM", volume);
         Sound[] soundArray = Array.FindAll(sounds, sound => !sound.soundEffect);
         foreach (Sound s in soundArray)
         {
@@ -58,6 +59,7 @@ public class AudioManager : MonoBehaviour
 
     public void SetSoundEffectVolume(float volume)
     {
+        PlayerPrefs.SetFloat("SE", volume);
         Sound[] soundArray = Array.FindAll(sounds, sound => sound.soundEffect);
         foreach (Sound s in soundArray)
         {

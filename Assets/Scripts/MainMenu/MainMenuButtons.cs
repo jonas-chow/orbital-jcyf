@@ -24,12 +24,6 @@ public class MainMenuButtons : MonoBehaviourPunCallbacks
         controls.SetActive(true);
     }
 
-    public void CloseControls()
-    {
-        AudioManager.Instance.Play("Click");
-        controls.SetActive(false);
-    }
-
     void Start()
     {
         if (PhotonNetwork.IsConnected) {
@@ -38,6 +32,9 @@ public class MainMenuButtons : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom != null) {
             multiplayerRoom.SetActive(true);
         }
+
+        AudioManager.Instance.SetBGMVolume(PlayerPrefs.GetFloat("BGM", 0.1f));
+        AudioManager.Instance.SetSoundEffectVolume(PlayerPrefs.GetFloat("SE", 1f));
     }
 
     public void Connect()

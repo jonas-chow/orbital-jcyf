@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        AudioManager.Instance.SetBGMVolume(PlayerPrefs.GetFloat("BGM", 0.1f));
+        AudioManager.Instance.SetSoundEffectVolume(PlayerPrefs.GetFloat("SE", 1f));
+        
         if (testing) {
             GameObject tank = BuildChar("Tank", false);
             GridManager.Instance.MoveToAndInsert(tank, 3, 5);
