@@ -9,7 +9,6 @@ public class MultiplayerLobby : MonoBehaviourPunCallbacks
 {
     public TMP_InputField roomName;
     public Transform content;
-    public RoomListing listing;
     public GameObject roomMenu;
 
     public void BackButton()

@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     {
         AudioManager.Instance.SetBGMVolume(PlayerPrefs.GetFloat("BGM", 0.1f));
         AudioManager.Instance.SetSoundEffectVolume(PlayerPrefs.GetFloat("SE", 1f));
-        
+
         if (testing) {
             GameObject tank = BuildChar("Tank", false);
             GridManager.Instance.MoveToAndInsert(tank, 3, 5);
@@ -475,7 +475,6 @@ public class GameManager : MonoBehaviour
     public void InsertChar(CharacterMovement cm)
     {
         if (cm.isEnemy) {
-            Debug.Log(enemies.Length);
             // want to maintain enemies as a way to index enemies
             if (enemies.Length == 3) {
                 CharacterMovement[] newEnemies = new CharacterMovement[4];

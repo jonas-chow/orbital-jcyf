@@ -21,7 +21,6 @@ public class RangeSpawner : MonoBehaviour
 
     public GameObject[] LinearIndicator(CharacterMovement character, int range, string direction)
     {
-        //Debug.Log(range);
         Vector3 dir = Vector3.zero;
         switch (direction)
         {
