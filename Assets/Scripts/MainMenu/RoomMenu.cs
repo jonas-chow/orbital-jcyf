@@ -53,6 +53,8 @@ public class RoomMenu : MonoBehaviourPunCallbacks
 
         p1Name.text = player1.NickName;
         p2Name.text = player2 != null ? player2.NickName : "Waiting for players";
+
+        Debug.Log($"PUN2 client connected to region: {PhotonNetwork.CloudRegion}");
     }
 
     public override void OnDisable()

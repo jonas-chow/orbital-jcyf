@@ -45,6 +45,7 @@ public class MainMenuButtons : MonoBehaviourPunCallbacks
             PhotonNetwork.GameVersion = "v1";
             Popup.StartPopup("Connecting...");
             PhotonNetwork.ConnectUsingSettings();
+            PhotonNetwork.ConnectToRegion("asia");
         } else {
             Popup.Notify("Please enter name");
         }
