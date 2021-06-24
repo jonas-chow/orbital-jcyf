@@ -12,6 +12,11 @@ public class MainMenuButtons : MonoBehaviourPunCallbacks
     public GameObject loadout;
     public GameObject controls;
 
+    public void Quit()
+    {
+        Application.Quit();
+    }
+    
     public void OpenLoadout()
     {
         AudioManager.Instance.Play("Click");
