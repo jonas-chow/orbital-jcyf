@@ -17,7 +17,7 @@ public class TankMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.range = 1;
-            this.damage = 5;
+            this.damage = 10;
             this.cooldown = 2;
             this.type = "attack";
         }

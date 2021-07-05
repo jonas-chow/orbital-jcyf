@@ -76,7 +76,7 @@ public class HealerMovement : CharacterMovement
             this.self = cm;
             this.range = 5;
             this.damage = 40;
-            this.cooldown = 15;
+            this.cooldown = 20;
             this.type = "heal";
         }
 
@@ -128,7 +128,7 @@ public class HealerMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.range = 5;
-            this.cooldown = 5;
+            this.cooldown = 20;
             this.damage = 10;
             this.type = "buff";
         }

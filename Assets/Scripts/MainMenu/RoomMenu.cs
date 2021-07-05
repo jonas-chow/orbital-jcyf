@@ -45,8 +45,8 @@ public class RoomMenu : MonoBehaviourPunCallbacks
             Player player = kvp.Value;
             if (!player.Equals(PhotonNetwork.LocalPlayer)) {
                 player2 = player;
-                if (player.CustomProperties.ContainsKey("ready") && (bool)player.CustomProperties["ready"]) {
-                    p2Ready.SetActive(true);
+                if (player.CustomProperties.ContainsKey("ready")) {
+                    p2Ready.SetActive((bool)player.CustomProperties["ready"]);
                 }
             }
         }
@@ -72,6 +72,7 @@ public class RoomMenu : MonoBehaviourPunCallbacks
         player2 = null;
         p2Name.text = "Waiting for players";
         p2Ready.SetActive(false);
+        startButton.SetActive(false);
     }
 
     public void LeaveRoom()
@@ -95,6 +96,7 @@ public class RoomMenu : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
+        startButton.SetActive(false);
         gameObject.SetActive(false);
         Popup.StopPopup();
     }
