@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 5671565735180509265}
   friendlySprites:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: b5820bcf749cb43eead84e01829771a2, type: 3}
+  - {fileID: 21300000, guid: b5820bcf749cb43eead84e01829771a2, type: 3}
+  - {fileID: 21300000, guid: b5820bcf749cb43eead84e01829771a2, type: 3}
+  - {fileID: 21300000, guid: b5820bcf749cb43eead84e01829771a2, type: 3}
   enemySprites:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 944e5c11b7d7840938875bcd351ece17, type: 3}
+  - {fileID: 21300000, guid: 944e5c11b7d7840938875bcd351ece17, type: 3}
+  - {fileID: 21300000, guid: 944e5c11b7d7840938875bcd351ece17, type: 3}
+  - {fileID: 21300000, guid: 944e5c11b7d7840938875bcd351ece17, type: 3}
   selection: {fileID: 0}
   damageText: {fileID: 1159168646705591353, guid: daca40db4ce494cf0ab0af755c51145e, type: 3}
   healText: {fileID: 1132091536140044234, guid: 5cd63148771ad4778ad14387d8b2dfea, type: 3}
@@ -102,6 +102,14 @@ PrefabInstance:
     - target: {fileID: 3369311213463426898, guid: a446b43e30b804575ba2966619114272, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4990129416805952006, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b5820bcf749cb43eead84e01829771a2, type: 3}
+    - target: {fileID: 4990129416805952006, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9136340724331206590, guid: a446b43e30b804575ba2966619114272, type: 3}
       propertyPath: maxHp

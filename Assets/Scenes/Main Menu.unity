@@ -4193,7 +4193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hunterSprite: {fileID: 3640250741144922084, guid: 4c14773ed0a654bbabd9cd6412aa0f72, type: 3}
   scoutSprite: {fileID: -1430384949528410460, guid: d653813126e5e4a4da1f1bc3805e15e5, type: 3}
-  trapperSprite: {fileID: 21300000, guid: 48179cbe581f64282abef16a677de08a, type: 3}
+  trapperSprite: {fileID: -3362422792901427839, guid: 6b7c92150b15043b58b929d14e508986, type: 3}
   icon: {fileID: 1580354003}
 --- !u!1 &600574193
 GameObject:
@@ -5726,8 +5726,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b61c3c006540454988f68c60a32fd68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wizardSprite: {fileID: 21300000, guid: 5a0363be3d07c4a17a431e96d34904ed, type: 3}
-  summonerSprite: {fileID: 21300000, guid: 5a0363be3d07c4a17a431e96d34904ed, type: 3}
+  wizardSprite: {fileID: -1610870378026325774, guid: 7137d562d594a49fd9740ba0170ff499, type: 3}
+  summonerSprite: {fileID: -8890269955475960522, guid: 12e5ceba493b04538b65523c55628694, type: 3}
   healerSprite: {fileID: 8545767474432127182, guid: a38a56f2c33694bc8aa65be00adc6b76, type: 3}
   icon: {fileID: 1914599434}
 --- !u!1 &769984848

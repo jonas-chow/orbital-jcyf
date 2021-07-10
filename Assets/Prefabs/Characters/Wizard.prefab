@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 5674963558665382080}
   friendlySprites:
-  - {fileID: 21300000, guid: 5a0363be3d07c4a17a431e96d34904ed, type: 3}
-  - {fileID: 21300000, guid: 5a0363be3d07c4a17a431e96d34904ed, type: 3}
-  - {fileID: 21300000, guid: 5a0363be3d07c4a17a431e96d34904ed, type: 3}
-  - {fileID: 21300000, guid: 5a0363be3d07c4a17a431e96d34904ed, type: 3}
+  - {fileID: 5524481094299092514, guid: 7137d562d594a49fd9740ba0170ff499, type: 3}
+  - {fileID: -1610870378026325774, guid: 7137d562d594a49fd9740ba0170ff499, type: 3}
+  - {fileID: 7828970718366926031, guid: 7137d562d594a49fd9740ba0170ff499, type: 3}
+  - {fileID: 3037488939307563083, guid: 7137d562d594a49fd9740ba0170ff499, type: 3}
   enemySprites:
-  - {fileID: 21300000, guid: 5a0363be3d07c4a17a431e96d34904ed, type: 3}
-  - {fileID: 21300000, guid: 5a0363be3d07c4a17a431e96d34904ed, type: 3}
-  - {fileID: 21300000, guid: 5a0363be3d07c4a17a431e96d34904ed, type: 3}
-  - {fileID: 21300000, guid: 5a0363be3d07c4a17a431e96d34904ed, type: 3}
+  - {fileID: 1476022103030554764, guid: e62a5c93fce444887b6ae7464fd1b956, type: 3}
+  - {fileID: -4582122059652631168, guid: e62a5c93fce444887b6ae7464fd1b956, type: 3}
+  - {fileID: -6588787255893053311, guid: e62a5c93fce444887b6ae7464fd1b956, type: 3}
+  - {fileID: -5323430404604590120, guid: e62a5c93fce444887b6ae7464fd1b956, type: 3}
   selection: {fileID: 7885348576729010768}
   damageText: {fileID: 1159168646705591353, guid: daca40db4ce494cf0ab0af755c51145e, type: 3}
   healText: {fileID: 1132091536140044234, guid: 5cd63148771ad4778ad14387d8b2dfea, type: 3}
@@ -98,6 +98,14 @@ PrefabInstance:
     - target: {fileID: 1718499127430642774, guid: a446b43e30b804575ba2966619114272, type: 3}
       propertyPath: m_Name
       value: Wizard
+      objectReference: {fileID: 0}
+    - target: {fileID: 4990129416805952006, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1610870378026325774, guid: 7137d562d594a49fd9740ba0170ff499, type: 3}
+    - target: {fileID: 4990129416805952006, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a446b43e30b804575ba2966619114272, type: 3}
