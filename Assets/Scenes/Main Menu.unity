@@ -474,7 +474,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 54.6
+  m_fontSize: 58.5
   m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3455,7 +3455,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomName: {fileID: 878716905}
   content: {fileID: 0}
-  listing: {fileID: 6009706233806298307, guid: 2c8a88fea3a6b449fa73e0d4a473b2ff, type: 3}
   roomMenu: {fileID: 1673170903}
 --- !u!1 &512540881
 GameObject:
@@ -4192,8 +4191,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82047915866924199ab8ac583100e2d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hunterSprite: {fileID: 21300000, guid: 48179cbe581f64282abef16a677de08a, type: 3}
-  scoutSprite: {fileID: 21300000, guid: 48179cbe581f64282abef16a677de08a, type: 3}
+  hunterSprite: {fileID: 3640250741144922084, guid: 4c14773ed0a654bbabd9cd6412aa0f72, type: 3}
+  scoutSprite: {fileID: -1430384949528410460, guid: d653813126e5e4a4da1f1bc3805e15e5, type: 3}
   trapperSprite: {fileID: 21300000, guid: 48179cbe581f64282abef16a677de08a, type: 3}
   icon: {fileID: 1580354003}
 --- !u!1 &600574193
@@ -5729,7 +5728,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wizardSprite: {fileID: 21300000, guid: 5a0363be3d07c4a17a431e96d34904ed, type: 3}
   summonerSprite: {fileID: 21300000, guid: 5a0363be3d07c4a17a431e96d34904ed, type: 3}
-  healerSprite: {fileID: 21300000, guid: 5a0363be3d07c4a17a431e96d34904ed, type: 3}
+  healerSprite: {fileID: 8545767474432127182, guid: a38a56f2c33694bc8aa65be00adc6b76, type: 3}
   icon: {fileID: 1914599434}
 --- !u!1 &769984848
 GameObject:
@@ -6546,7 +6545,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 54.6
+  m_fontSize: 58.5
   m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7335,9 +7334,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab923eaf00d18441bbe6df3686cdccef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assassinSprite: {fileID: 21300000, guid: f6f5dc3b0e91844eba8810540fdb0be5, type: 3}
-  bruiserSprite: {fileID: 21300000, guid: f6f5dc3b0e91844eba8810540fdb0be5, type: 3}
-  tankSprite: {fileID: 21300000, guid: f6f5dc3b0e91844eba8810540fdb0be5, type: 3}
+  assassinSprite: {fileID: 6652427714922959906, guid: 51371c39aa6444a4384d53470e6bc7cd, type: 3}
+  bruiserSprite: {fileID: -8144422567844628548, guid: 4b998885e1e4540fe80f82a6237c8ff6, type: 3}
+  tankSprite: {fileID: 8311711190023255164, guid: 6ba97b425cd7d428798168ee3f585566, type: 3}
   icon: {fileID: 398676774}
 --- !u!1 &1035704910
 GameObject:
