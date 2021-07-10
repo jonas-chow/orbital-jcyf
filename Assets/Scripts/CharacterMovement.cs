@@ -235,6 +235,7 @@ public abstract class CharacterMovement : MonoBehaviour
         spriteRenderer.enabled = false;
         fog.SetActive(false);
         hp.SetVisible(false);
+        selection.SetActive(false);
         // GameObject.Destroy(gameObject);
     }
 

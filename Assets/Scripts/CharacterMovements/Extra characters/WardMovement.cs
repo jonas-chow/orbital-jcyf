@@ -13,7 +13,7 @@ public class WardMovement : CharacterMovement
     public void init(bool isEnemy)
     {
         this.isEnemy = isEnemy;
-        spriteRenderer.color = isEnemy ? Color.red : Color.green;
+        spriteRenderer.sprite = isEnemy ? enemySprites[0] : friendlySprites[0];
         fog.SetActive(!isEnemy);
     }
 
