@@ -17,22 +17,12 @@ public class StealthBuff : Buff
             existingBuff.turnsLeft = existingBuff.turnsLeft > this.turnsLeft ? existingBuff.turnsLeft : this.turnsLeft;
         } else {
             character.stealthed = true;
-            if (character.isEnemy) {
-                character.overallSprites.SetActive(false);
-            } else {
-                character.friendlySprite.SetActive(false);
-                character.stealthedSprite.SetActive(true);
-            }
+            character.spriteRenderer.color = new Color(1, 1, 1, character.isEnemy ? 0 : 0.5f);
         }
     }
 
     public override void Remove() {
-        if (character.isEnemy) {
-            character.overallSprites.SetActive(true);
-        } else {
-            character.stealthedSprite.SetActive(false);
-            character.friendlySprite.SetActive(true);
-        }
         character.stealthed = false;
+        character.spriteRenderer.color = Color.white;
     }
 }

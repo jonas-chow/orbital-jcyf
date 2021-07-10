@@ -4,12 +4,11 @@ using UnityEngine;
 
 public abstract class CharacterMovement : MonoBehaviour
 {
-    public GameObject stealthedSprite;
-    public GameObject friendlySprite;
-    public GameObject enemySprite;
+    public SpriteRenderer spriteRenderer;
+    public Sprite[] friendlySprites = new Sprite[4];
+    public Sprite[] enemySprites = new Sprite[4];
+
     public GameObject selection;
-    // so you can rotate the sprites without rotating the hp
-    public GameObject overallSprites;
 
     public GameObject damageText;
     public GameObject healText;
@@ -233,7 +232,7 @@ public abstract class CharacterMovement : MonoBehaviour
         }
         AudioManager.Instance.Play("Death");
         // become invisible, nothing will interact with you
-        overallSprites.SetActive(false);
+        spriteRenderer.enabled = false;
         fog.SetActive(false);
         hp.SetVisible(false);
         // GameObject.Destroy(gameObject);
@@ -273,22 +272,23 @@ public abstract class CharacterMovement : MonoBehaviour
 
     public void Face(string direction)
     {
+        Sprite[] sprites = isEnemy ? enemySprites : friendlySprites;
         switch (direction)
         {
             case "up":
-                overallSprites.transform.up = Vector3.up;
+                spriteRenderer.sprite = sprites[0];
                 faceDirection = "up";
                 break;
             case "down":
-                overallSprites.transform.up = Vector3.down;
+                spriteRenderer.sprite = sprites[1];
                 faceDirection = "down";
                 break;
             case "left":
-                overallSprites.transform.up = Vector3.left;
+                spriteRenderer.sprite = sprites[2];
                 faceDirection = "left";
                 break;
             case "right":
-                overallSprites.transform.up = Vector3.right;
+                spriteRenderer.sprite = sprites[3];
                 faceDirection = "right";
                 break;
         }
@@ -298,8 +298,7 @@ public abstract class CharacterMovement : MonoBehaviour
     {
         this.isEnemy = isEnemy;
         fog.SetActive(!isEnemy);
-        enemySprite.SetActive(isEnemy);
-        friendlySprite.SetActive(!isEnemy);
+        spriteRenderer.sprite = isEnemy ? enemySprites[0] : friendlySprites[0];
     }
 
     public void EventAttack(int attackId, object[] extraData)
