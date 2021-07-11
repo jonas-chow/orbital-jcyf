@@ -3,7 +3,14 @@ guid: fc837274ecb364a93989a34fa3e2bd8e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - bloodEffect: {instanceID: 0}
+  - spriteRenderer: {instanceID: 0}
+  - selection: {instanceID: 0}
+  - damageText: {instanceID: 0}
+  - healText: {instanceID: 0}
+  - fog: {instanceID: 0}
+  - hp: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

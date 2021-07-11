@@ -16,6 +16,8 @@ public class BruiserMovement : CharacterMovement
     public static int _attack = 15;
     public static int _defense = 15;
 
+    public ParticleSystem slashEffect;
+
     public class Attack1 : LinearAttack
     {
         public BruiserMovement self;
@@ -37,6 +39,8 @@ public class BruiserMovement : CharacterMovement
             CharacterMovement target = FindTarget(direction);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
+                ParticleSystem slashEffect = ParticleSystem.Instantiate(self.slashEffect, 
+                    GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
                 AudioManager.Instance.Play("MeleeHit");  
             }
             AudioManager.Instance.Play("MeleeMiss");  
@@ -54,6 +58,8 @@ public class BruiserMovement : CharacterMovement
             CharacterMovement target = FindTarget(dir);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
+                ParticleSystem slashEffect = ParticleSystem.Instantiate(self.slashEffect, 
+                    GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
                 AudioManager.Instance.Play("MeleeHit");  
             }
             AudioManager.Instance.Play("MeleeMiss");  

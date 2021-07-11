@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4635fd91b7dd34a0db909b89a6918d70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bloodEffect: {fileID: 2567772567676637033, guid: f0ae7e35992d680499e536f4fecb78a4, type: 3}
   spriteRenderer: {fileID: 5671565735180509265}
   friendlySprites:
   - {fileID: 21300000, guid: b5820bcf749cb43eead84e01829771a2, type: 3}

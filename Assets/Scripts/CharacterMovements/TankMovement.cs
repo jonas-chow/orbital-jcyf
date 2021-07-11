@@ -8,6 +8,8 @@ public class TankMovement : CharacterMovement
     public static int _attack = 10;
     public static int _defense = 20;
 
+    public ParticleSystem slashEffect;
+
     public class Attack1 : LinearAttack
     {
         public TankMovement self;
@@ -29,6 +31,8 @@ public class TankMovement : CharacterMovement
             CharacterMovement target = FindTarget(direction);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
+                ParticleSystem slashEffect = ParticleSystem.Instantiate(self.slashEffect, 
+                    GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
                 AudioManager.Instance.Play("MeleeHit");
             }
             AudioManager.Instance.Play("MeleeMiss");
@@ -46,6 +50,8 @@ public class TankMovement : CharacterMovement
             CharacterMovement target = FindTarget(dir);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
+                ParticleSystem slashEffect = ParticleSystem.Instantiate(self.slashEffect, 
+                    GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
                 AudioManager.Instance.Play("MeleeHit");
             }
             AudioManager.Instance.Play("MeleeMiss");

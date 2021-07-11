@@ -16,6 +16,11 @@ public class AssassinMovement : CharacterMovement
     public static int _attack = 20;
     public static int _defense = 10;
 
+    public ParticleSystem smokeEffect;
+    public ParticleSystem slashEffect;
+    public ParticleSystem heavySlashEffect;
+    public ParticleSystem poisonEffect;
+
     public class Attack1 : LinearAttack
     {
         public AssassinMovement self;
@@ -39,8 +44,12 @@ public class AssassinMovement : CharacterMovement
             if (target != null && target.IsEnemyOf(self)) {
                 if (target.faceDirection == self.faceDirection) {
                     target.TakeDamage(self.GetAttack(), damage + backstabBonus);
+                    ParticleSystem heavySlashEffect = ParticleSystem.Instantiate(self.heavySlashEffect, 
+                        GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
                 } else {
                     target.TakeDamage(self.GetAttack(), damage);
+                    ParticleSystem slashEffect = ParticleSystem.Instantiate(self.slashEffect, 
+                        GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
                 }
                 AudioManager.Instance.Play("MeleeHit");            
             }
@@ -60,8 +69,12 @@ public class AssassinMovement : CharacterMovement
             if (target != null && target.IsEnemyOf(self)) {
                 if (target.faceDirection == self.faceDirection) {
                     target.TakeDamage(self.GetAttack(), damage + backstabBonus);
+                    ParticleSystem heavySlashEffect = ParticleSystem.Instantiate(self.heavySlashEffect, 
+                        GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
                 } else {
                     target.TakeDamage(self.GetAttack(), damage);
+                    ParticleSystem slashEffect = ParticleSystem.Instantiate(self.slashEffect, 
+                        GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
                 }
                 AudioManager.Instance.Play("MeleeHit");   
             }
@@ -101,6 +114,8 @@ public class AssassinMovement : CharacterMovement
             if (target != null && target.IsEnemyOf(self)) {
                 target.AddBuff(new PoisonDebuff(3));
                 target.TakeDamage(self.GetAttack(), damage);
+                ParticleSystem poisonEffect = ParticleSystem.Instantiate(self.poisonEffect, 
+                    GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
                 AudioManager.Instance.Play("Poison");
             }
             AudioManager.Instance.Play("MeleeMiss");
@@ -119,6 +134,8 @@ public class AssassinMovement : CharacterMovement
             if (target != null && target.IsEnemyOf(self)) {
                 target.AddBuff(new PoisonDebuff(3));
                 target.TakeDamage(self.GetAttack(), damage);
+                ParticleSystem poisonEffect = ParticleSystem.Instantiate(self.poisonEffect, 
+                    GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
                 AudioManager.Instance.Play("Poison");
             }
             AudioManager.Instance.Play("MeleeMiss");
@@ -152,6 +169,8 @@ public class AssassinMovement : CharacterMovement
         {
             SendEvent();
             self.AddBuff(new StealthBuff(2));
+            ParticleSystem smokeEffect = ParticleSystem.Instantiate(self.smokeEffect, 
+                GridManager.Instance.GetCoords(GetX(), GetY()), Quaternion.identity);
             AudioManager.Instance.Play("Stealth");
         }
 
@@ -164,6 +183,8 @@ public class AssassinMovement : CharacterMovement
         public override void EventExecute(object[] extraData)
         {
             self.AddBuff(new StealthBuff(2));
+            ParticleSystem smokeEffect = ParticleSystem.Instantiate(self.smokeEffect, 
+                GridManager.Instance.GetCoords(GetX(), GetY()), Quaternion.identity);
             AudioManager.Instance.Play("Stealth");
         }
 

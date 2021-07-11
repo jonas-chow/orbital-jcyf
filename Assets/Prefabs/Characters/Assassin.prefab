@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc801ac51bc034f7c824bc3a97e4c401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bloodEffect: {fileID: 19800000, guid: bc98890f6028f444eaa7789bde5e2eeb, type: 3}
   spriteRenderer: {fileID: 7843183164678699743}
   friendlySprites:
   - {fileID: 6489026438188888012, guid: 51371c39aa6444a4384d53470e6bc7cd, type: 3}
@@ -44,6 +45,10 @@ MonoBehaviour:
   attack1Turn: -999
   attack2Turn: -999
   attack3Turn: -999
+  smokeEffect: {fileID: 7280255243917979218, guid: ed4392f314c42164688db4e4bdbf14d1, type: 3}
+  slashEffect: {fileID: 1411206493308713459, guid: a64811302b57b994faa437ec669e0b78, type: 3}
+  heavySlashEffect: {fileID: 1411206493308713459, guid: 718b338f6d96050429eaefc1f90fa6bc, type: 3}
+  poisonEffect: {fileID: 19800006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
 --- !u!1001 &2997169520097710297
 PrefabInstance:
   m_ObjectHideFlags: 0

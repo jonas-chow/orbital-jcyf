@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class CharacterMovement : MonoBehaviour
 {
+    public ParticleSystem bloodEffect;
     public SpriteRenderer spriteRenderer;
     public Sprite[] friendlySprites = new Sprite[4];
     public Sprite[] enemySprites = new Sprite[4];
@@ -202,6 +203,8 @@ public abstract class CharacterMovement : MonoBehaviour
         if (hp.TakeDamage(damage, isEnemy ? -1 : charID)) {
             Die();
         }
+        ParticleSystem bloodEffect = ParticleSystem.Instantiate(this.bloodEffect, 
+                    GridManager.Instance.GetCoords(this.GetX(), this.GetY()), Quaternion.identity);
     }
 
     public void Heal(int healAmount)
