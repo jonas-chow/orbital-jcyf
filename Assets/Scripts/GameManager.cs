@@ -81,16 +81,7 @@ public class GameManager : MonoBehaviour
             numEnemy = 9;
             loadingUI.SetActive(false);
             readyForTurn = true;
-            CharacterMenu.Instance.Init(new Attack[] {
-            friendly[0].attack1, 
-            friendly[0].attack2, 
-            friendly[0].attack3, 
-            friendly[3].attack1, 
-            friendly[3].attack2, 
-            friendly[3].attack3, 
-            friendly[6].attack1, 
-            friendly[6].attack2, 
-            friendly[6].attack3});
+            CharacterMenu.Instance.Init(new CharacterMovement[] {friendly[0], friendly[3], friendly[6]});
         } else {
             InstantiateSelf();
         }
@@ -145,16 +136,7 @@ public class GameManager : MonoBehaviour
             ranged.GetComponent<CharacterMovement>(),
             mage.GetComponent<CharacterMovement>()};
 
-        CharacterMenu.Instance.Init(new Attack[] {
-            friendly[0].attack1, 
-            friendly[0].attack2, 
-            friendly[0].attack3, 
-            friendly[1].attack1, 
-            friendly[1].attack2, 
-            friendly[1].attack3, 
-            friendly[2].attack1, 
-            friendly[2].attack2, 
-            friendly[2].attack3});
+        CharacterMenu.Instance.Init(friendly);
 
         CharacterMenu.Instance.SelectChar(0);
 
@@ -500,9 +482,7 @@ public class GameManager : MonoBehaviour
             newFriendlies[numFriendly] = cm;
             numFriendly++;
             friendly = newFriendlies;
-            CharacterMenu.Instance.Set4thChar(new Attack[] {
-                cm.attack1, cm.attack2, cm.attack3
-            });
+            CharacterMenu.Instance.Set4thChar(cm);
         }
     }
 

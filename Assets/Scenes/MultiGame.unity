@@ -2126,34 +2126,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 360f18e4865f54a89980a70c41cbd3aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldowns:
-  - {fileID: 1876907586}
-  - {fileID: 2042191623}
-  - {fileID: 1866315868}
-  - {fileID: 1737925533}
-  - {fileID: 1721355989}
-  - {fileID: 644715536}
-  - {fileID: 430225154}
-  - {fileID: 2099421829}
-  - {fileID: 1325146720}
-  - {fileID: 446093068}
-  - {fileID: 1307559671}
-  - {fileID: 482740878}
-  greenHps:
-  - {fileID: 1082008585}
-  - {fileID: 1935828783}
-  - {fileID: 138957854}
-  - {fileID: 1155096605}
-  selectionIndicators:
-  - {fileID: 1899295747}
-  - {fileID: 263428955}
-  - {fileID: 1693750366}
-  - {fileID: 798001816}
-  deadIndicators:
-  - {fileID: 269609271}
-  - {fileID: 1918158525}
-  - {fileID: 2140664400}
-  - {fileID: 130989853}
+  characterListings:
+  - {fileID: 1880786217}
+  - {fileID: 1552770432}
+  - {fileID: 1004840330}
+  - {fileID: 1475975351}
   fourthChar: {fileID: 1475975349}
   attack: {fileID: 21300000, guid: cedf56f00fc044afbb0d95e532617ac3, type: 3}
   buff: {fileID: 21300000, guid: e053ed71182294b2586f4fb31b865618, type: 3}
@@ -3161,7 +3138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1521293397}
-  cdOverlay: {fileID: 703004860}
+  cdOverlay: {fileID: 482740879}
   icon: {fileID: 703004860}
 --- !u!212 &482740879
 SpriteRenderer:
@@ -5850,6 +5827,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1004840329}
+  - component: {fileID: 1004840330}
   m_Layer: 0
   m_Name: Mage
   m_TagString: Untagged
@@ -5879,6 +5857,26 @@ Transform:
   m_Father: {fileID: 337709557}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1004840330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004840328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b9860e410277415580c7f358cbdca0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldowns:
+  - {fileID: 430225154}
+  - {fileID: 2099421829}
+  - {fileID: 1325146720}
+  greenBar: {fileID: 138957854}
+  icon: {fileID: 684676787}
+  selectionIndicator: {fileID: 1693750366}
+  deadIndicator: {fileID: 2140664400}
 --- !u!1 &1032785777
 GameObject:
   m_ObjectHideFlags: 0
@@ -8814,7 +8812,7 @@ GameObject:
   - component: {fileID: 1466700566}
   - component: {fileID: 1466700567}
   m_Layer: 0
-  m_Name: Isometric Diamond
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8829,7 +8827,7 @@ Transform:
   m_GameObject: {fileID: 1466700565}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 1475975350}
   m_RootOrder: 5
@@ -8970,6 +8968,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1475975350}
+  - component: {fileID: 1475975351}
   m_Layer: 0
   m_Name: Pet
   m_TagString: Untagged
@@ -8999,6 +8998,26 @@ Transform:
   m_Father: {fileID: 337709557}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1475975351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1475975349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b9860e410277415580c7f358cbdca0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldowns:
+  - {fileID: 446093068}
+  - {fileID: 1307559671}
+  - {fileID: 482740878}
+  greenBar: {fileID: 1155096605}
+  icon: {fileID: 1466700567}
+  selectionIndicator: {fileID: 798001816}
+  deadIndicator: {fileID: 130989853}
 --- !u!1 &1484919333
 GameObject:
   m_ObjectHideFlags: 0
@@ -19222,6 +19241,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1552770431}
+  - component: {fileID: 1552770432}
   m_Layer: 0
   m_Name: Ranged
   m_TagString: Untagged
@@ -19251,6 +19271,26 @@ Transform:
   m_Father: {fileID: 337709557}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1552770432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1552770430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b9860e410277415580c7f358cbdca0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldowns:
+  - {fileID: 1737925533}
+  - {fileID: 1721355989}
+  - {fileID: 644715536}
+  greenBar: {fileID: 1935828783}
+  icon: {fileID: 884585972}
+  selectionIndicator: {fileID: 263428955}
+  deadIndicator: {fileID: 1918158525}
 --- !u!1 &1584280522
 GameObject:
   m_ObjectHideFlags: 0
@@ -21066,8 +21106,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1880786216}
+  - component: {fileID: 1880786217}
   m_Layer: 0
-  m_Name: Warrior
+  m_Name: Melee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21095,6 +21136,26 @@ Transform:
   m_Father: {fileID: 337709557}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1880786217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880786215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b9860e410277415580c7f358cbdca0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldowns:
+  - {fileID: 1876907586}
+  - {fileID: 2042191623}
+  - {fileID: 1866315868}
+  greenBar: {fileID: 1082008585}
+  icon: {fileID: 1243897119}
+  selectionIndicator: {fileID: 1899295747}
+  deadIndicator: {fileID: 269609271}
 --- !u!1 &1899295747
 GameObject:
   m_ObjectHideFlags: 0

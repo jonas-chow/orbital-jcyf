@@ -16,6 +16,7 @@ public class CooldownIndicator : MonoBehaviour
     {
         this.cooldown = attack.cooldown;
         this.description = attack.GetDescription();
+        this.counter = 0;
         switch (attack.type)
         {
             case "attack":
@@ -56,6 +57,7 @@ public class CooldownIndicator : MonoBehaviour
     public void ResetCD()
     {
         cdOverlay.enabled = false;
+        counter = 0;
         text.text = "";
     }
 

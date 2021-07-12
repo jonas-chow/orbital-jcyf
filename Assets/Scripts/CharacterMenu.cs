@@ -6,8 +6,6 @@ public class CharacterMenu : MonoBehaviour
 {
     private static CharacterMenu instance;
     public static CharacterMenu Instance { get { return instance; } }
-    private Vector3 initialHealthPosition = new Vector3(2.25f, -1, 0);
-    private Vector3 initialHealthScale = new Vector3(5.5f, 0.4f, 1);
 
     void Awake()
     {
@@ -19,11 +17,7 @@ public class CharacterMenu : MonoBehaviour
         }
     }
 
-    public CooldownIndicator[] cooldowns = new CooldownIndicator[12];
-    
-    public GameObject[] greenHps = new GameObject[4];
-    public GameObject[] selectionIndicators = new GameObject[4];
-    public GameObject[] deadIndicators = new GameObject[4];
+    public CharacterListing[] characterListings = new CharacterListing[4];
     public GameObject fourthChar;
     public Sprite attack;
     public Sprite buff;
@@ -33,51 +27,38 @@ public class CharacterMenu : MonoBehaviour
 
     public void TurnPass()
     {
-        foreach (CooldownIndicator cd in cooldowns) {
-            cd.TurnPass();
+        foreach (CharacterListing listing in characterListings) {
+            listing.TurnPass();
         }
     }
 
     public void UseSkill(int charId, int skillId) {
-        cooldowns[charId * 3 + skillId].SkillUsed();
+        characterListings[charId].SkillUsed(skillId);
     }
 
     public void SelectChar(int charId) {
         for (int i = 0; i < 4; i++) {
-            selectionIndicators[i].SetActive(i == charId);
+            characterListings[i].SetSelect(i == charId);
         }
     }
 
     public void SetHealth(int charId, float healthPercentage) {
-        if (healthPercentage <= 0) {
-            greenHps[charId].transform.localScale = Vector3.zero;
-            deadIndicators[charId].SetActive(true);
-        } else {
-            greenHps[charId].transform.localScale = new Vector3(
-                initialHealthScale.x * healthPercentage, initialHealthScale.y, 0);
-            // weird formula that works
-            greenHps[charId].transform.localPosition = new Vector3(
-                initialHealthScale.x * healthPercentage / 2 - 0.5f, initialHealthPosition.y, 0);
-        }
+        characterListings[charId].SetHealth(healthPercentage);
     }
 
-    public void Init(Attack[] attacks) {
-        for (int i = 0; i < 9; i++) {
-            cooldowns[i].Init(attacks[i]);
-        }
-    }
-
-    public void Set4thChar(Attack[] attacks) {
-        fourthChar.SetActive(true);
-        SetHealth(3, 1f);
-        deadIndicators[3].SetActive(false);
+    public void Init(CharacterMovement[] attacks) {
         for (int i = 0; i < 3; i++) {
-            cooldowns[i + 9].Init(attacks[i]);
+            characterListings[i].Init(attacks[i]);
         }
     }
 
-    public void ResetCD(int charID, int skillID)
+    public void Set4thChar(CharacterMovement char4) {
+        fourthChar.SetActive(true);
+        characterListings[3].Init(char4);
+    }
+
+    public void ResetCD(int charId, int skillId)
     {
-        cooldowns[charID * 3 + skillID - 1].ResetCD();
+        characterListings[charId].ResetCD(skillId);
     }
 }

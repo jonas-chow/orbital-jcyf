@@ -203,7 +203,7 @@ public abstract class CharacterMovement : MonoBehaviour
         if (hp.TakeDamage(damage, isEnemy ? -1 : charID)) {
             Die();
         }
-        ParticleSystem bloodEffect = ParticleSystem.Instantiate(this.bloodEffect, 
+        ParticleSystem.Instantiate(this.bloodEffect, 
                     GridManager.Instance.GetCoords(this.GetX(), this.GetY()), Quaternion.identity);
     }
 
@@ -372,6 +372,6 @@ public abstract class CharacterMovement : MonoBehaviour
                 break;
         }
 
-        CharacterMenu.Instance.ResetCD(charID, attackNum);
+        CharacterMenu.Instance.ResetCD(charID, attackNum - 1);
     }
 }
