@@ -4792,9 +4792,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1035381539
+  m_SortingLayer: 5
+  m_SortingOrder: 10
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -4819,7 +4819,7 @@ ParticleSystemRenderer:
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
 --- !u!1 &1119560965430016
 GameObject:
   m_ObjectHideFlags: 0
@@ -9488,9 +9488,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1035381539
+  m_SortingLayer: 5
+  m_SortingOrder: 10
   m_RenderMode: 0
   m_SortMode: 1
   m_MinParticleSize: 0
@@ -9515,7 +9515,7 @@ ParticleSystemRenderer:
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
 --- !u!1 &1838308332998216
 GameObject:
   m_ObjectHideFlags: 0
@@ -14227,9 +14227,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1035381539
+  m_SortingLayer: 5
+  m_SortingOrder: 10
   m_RenderMode: 1
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -14254,7 +14254,7 @@ ParticleSystemRenderer:
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
 --- !u!1 &1892078723244562
 GameObject:
   m_ObjectHideFlags: 0
