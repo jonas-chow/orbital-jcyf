@@ -17,6 +17,7 @@ public class DisabledDebuff : Buff
             existingBuff.turnsLeft = existingBuff.turnsLeft > this.turnsLeft ? existingBuff.turnsLeft : this.turnsLeft;
         } else {
             character.Disable();
+            character.buffs.Add(this);
         }
     }
 

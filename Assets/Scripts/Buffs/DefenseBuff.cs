@@ -17,6 +17,7 @@ public class DefenseBuff : Buff
     public override void Add(CharacterMovement character) {
         this.character = character;
         character.defBuff += strength;
+        character.buffs.Add(this);
         if (strength > 0) {
             buffEffectClone = ParticleSystem.Instantiate(character.buffEffect, 
                 GridManager.Instance.GetCoords(character.GetX(), character.GetY()), Quaternion.identity);

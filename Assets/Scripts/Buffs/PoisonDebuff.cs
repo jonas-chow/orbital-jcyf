@@ -18,10 +18,11 @@ public class PoisonDebuff : Buff
             existingBuff.turnsLeft = existingBuff.turnsLeft > this.turnsLeft ? existingBuff.turnsLeft : this.turnsLeft;
         } else {
             character.poisoned = true;
-        }
+            character.buffs.Add(this);
             poisonEffectClone = ParticleSystem.Instantiate(character.poisonEffect, 
                 GridManager.Instance.GetCoords(character.GetX(), character.GetY()), Quaternion.identity);
             poisonEffectClone.transform.parent = character.transform;
+        } 
     }
 
     public override void Remove() {

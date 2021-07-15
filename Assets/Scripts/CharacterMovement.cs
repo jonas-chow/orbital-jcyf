@@ -363,7 +363,6 @@ public abstract class CharacterMovement : MonoBehaviour
     public void AddBuff(Buff buff)
     {
         buff.Add(this);
-        buffs.Add(buff);
     }
 
     public bool IsEnemyOf(CharacterMovement other)

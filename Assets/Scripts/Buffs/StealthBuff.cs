@@ -18,6 +18,7 @@ public class StealthBuff : Buff
         } else {
             character.stealthed = true;
             character.spriteRenderer.color = new Color(1, 1, 1, character.isEnemy ? 0 : 0.5f);
+            character.buffs.Add(this);
         }
     }
 

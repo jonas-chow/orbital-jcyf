@@ -18,10 +18,11 @@ public class InvincibleBuff : Buff
             existingBuff.turnsLeft = existingBuff.turnsLeft > this.turnsLeft ? existingBuff.turnsLeft : this.turnsLeft;
         } else {
             character.invincible = true;
+            character.buffs.Add(this);
+            invincibleEffectClone = ParticleSystem.Instantiate(character.invincibleEffect, 
+                GridManager.Instance.GetCoords(character.GetX(), character.GetY()), Quaternion.identity);
+            invincibleEffectClone.transform.parent = character.transform;
         }
-        invincibleEffectClone = ParticleSystem.Instantiate(character.invincibleEffect, 
-            GridManager.Instance.GetCoords(character.GetX(), character.GetY()), Quaternion.identity);
-        invincibleEffectClone.transform.parent = character.transform;
     }
 
     public override void Remove() {

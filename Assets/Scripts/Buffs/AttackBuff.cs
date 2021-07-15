@@ -15,6 +15,7 @@ public class AttackBuff : Buff
     public override void Add(CharacterMovement character) {
         this.character = character;
         character.atkBuff += strength;
+        character.buffs.Add(this);
     }
 
     public override void Remove() {

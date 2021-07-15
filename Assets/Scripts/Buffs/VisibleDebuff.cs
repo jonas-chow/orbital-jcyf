@@ -18,6 +18,7 @@ public class VisibleDebuff : Buff
                 existingBuff.turnsLeft = existingBuff.turnsLeft > this.turnsLeft ? existingBuff.turnsLeft : this.turnsLeft;
             } else {
                 character.fog.SetActive(true);
+                character.buffs.Add(this);
             }
         }
     }
