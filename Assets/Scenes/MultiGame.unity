@@ -414,7 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff44f28995aba40d0aca4bf593337509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testing: 0
+  testing: 1
   defeatUI: {fileID: 996488427}
   victoryUI: {fileID: 982411403}
   loadingUI: {fileID: 1473468720}
@@ -4743,7 +4743,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: b1cb2d6316113c846a343c0148132cac, type: 3}
     volume: 1
     loop: 0
-    soundEffect: 0
+    soundEffect: 1
     source: {fileID: 0}
   - name: AOEbuff
     clip: {fileID: 8300000, guid: cd8af594b318aeb44880f475e8fc75e1, type: 3}

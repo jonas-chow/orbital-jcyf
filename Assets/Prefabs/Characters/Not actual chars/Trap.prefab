@@ -126,4 +126,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2e4c9b0da05144eeadf4c078bfa6af4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trapExplosionEffect: {fileID: 198194127032045410, guid: 46876a2780737ec45a19d62f88e5ce56, type: 3}
   sprites: {fileID: 7336328320628337380}

@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bloodEffect: {fileID: 2567772567676637033, guid: f0ae7e35992d680499e536f4fecb78a4, type: 3}
+  invincibleEffect: {fileID: 198858562690846188, guid: 968c924d2be019d4b9e67647551eec3e, type: 3}
+  poisonEffect: {fileID: 19800006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
+  healEffect: {fileID: 2567772567676637033, guid: f0ae7e35992d680499e536f4fecb78a4, type: 3}
+  buffEffect: {fileID: 2567772567676637033, guid: f0ae7e35992d680499e536f4fecb78a4, type: 3}
+  debuffEffect: {fileID: 2567772567676637033, guid: f0ae7e35992d680499e536f4fecb78a4, type: 3}
   spriteRenderer: {fileID: 5671565735180509265}
   friendlySprites:
   - {fileID: 21300000, guid: b5820bcf749cb43eead84e01829771a2, type: 3}

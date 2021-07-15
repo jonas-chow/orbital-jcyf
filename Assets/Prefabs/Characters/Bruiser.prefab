@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bloodEffect: {fileID: 19800000, guid: bc98890f6028f444eaa7789bde5e2eeb, type: 3}
+  invincibleEffect: {fileID: 198858562690846188, guid: 968c924d2be019d4b9e67647551eec3e, type: 3}
+  poisonEffect: {fileID: 19800006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
+  healEffect: {fileID: 19800000, guid: ada5d62ffe762ce4fbccc70dcdbc9022, type: 3}
+  buffEffect: {fileID: 19800000, guid: e393400376528bf4d96ed9178316933a, type: 3}
+  debuffEffect: {fileID: 19800000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
   spriteRenderer: {fileID: 5716813856575147021}
   friendlySprites:
   - {fileID: 8468408881239380914, guid: 4b998885e1e4540fe80f82a6237c8ff6, type: 3}
@@ -46,6 +51,8 @@ MonoBehaviour:
   attack2Turn: -999
   attack3Turn: -999
   slashEffect: {fileID: 1411206493308713459, guid: a64811302b57b994faa437ec669e0b78, type: 3}
+  aoeSlashEffect: {fileID: 19800002, guid: 3d4907e6bd39f474b8fd8220920e65c4, type: 3}
+  undyingEffect: {fileID: 198796712453205768, guid: fc490e7c1935b7644be1175dcc2c506a, type: 3}
 --- !u!1001 &726965949365970443
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -53,6 +60,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8302465763373070669, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: m_Size.x
+      value: 0.86454475
+      objectReference: {fileID: 0}
+    - target: {fileID: -8302465763373070669, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: m_Size.y
+      value: 0.8118676
+      objectReference: {fileID: 0}
+    - target: {fileID: -8302465763373070669, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.06020236
+      objectReference: {fileID: 0}
+    - target: {fileID: -8302465763373070669, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.018813193
+      objectReference: {fileID: 0}
     - target: {fileID: 1718499127430642773, guid: a446b43e30b804575ba2966619114272, type: 3}
       propertyPath: m_RootOrder
       value: 0

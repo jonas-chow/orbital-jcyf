@@ -5,6 +5,12 @@ using UnityEngine;
 public abstract class CharacterMovement : MonoBehaviour
 {
     public ParticleSystem bloodEffect;
+    public ParticleSystem invincibleEffect;
+    public ParticleSystem poisonEffect;
+    public ParticleSystem healEffect;
+    public ParticleSystem buffEffect;
+    public ParticleSystem debuffEffect;
+
     public SpriteRenderer spriteRenderer;
     public Sprite[] friendlySprites = new Sprite[4];
     public Sprite[] enemySprites = new Sprite[4];
@@ -217,12 +223,18 @@ public abstract class CharacterMovement : MonoBehaviour
                 Quaternion.identity)
             .GetComponent<DamageText>()
             .SetText(healAmount.ToString());
+        ParticleSystem healEffect = ParticleSystem.Instantiate(this.healEffect, 
+            GridManager.Instance.GetCoords(GetX(), GetY()), Quaternion.identity);
+        healEffect.transform.parent = this.transform;
 
         hp.TakeDamage(-healAmount, isEnemy ? -1 : charID);
     }
 
     public virtual void Die()
     {
+        foreach (Buff x in buffs) {
+            x.Remove();
+        }
         // reset buffs so none try to remove themselves
         buffs = new List<Buff>();
         GridManager.Instance.RemoveObject(GetX(), GetY());
@@ -239,6 +251,8 @@ public abstract class CharacterMovement : MonoBehaviour
         fog.SetActive(false);
         hp.SetVisible(false);
         selection.SetActive(false);
+
+        Destroy(gameObject.GetComponent<BoxCollider2D>());
         // GameObject.Destroy(gameObject);
     }
 
@@ -373,5 +387,25 @@ public abstract class CharacterMovement : MonoBehaviour
         }
 
         CharacterMenu.Instance.ResetCD(charID, attackNum - 1);
+    }
+
+    public void RotateProjectileEffect(string direction, ParticleSystem effect)
+    {
+        switch (direction)
+        {
+            case "up":
+                effect.transform.Rotate(0, 0, 0);
+                break;
+            case "down":
+                effect.transform.Rotate(0, 0, 180);
+                break;
+            case "left":
+                effect.transform.Rotate(0, 0, 90);
+                break;
+            case "right":
+                effect.transform.Rotate(0, 0, -90);
+                break;
+        }
+        
     }
 }

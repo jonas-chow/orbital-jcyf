@@ -17,6 +17,8 @@ public class BruiserMovement : CharacterMovement
     public static int _defense = 15;
 
     public ParticleSystem slashEffect;
+    public ParticleSystem aoeSlashEffect;
+    public ParticleSystem undyingEffect;
 
     public class Attack1 : LinearAttack
     {
@@ -96,6 +98,8 @@ public class BruiserMovement : CharacterMovement
             enemies.ForEach(cm => {
                 cm.TakeDamage(self.GetAttack(), damage);
             });
+            ParticleSystem aoeSlashEffect = ParticleSystem.Instantiate(self.aoeSlashEffect, 
+                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
 
             // use defense as the attack so that always take fixed damage
             self.TakeDamage(self.GetDefense(), damage);
@@ -113,6 +117,8 @@ public class BruiserMovement : CharacterMovement
             allies.ForEach(cm => {
                 cm.TakeDamage(self.GetAttack(), damage);
             });
+            ParticleSystem aoeSlashEffect = ParticleSystem.Instantiate(self.aoeSlashEffect, 
+                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
 
             self.TakeDamage(self.GetDefense(), 20);
             AudioManager.Instance.Play("BruiserAOE");  
@@ -145,6 +151,9 @@ public class BruiserMovement : CharacterMovement
         {
             SendEvent();
             self.AddBuff(new InvincibleBuff(2));
+            ParticleSystem undyingEffect = ParticleSystem.Instantiate(self.undyingEffect, 
+                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
+            undyingEffect.transform.parent = self.transform; 
             AudioManager.Instance.Play("BruiserInvincible");  
         }
 
@@ -156,6 +165,9 @@ public class BruiserMovement : CharacterMovement
         public override void EventExecute(object[] extraData)
         {
             self.AddBuff(new InvincibleBuff(2));
+            ParticleSystem undyingEffect = ParticleSystem.Instantiate(self.undyingEffect, 
+                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
+            undyingEffect.transform.parent = self.transform; 
             AudioManager.Instance.Play("BruiserInvincible");  
         }
 

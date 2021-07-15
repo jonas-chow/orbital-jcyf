@@ -18,6 +18,7 @@ public class TrapperMovement : CharacterMovement
 
     public GameObject trapPrefab;
     private List<Trap> traps = new List<Trap>();
+    public ParticleSystem arrowEffect;
 
     public class Attack1 : LinearAttack
     {
@@ -41,6 +42,9 @@ public class TrapperMovement : CharacterMovement
                 target.TakeDamage(self.GetAttack(), damage);
                 AudioManager.Instance.Play("ArrowHit");
             }
+            ParticleSystem arrowEffect = ParticleSystem.Instantiate(self.arrowEffect, 
+                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
+            self.RotateProjectileEffect(self.faceDirection, arrowEffect);
             AudioManager.Instance.Play("ArrowMiss");
         }
 
@@ -58,6 +62,9 @@ public class TrapperMovement : CharacterMovement
                 target.TakeDamage(self.GetAttack(), damage);
                 AudioManager.Instance.Play("ArrowHit");
             }
+            ParticleSystem arrowEffect = ParticleSystem.Instantiate(self.arrowEffect, 
+                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
+            self.RotateProjectileEffect(self.faceDirection, arrowEffect);
             AudioManager.Instance.Play("ArrowMiss");
         }
 
@@ -148,7 +155,7 @@ public class TrapperMovement : CharacterMovement
             SendEvent();
             self.traps.ForEach(trap => trap.Explode(damage));
             self.traps = new List<Trap>();
-            AudioManager.Instance.Play("TrapExplosion");
+            //AudioManager.Instance.Play("TrapExplosion");
         }
 
         public override void SendEvent()
@@ -161,7 +168,7 @@ public class TrapperMovement : CharacterMovement
         {
             self.traps.ForEach(trap => trap.Explode(damage));
             self.traps = new List<Trap>();
-            AudioManager.Instance.Play("TrapExplosion");
+            //AudioManager.Instance.Play("TrapExplosion");
         }
 
         public override string GetDescription()

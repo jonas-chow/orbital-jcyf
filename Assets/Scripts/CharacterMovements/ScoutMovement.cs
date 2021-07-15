@@ -17,6 +17,7 @@ public class ScoutMovement : CharacterMovement
     public static int _defense = 15;
 
     public GameObject ward;
+    public ParticleSystem arrowEffect;
 
     public class Attack1 : LinearAttack
     {
@@ -40,6 +41,9 @@ public class ScoutMovement : CharacterMovement
                 target.TakeDamage(self.GetAttack(), damage);
                 AudioManager.Instance.Play("ArrowHit");
             }
+            ParticleSystem arrowEffect = ParticleSystem.Instantiate(self.arrowEffect, 
+                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
+            self.RotateProjectileEffect(self.faceDirection, arrowEffect);
             AudioManager.Instance.Play("ArrowMiss");
         }
 
@@ -57,6 +61,9 @@ public class ScoutMovement : CharacterMovement
                 target.TakeDamage(self.GetAttack(), damage);
                 AudioManager.Instance.Play("ArrowHit");
             }
+            ParticleSystem arrowEffect = ParticleSystem.Instantiate(self.arrowEffect, 
+                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
+            self.RotateProjectileEffect(self.faceDirection, arrowEffect);
             AudioManager.Instance.Play("ArrowMiss");
         }
 

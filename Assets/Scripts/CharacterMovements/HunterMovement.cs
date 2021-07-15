@@ -16,6 +16,10 @@ public class HunterMovement : CharacterMovement
     public static int _attack = 20;
     public static int _defense = 10;
 
+    public ParticleSystem arrowEffect;
+    public ParticleSystem arrowinfEffect;
+    public ParticleSystem knockbackEffect;
+
     public class Attack1 : LinearAttack
     {
         public HunterMovement self;
@@ -38,6 +42,9 @@ public class HunterMovement : CharacterMovement
                 target.TakeDamage(self.GetAttack(), damage);
                 AudioManager.Instance.Play("ArrowHit");
             }
+            ParticleSystem arrowEffect = ParticleSystem.Instantiate(self.arrowEffect, 
+                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
+            self.RotateProjectileEffect(self.faceDirection, arrowEffect);
             AudioManager.Instance.Play("ArrowMiss");
         }
 
@@ -55,6 +62,9 @@ public class HunterMovement : CharacterMovement
                 target.TakeDamage(self.GetAttack(), damage);
                 AudioManager.Instance.Play("ArrowHit");
             }
+            ParticleSystem arrowEffect = ParticleSystem.Instantiate(self.arrowEffect, 
+                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
+            self.RotateProjectileEffect(self.faceDirection, arrowEffect);
             AudioManager.Instance.Play("ArrowMiss");
         }
 
@@ -94,6 +104,9 @@ public class HunterMovement : CharacterMovement
                 target.TakeDamage(self.GetAttack(), dmg);
                 AudioManager.Instance.Play("ArrowHit");
             }
+            ParticleSystem arrowinfEffect = ParticleSystem.Instantiate(self.arrowinfEffect, 
+                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
+            self.RotateProjectileEffect(self.faceDirection, arrowinfEffect);
             AudioManager.Instance.Play("ArrowMiss");
         }
 
@@ -113,6 +126,9 @@ public class HunterMovement : CharacterMovement
                 target.TakeDamage(self.GetAttack(), dmg);
                 AudioManager.Instance.Play("ArrowHit");
             }
+            ParticleSystem arrowinfEffect = ParticleSystem.Instantiate(self.arrowinfEffect, 
+                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
+            self.RotateProjectileEffect(self.faceDirection, arrowinfEffect);
             AudioManager.Instance.Play("ArrowMiss");
         }
 
@@ -158,6 +174,8 @@ public class HunterMovement : CharacterMovement
                     }
                     target.Face(targetDir);
                 }
+                ParticleSystem knockbackEffect = ParticleSystem.Instantiate(self.knockbackEffect, 
+                    GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
                 AudioManager.Instance.Play("Knockback");
             }
         }
@@ -182,6 +200,8 @@ public class HunterMovement : CharacterMovement
                     }
                     target.Face(targetDir);
                 }
+                ParticleSystem knockbackEffect = ParticleSystem.Instantiate(self.knockbackEffect, 
+                    GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
                 AudioManager.Instance.Play("Knockback");
             }
         }
