@@ -14,7 +14,7 @@ public class InvincibleBuff : Buff
         this.character = character;
         // refresh buff duration if character is already invincible
         if (character.invincible) {
-                        Buff existingBuff = character.buffs.Find(buff => typeof(InvincibleBuff).IsInstanceOfType(buff));
+            Buff existingBuff = character.buffs.Find(buff => typeof(InvincibleBuff).IsInstanceOfType(buff));
             existingBuff.turnsLeft = existingBuff.turnsLeft > this.turnsLeft ? existingBuff.turnsLeft : this.turnsLeft;
         } else {
             character.invincible = true;
