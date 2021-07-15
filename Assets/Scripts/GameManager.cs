@@ -156,9 +156,7 @@ public class GameManager : MonoBehaviour
 
         Debug.Log(gameMode);
         // For single player mode
-        if (gameMode == 0) {
-            InstantiateEnemies(0, 0, 0);
-        } else {
+        if (gameMode == 1) {
             // Instantiate dummy
             GameObject dummy = Instantiate(TargetDummy, transform);
             CharacterMovement dummyMovement = dummy.GetComponent<CharacterMovement>();
