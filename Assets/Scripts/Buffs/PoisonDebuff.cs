@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PoisonDebuff : Buff
 {
+    private ParticleSystem poisonEffectClone;
     public PoisonDebuff(int turns)
     {
         this.turnsLeft = turns;
@@ -18,9 +19,13 @@ public class PoisonDebuff : Buff
         } else {
             character.poisoned = true;
         }
+            poisonEffectClone = ParticleSystem.Instantiate(character.poisonEffect, 
+                GridManager.Instance.GetCoords(character.GetX(), character.GetY()), Quaternion.identity);
+            poisonEffectClone.transform.parent = character.transform;
     }
 
     public override void Remove() {
+        ParticleSystem.Destroy(this.poisonEffectClone.gameObject);
         character.poisoned = false;
     }
 

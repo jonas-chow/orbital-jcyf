@@ -16,6 +16,8 @@ public class HealerMovement : CharacterMovement
     public static int _attack = 5;
     public static int _defense = 15;
 
+    public ParticleSystem magicAttackEffect;
+
     public class Attack1 : LinearAttack
     {
         public HealerMovement self;
@@ -37,6 +39,9 @@ public class HealerMovement : CharacterMovement
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
+            ParticleSystem magicAttackEffect = ParticleSystem.Instantiate(self.magicAttackEffect, 
+                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
+            self.RotateProjectileEffect(self.faceDirection, magicAttackEffect);
             AudioManager.Instance.Play("MagicAttack");
         }
 
@@ -53,6 +58,9 @@ public class HealerMovement : CharacterMovement
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
+            ParticleSystem magicAttackEffect = ParticleSystem.Instantiate(self.magicAttackEffect, 
+                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
+            self.RotateProjectileEffect(self.faceDirection, magicAttackEffect);
             AudioManager.Instance.Play("MagicAttack");
         }
 
@@ -122,7 +130,7 @@ public class HealerMovement : CharacterMovement
             this.character = cm;
             this.self = cm;
             this.range = 5;
-            this.cooldown = 20;
+            this.cooldown = 0;
             this.damage = 10;
             this.type = "buff";
         }

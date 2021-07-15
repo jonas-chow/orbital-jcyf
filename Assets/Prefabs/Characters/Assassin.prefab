@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bloodEffect: {fileID: 19800000, guid: bc98890f6028f444eaa7789bde5e2eeb, type: 3}
+  invincibleEffect: {fileID: 198858562690846188, guid: 968c924d2be019d4b9e67647551eec3e, type: 3}
+  poisonEffect: {fileID: 19800006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
+  healEffect: {fileID: 19800000, guid: ada5d62ffe762ce4fbccc70dcdbc9022, type: 3}
+  buffEffect: {fileID: 19800000, guid: e393400376528bf4d96ed9178316933a, type: 3}
+  debuffEffect: {fileID: 19800000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
   spriteRenderer: {fileID: 7843183164678699743}
   friendlySprites:
   - {fileID: 6489026438188888012, guid: 51371c39aa6444a4384d53470e6bc7cd, type: 3}
@@ -48,7 +53,6 @@ MonoBehaviour:
   smokeEffect: {fileID: 7280255243917979218, guid: ed4392f314c42164688db4e4bdbf14d1, type: 3}
   slashEffect: {fileID: 1411206493308713459, guid: a64811302b57b994faa437ec669e0b78, type: 3}
   heavySlashEffect: {fileID: 1411206493308713459, guid: 718b338f6d96050429eaefc1f90fa6bc, type: 3}
-  poisonEffect: {fileID: 19800006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
 --- !u!1001 &2997169520097710297
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56,6 +60,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8302465763373070669, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: m_Size.x
+      value: 0.3871535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8302465763373070669, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: m_Size.y
+      value: 0.60528535
+      objectReference: {fileID: 0}
+    - target: {fileID: -8302465763373070669, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.0051935613
+      objectReference: {fileID: 0}
+    - target: {fileID: -8302465763373070669, guid: a446b43e30b804575ba2966619114272, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.041548878
+      objectReference: {fileID: 0}
     - target: {fileID: 1718499127430642773, guid: a446b43e30b804575ba2966619114272, type: 3}
       propertyPath: m_RootOrder
       value: 0

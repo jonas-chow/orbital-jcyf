@@ -13,6 +13,9 @@ TODO:
 public class FamiliarMovement : CharacterMovement
 {
     SummonerMovement summoner;
+    public ParticleSystem familiarAttackEffect;
+    public ParticleSystem explosionEffect;
+    public ParticleSystem swapEffect;
 
     public class Attack1 : LinearAttack
     {
@@ -35,6 +38,8 @@ public class FamiliarMovement : CharacterMovement
             CharacterMovement target = FindTarget(direction);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
+                ParticleSystem familiarAttackEffect = ParticleSystem.Instantiate(self.familiarAttackEffect, 
+                    GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
                 AudioManager.Instance.Play("FamiliarAttack");
             }
         }
@@ -51,6 +56,8 @@ public class FamiliarMovement : CharacterMovement
             CharacterMovement target = FindTarget(dir);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
+                ParticleSystem familiarAttackEffect = ParticleSystem.Instantiate(self.familiarAttackEffect, 
+                    GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
                 AudioManager.Instance.Play("FamiliarAttack");
             }
         }
@@ -129,7 +136,13 @@ public class FamiliarMovement : CharacterMovement
                 self.summoner.gameObject, 
                 self.summoner.GetX(), 
                 self.summoner.GetY());
-                AudioManager.Instance.Play("Swap");
+            ParticleSystem swapEffect1 = ParticleSystem.Instantiate(self.swapEffect, 
+                GridManager.Instance.GetCoords(self.summoner.GetX(), self.summoner.GetY()), Quaternion.identity);
+            ParticleSystem swapEffect2 = ParticleSystem.Instantiate(self.swapEffect, 
+                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
+            swapEffect1.transform.parent = self.summoner.transform;
+            swapEffect2.transform.parent = self.transform;
+            AudioManager.Instance.Play("Swap");
         }
 
         public override void SendEvent()
@@ -149,7 +162,13 @@ public class FamiliarMovement : CharacterMovement
                 self.summoner.gameObject, 
                 self.summoner.GetX(), 
                 self.summoner.GetY());
-                AudioManager.Instance.Play("Swap");
+            ParticleSystem swapEffect1 = ParticleSystem.Instantiate(self.swapEffect, 
+                GridManager.Instance.GetCoords(self.summoner.GetX(), self.summoner.GetY()), Quaternion.identity);
+            ParticleSystem swapEffect2 = ParticleSystem.Instantiate(self.swapEffect, 
+                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
+            swapEffect1.transform.parent = self.summoner.transform;
+            swapEffect2.transform.parent = self.transform;
+            AudioManager.Instance.Play("Swap");
         }
 
         public override string GetDescription()
@@ -197,6 +216,8 @@ public class FamiliarMovement : CharacterMovement
         enemies.ForEach(cm => cm.TakeDamage(GetAttack(), attack2.damage));
         summoner.FamiliarDied();
         base.Die();
+        ParticleSystem explosionEffect = ParticleSystem.Instantiate(this.explosionEffect, 
+            GridManager.Instance.GetCoords(GetX(), GetY()), Quaternion.identity);
     }
 
     public void Init(SummonerMovement summoner)

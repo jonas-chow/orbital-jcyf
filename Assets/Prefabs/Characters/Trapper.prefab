@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bloodEffect: {fileID: 19800000, guid: bc98890f6028f444eaa7789bde5e2eeb, type: 3}
+  invincibleEffect: {fileID: 198858562690846188, guid: 968c924d2be019d4b9e67647551eec3e, type: 3}
+  poisonEffect: {fileID: 19800006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
+  healEffect: {fileID: 19800000, guid: ada5d62ffe762ce4fbccc70dcdbc9022, type: 3}
+  buffEffect: {fileID: 19800000, guid: e393400376528bf4d96ed9178316933a, type: 3}
+  debuffEffect: {fileID: 19800000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
   spriteRenderer: {fileID: 3964312501362201709}
   friendlySprites:
   - {fileID: 4439281475064385288, guid: 6b7c92150b15043b58b929d14e508986, type: 3}
@@ -46,6 +51,7 @@ MonoBehaviour:
   attack2Turn: -999
   attack3Turn: -999
   trapPrefab: {fileID: 7945980701586485691, guid: c42daf4185c59480885cef015a7d2a7a, type: 3}
+  arrowEffect: {fileID: 7299009099270043012, guid: ef639aea8e48e0d479eb26f41725c9ee, type: 3}
 --- !u!1001 &8233865943217323627
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bloodEffect: {fileID: 19800000, guid: bc98890f6028f444eaa7789bde5e2eeb, type: 3}
+  invincibleEffect: {fileID: 198858562690846188, guid: 968c924d2be019d4b9e67647551eec3e, type: 3}
+  poisonEffect: {fileID: 19800006, guid: 2a474af3f4c27be4e9bdce39cfe4315d, type: 3}
+  healEffect: {fileID: 19800000, guid: ada5d62ffe762ce4fbccc70dcdbc9022, type: 3}
+  buffEffect: {fileID: 19800000, guid: e393400376528bf4d96ed9178316933a, type: 3}
+  debuffEffect: {fileID: 19800000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
   spriteRenderer: {fileID: 1335674820423745132}
   friendlySprites:
   - {fileID: 64439328421697270, guid: abc3088fb44e54b64a52cfb73e7e69e1, type: 3}
@@ -45,6 +50,9 @@ MonoBehaviour:
   attack1Turn: -999
   attack2Turn: -999
   attack3Turn: -999
+  familiarAttackEffect: {fileID: 1411206493308713459, guid: 52abc87475237894dbb7ccd6157803c4, type: 3}
+  explosionEffect: {fileID: 198927480420149238, guid: b395d5d6eb4b4b846acc021ee036b744, type: 3}
+  swapEffect: {fileID: 198159274938206214, guid: 9e4577abe56a95f4a91d29a0473cd30c, type: 3}
 --- !u!1001 &6325804202643182698
 PrefabInstance:
   m_ObjectHideFlags: 0

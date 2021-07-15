@@ -16,6 +16,9 @@ public class WizardMovement : CharacterMovement
     public static int _attack = 20;
     public static int _defense = 10;
 
+    public ParticleSystem magicAttackEffect;
+    public ParticleSystem electricAttackEffect;
+
     public class Attack1 : LinearAttack
     {
         public WizardMovement self;
@@ -37,6 +40,9 @@ public class WizardMovement : CharacterMovement
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
+            ParticleSystem magicAttackEffect = ParticleSystem.Instantiate(self.magicAttackEffect, 
+                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
+            self.RotateProjectileEffect(self.faceDirection, magicAttackEffect);
             AudioManager.Instance.Play("MagicAttack");
         }
 
@@ -53,6 +59,9 @@ public class WizardMovement : CharacterMovement
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
             }
+            ParticleSystem magicAttackEffect = ParticleSystem.Instantiate(self.magicAttackEffect, 
+                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
+            self.RotateProjectileEffect(self.faceDirection, magicAttackEffect);
             AudioManager.Instance.Play("MagicAttack");
         }
 
@@ -85,6 +94,8 @@ public class WizardMovement : CharacterMovement
             enemies.ForEach(cm => {
                 cm.TakeDamage(self.GetAttack(), damage);
             });
+            ParticleSystem electricAttackEffect = ParticleSystem.Instantiate(self.electricAttackEffect, 
+                GridManager.Instance.GetCoords(self.GetX() + offsetX, self.GetY() + offsetY), Quaternion.identity);
             AudioManager.Instance.Play("AOEMagicAttack");
         }
 
@@ -103,6 +114,8 @@ public class WizardMovement : CharacterMovement
             allies.ForEach(cm => {
                 cm.TakeDamage(self.GetAttack(), damage);
             });
+            ParticleSystem electricAttackEffect = ParticleSystem.Instantiate(self.electricAttackEffect, 
+                GridManager.Instance.GetCoords(self.GetX() + offsetX, self.GetY() + offsetY), Quaternion.identity);
             FaceTargetDirection(offsetX, offsetY);
             AudioManager.Instance.Play("AOEMagicAttack");
         }

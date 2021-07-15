@@ -19,7 +19,6 @@ public class AssassinMovement : CharacterMovement
     public ParticleSystem smokeEffect;
     public ParticleSystem slashEffect;
     public ParticleSystem heavySlashEffect;
-    public ParticleSystem poisonEffect;
 
     public class Attack1 : LinearAttack
     {
@@ -110,8 +109,6 @@ public class AssassinMovement : CharacterMovement
             if (target != null && target.IsEnemyOf(self)) {
                 target.AddBuff(new PoisonDebuff(3));
                 target.TakeDamage(self.GetAttack(), damage);
-                ParticleSystem poisonEffect = ParticleSystem.Instantiate(self.poisonEffect, 
-                    GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
                 AudioManager.Instance.Play("Poison");
             }
             AudioManager.Instance.Play("MeleeMiss");
@@ -130,8 +127,6 @@ public class AssassinMovement : CharacterMovement
             if (target != null && target.IsEnemyOf(self)) {
                 target.AddBuff(new PoisonDebuff(3));
                 target.TakeDamage(self.GetAttack(), damage);
-                ParticleSystem poisonEffect = ParticleSystem.Instantiate(self.poisonEffect, 
-                    GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
                 AudioManager.Instance.Play("Poison");
             }
             AudioManager.Instance.Play("MeleeMiss");

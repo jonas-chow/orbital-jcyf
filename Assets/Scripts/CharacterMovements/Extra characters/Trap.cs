@@ -12,6 +12,7 @@ TODO:
 
 public class Trap : MonoBehaviour
 {
+    public ParticleSystem trapExplosionEffect;
     public GameObject sprites;
     private int damage;
     private bool isEnemy;
@@ -53,5 +54,8 @@ public class Trap : MonoBehaviour
 
         enemies.ForEach(cm => cm.TakeDamage(trapper.GetAttack(), damage));
         GameObject.Destroy(this.gameObject);
+        ParticleSystem explosionEffect = ParticleSystem.Instantiate(this.trapExplosionEffect, 
+            GridManager.Instance.GetCoords(x, y), Quaternion.identity);
+        AudioManager.Instance.Play("TrapExplosion");
     }
 }

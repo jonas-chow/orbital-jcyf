@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InvincibleBuff : Buff
 {
+    private ParticleSystem invincibleEffectClone;
     public InvincibleBuff(int turns)
     {
         this.turnsLeft = turns;
@@ -18,9 +19,13 @@ public class InvincibleBuff : Buff
         } else {
             character.invincible = true;
         }
+        invincibleEffectClone = ParticleSystem.Instantiate(character.invincibleEffect, 
+            GridManager.Instance.GetCoords(character.GetX(), character.GetY()), Quaternion.identity);
+        invincibleEffectClone.transform.parent = character.transform;
     }
 
     public override void Remove() {
+        ParticleSystem.Destroy(invincibleEffectClone.gameObject);
         character.invincible = false;
     }
 }
