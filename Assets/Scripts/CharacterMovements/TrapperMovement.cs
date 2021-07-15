@@ -50,7 +50,7 @@ public class TrapperMovement : CharacterMovement
 
         public override void SendEvent()
         {
-            object[] extraData = new object[] {direction};
+            object[] extraData = new object[] {InvertDirection(direction)};
             EventHandler.Instance.SendAttackEvent(self.charID, 1, extraData);
         }
 
