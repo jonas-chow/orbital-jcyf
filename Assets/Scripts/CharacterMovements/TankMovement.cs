@@ -59,11 +59,8 @@ public class TankMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Deals {damage} damage to the target in front of you. 
-
-            Cooldown: {cooldown}
-            Range: {range}";
+            return $"Deals {damage} damage to the target in front of you.\n\n" +
+            $"Cooldown: {cooldown}\nRange: {range}";
         }
     }
 
@@ -101,16 +98,14 @@ public class TankMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Heal yourself for {damage} HP.
-
-            Cooldown: {cooldown}";
+            return $"Heal yourself for {damage} HP.\n\nCooldown: {cooldown}";
         }
     }
 
     public class Attack3 : MeleeAOEAttack
     {
         public TankMovement self;
+        private int debuffStrength;
 
         public Attack3(TankMovement cm)
         {
@@ -119,6 +114,7 @@ public class TankMovement : CharacterMovement
             this.range = 0;
             this.damage = 0;
             this.cooldown = 10;
+            this.debuffStrength = 10;
             this.type = "buff";
         }
 
@@ -129,7 +125,7 @@ public class TankMovement : CharacterMovement
             List<CharacterMovement> allies = FindTargets().FindAll(cm => !cm.IsEnemyOf(self));
             allies.ForEach(cm => {
                 if (cm.Equals(self)) {
-                    cm.AddBuff(new DefenseBuff(-10, 2));
+                    cm.AddBuff(new DefenseBuff(-debuffStrength, 2));
                 } else {
                     cm.AddBuff(new InvincibleBuff(2));
                 }
@@ -147,7 +143,7 @@ public class TankMovement : CharacterMovement
             List<CharacterMovement> enemies = FindTargets().FindAll(cm => !cm.IsEnemyOf(self));
             enemies.ForEach(cm => {
                 if (cm.Equals(self)) {
-                    cm.AddBuff(new DefenseBuff(-10, 2));
+                    cm.AddBuff(new DefenseBuff(-debuffStrength, 2));
                 } else {
                     cm.AddBuff(new InvincibleBuff(2));
                 }
@@ -157,12 +153,9 @@ public class TankMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            All allies around you become invincible until the start of your next turn.
-
-            You lose 10 defense until the start of your next turn
-
-            Cooldown: {cooldown}";
+            return $"All allies around you become invincible until the start of your next turn.\n" +
+            $"You lose {debuffStrength} defense until the start of your next turn\n\n" +
+            $"Cooldown: {cooldown}";
         }
     }
 

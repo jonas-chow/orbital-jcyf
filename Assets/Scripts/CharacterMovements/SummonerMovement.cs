@@ -62,11 +62,8 @@ public class SummonerMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Deals {damage} damage to the first target in front of you. 
-
-            Cooldown: {cooldown}
-            Range: {range}";
+            return $"Deals {damage} damage to the first target in front of you.\n\n" +
+            $"Cooldown: {cooldown}\nRange: {range}";
         }
     }
 
@@ -140,13 +137,10 @@ public class SummonerMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Summon a controllable familiar at the target position which explodes on death, dealing {damage} damage to all enemies around it.
-
-            If cast on an enemy, will instead deal {damage} to the target.
-
-            Cooldown: {cooldown}
-            Range: {range}";
+            return $"Summon a controllable familiar at the target position which explodes on death, " +
+            $"dealing {damage} damage to all enemies around it.\n" +
+            $"If cast on an enemy, will instead deal {damage} to the target.\n\n" +
+            $"Cooldown: {cooldown}\nRange: {range}";
         }
     }
 
@@ -207,10 +201,7 @@ public class SummonerMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Swap places with the familiar.
-
-            Cooldown: {cooldown}";
+            return $"Swap places with the familiar.\n\nCooldown: {cooldown}";
         }
     }
 

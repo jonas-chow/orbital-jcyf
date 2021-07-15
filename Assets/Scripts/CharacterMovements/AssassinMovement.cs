@@ -83,13 +83,9 @@ public class AssassinMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Deals {damage} damage to the target in front of you. 
-
-            Does an extra {backstabBonus} damage if you attack the target from the back.
-
-            Cooldown: {cooldown}
-            Range: {range}";
+            return $"Deals {damage} damage to the target in front of you.\n" +
+            $"Does an extra {backstabBonus} damage if you attack the target from the back.\n\n" + 
+            $"Cooldown: {cooldown}\nRange: {range}";
         }
     }
 
@@ -143,13 +139,9 @@ public class AssassinMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Deals {damage} damage to the target in front of you. 
-
-            Also poisons the target, dealing 10 damage at the end of each turn.
-            
-            Cooldown: {cooldown}
-            Range: {range}";
+            return $"Deals {damage} damage to the target in front of you.\n" +
+            $"Also poisons the target, dealing 10 damage at the end of each turn.\n\n" +
+            $"Cooldown: {cooldown}\nRange: {range}";
         }
     }
 
@@ -190,12 +182,9 @@ public class AssassinMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Go into stealth until the start of your next turn.
-
-            Enemies cannot see you when you are stealthed, but you will be revealed if you take damage.
-            
-            Cooldown: {cooldown}";
+            return $"Go into stealth until the start of your next turn.\n" +
+            $"Enemies cannot see you when you are stealthed, but you will be revealed if " +
+            $"you take damage.\n\nCooldown: {cooldown}";
         }
     }
 

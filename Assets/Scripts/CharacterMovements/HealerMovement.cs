@@ -58,11 +58,8 @@ public class HealerMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Deals {damage} damage to the first target in front of you. 
-
-            Cooldown: {cooldown}
-            Range: {range}";
+            return $"Deals {damage} damage to the first target in front of you.\n\n" +
+            $"Cooldown: {cooldown}\nRange: {range}";
         }
     }
 
@@ -111,11 +108,8 @@ public class HealerMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Heals all allies for {damage} HP in an area of effect.
-
-            Cooldown: {cooldown}
-            Range: {range}";
+            return $"Heals all allies for {damage} HP in an area of effect.\n\n" +
+            $"Cooldown: {cooldown}\nRange: {range}";
         }
     }
 
@@ -166,13 +160,9 @@ public class HealerMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Buffs all allies in an area of effect until the start of next turn.
-
-            Affected allies have {damage} higher attack and defense.
-
-            Cooldown: {cooldown}
-            Range: {range}";
+            return $"Buffs all allies in an area of effect until the start of next turn.\n" +
+            $"Affected allies have {damage} increased attack and defense.\n\n" +
+            $"Cooldown: {cooldown}\nRange: {range}";
         }
     }
 

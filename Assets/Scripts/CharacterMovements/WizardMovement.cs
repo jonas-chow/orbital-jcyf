@@ -58,11 +58,8 @@ public class WizardMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Deals {damage} damage to the first target in front of you. 
-
-            Cooldown: {cooldown}
-            Range: {range}";
+            return $"Deals {damage} damage to the first target in front of you.\n\n" +
+            $"Cooldown: {cooldown}\nRange: {range}";
         }
     }
 
@@ -112,11 +109,8 @@ public class WizardMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Deals {damage} damage in an area of effect.
-
-            Cooldown: {cooldown}
-            Range: {range}";
+            return $"Deals {damage} damage in an area of effect.\n\n" +
+            $"Cooldown: {cooldown}\nRange: {range}";
         }
     }
 
@@ -153,10 +147,8 @@ public class WizardMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            End the cooldown of your other skills.
-
-            Cooldown: {cooldown}";
+            return $"End the cooldown of your other skills.\n\n" +
+            $"Cooldown: {cooldown}";
         }
     }
 

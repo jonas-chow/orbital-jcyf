@@ -57,11 +57,8 @@ public class FamiliarMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Deals {damage} damage to the target in front of you. 
-
-            Cooldown: {cooldown}
-            Range: {range}";
+            return $"Deals {damage} damage to the target in front of you. \n\n" +
+            $"Cooldown: {cooldown}\nRange: {range}";
         }
     }
 
@@ -102,10 +99,8 @@ public class FamiliarMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Explode and deal {damage} to all enemies in an area of effect.
-
-            Cooldown: {cooldown}";
+            return $"Explode and deal {damage} to all enemies in an area of effect.\n\n" +
+            $"Cooldown: {cooldown}";
         }
     }
 
@@ -159,10 +154,7 @@ public class FamiliarMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Swap positions with the summoner.
-
-            Cooldown: {cooldown}";
+            return $"Swap positions with the summoner.\n\nCooldown: {cooldown}";
         }
     }
 

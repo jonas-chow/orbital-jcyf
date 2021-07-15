@@ -67,11 +67,8 @@ public class BruiserMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Deals {damage} damage to the target in front of you. 
-
-            Cooldown: {cooldown}
-            Range: {range}";
+            return $"Deals {damage} damage to the target in front of you.\n\n" +
+            $"Cooldown: {cooldown}\nRange: {range}";
         }
     }
 
@@ -120,12 +117,8 @@ public class BruiserMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Deals {damage} damage to all enemies around you.
-
-            You take {damage} damage as recoil.
-
-            Cooldown: {cooldown}";
+            return $"Deals {damage} damage to all enemies around you.\n" +
+            $"You take {damage} damage as recoil.\n\nCooldown: {cooldown}";
         }
     }
 
@@ -161,12 +154,8 @@ public class BruiserMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Become invincible until the start of your next turn.
-
-            You cannot take any damage when invincible.
-
-            Cooldown: {cooldown}";
+            return $"Become invincible until the start of your next turn.\n" +
+            $"You cannot take any damage when invincible.\n\nCooldown: {cooldown}";
         }
     }
 

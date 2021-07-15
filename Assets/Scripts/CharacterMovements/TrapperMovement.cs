@@ -63,11 +63,8 @@ public class TrapperMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Deals {damage} damage to the first target in front of you. 
-
-            Cooldown: {cooldown}
-            Range: {range}";
+            return $"Deals {damage} damage to the first target in front of you.\n\n" +
+            $"Cooldown: {cooldown}\nRange: {range}";
         }
     }
 
@@ -118,14 +115,10 @@ public class TrapperMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Sets a trap at your position. 
-            
-            Traps do {damage} damage when an enemy steps on them.
-
-            Traps also disable the enemy and grants you vision of them for 3 turns.
-
-            Cooldown: {cooldown}";
+            return $"Sets a trap at your position.\n" +
+            $"Traps do {damage} damage when an enemy steps on them.\n" +
+            $"Traps also disable the enemy and grants you vision of them for 3 turns.\n\n" +
+            $"Cooldown: {cooldown}";
         }
     }
 
@@ -166,10 +159,8 @@ public class TrapperMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            All traps explode, dealing {damage} damage in an area of effect.
-
-            Cooldown: {cooldown}";
+            return $"All traps explode, dealing {damage} damage in an area of effect.\n\n" +
+            $"Cooldown: {cooldown}";
         }
     }
 

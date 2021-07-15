@@ -60,11 +60,8 @@ public class HunterMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Deals {damage} damage to the first target in front of you. 
-
-            Cooldown: {cooldown}
-            Range: {range}";
+            return $"Deals {damage} damage to the first target in front of you.\n\n" +
+            $"Cooldown: {cooldown}\nRange: {range}";
         }
     }
 
@@ -118,13 +115,9 @@ public class HunterMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Deals {damage} damage to the first target in front of you. 
-
-            Deals an additional {distanceScaling} damage for each tile between you and the target.
-
-            Cooldown: {cooldown}
-            Range: {range}";
+            return $"Deals {damage} damage to the first target in front of you.\n" +
+            $"Deals an additional {distanceScaling} damage for each tile between you and the target.\n\n" +
+            $"Cooldown: {cooldown}\nRange: {range}";
         }
     }
 
@@ -188,13 +181,9 @@ public class HunterMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Deals {damage} damage to the target in front of you.
-
-            Also knocks the target back {knockback} tiles.
-
-            Cooldown: {cooldown}
-            Range: {range}";
+            return $"Deals {damage} damage to the target in front of you.\n" +
+            $"Also knocks the target back {knockback} tiles.\n\n" +
+            $"Cooldown: {cooldown}\nRange: {range}";
         }
     }
 

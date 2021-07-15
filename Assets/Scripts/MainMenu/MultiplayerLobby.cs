@@ -8,7 +8,6 @@ using Photon.Realtime;
 public class MultiplayerLobby : MonoBehaviourPunCallbacks
 {
     public TMP_InputField roomName;
-    public Transform content;
     public GameObject roomMenu;
 
     public void BackButton()

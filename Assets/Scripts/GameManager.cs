@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
     {
         AudioManager.Instance.SetBGMVolume(PlayerPrefs.GetFloat("BGM", 0.1f));
         AudioManager.Instance.SetSoundEffectVolume(PlayerPrefs.GetFloat("SE", 1f));
+        
+        gameMode = PlayerPrefs.GetInt("Mode", 0);
+        autoMove = PlayerPrefs.GetInt("Movement", 0) == 1;
 
         if (testing) {
             GameObject tank = BuildChar("Tank", false);
@@ -88,9 +91,10 @@ public class GameManager : MonoBehaviour
     }
 
     public bool testing;
+    public int gameMode;
     [SerializeField]
     private GameObject defeatUI, victoryUI, loadingUI, yourTurnUI, enemyTurnUI, pauseUI, 
-        opponentConcedeUI, opponentDisconnectUI;
+        opponentConcedeUI, opponentDisconnectUI, statsUI;
 
     [SerializeField]
     private GameObject Tank, Bruiser, Assassin;
@@ -98,6 +102,8 @@ public class GameManager : MonoBehaviour
     private GameObject Scout, Trapper, Hunter;
     [SerializeField]
     private GameObject Healer, Wizard, Summoner;
+    [SerializeField]
+    private GameObject TargetDummy;
     public CharacterMovement[] enemies;
     public CharacterMovement[] friendly;
     private int numEnemy = 3;
@@ -115,6 +121,10 @@ public class GameManager : MonoBehaviour
     public int actionCount = 0;
     private bool paused = false;
     public TextMeshProUGUI tooltipText;
+    public TextMeshProUGUI statsText;
+
+    private int turnCount = 0;
+    private bool autoMove = false;
 
     public void InstantiateSelf()
     {
@@ -144,9 +154,26 @@ public class GameManager : MonoBehaviour
         CheckLoading();
         CheckBothReady();
 
+        Debug.Log(gameMode);
         // For single player mode
-        if (EventHandler.Instance == null) {
+        if (gameMode == 0) {
             InstantiateEnemies(0, 0, 0);
+        } else {
+            // Instantiate dummy
+            GameObject dummy = Instantiate(TargetDummy, transform);
+            CharacterMovement dummyMovement = dummy.GetComponent<CharacterMovement>();
+            dummyMovement.SetEnemy(true);
+            dummyMovement.Face("down");
+            // if failed to insert in specified position
+            if (!GridManager.Instance.MoveToAndInsert(dummy, PlayerPrefs.GetInt("X", 15), PlayerPrefs.GetInt("Y", 15)))
+            {
+                // default position is (15, 15)
+                GridManager.Instance.MoveToAndInsert(dummy, 15, 15);
+            }
+            enemies = new CharacterMovement[] {dummyMovement};
+            numEnemy = 1;
+            loadingUI.SetActive(false);
+            readyForTurn = true;
         }
     }
 
@@ -358,12 +385,20 @@ public class GameManager : MonoBehaviour
 
     public void Lose() {
         defeatUI.SetActive(true);
+        if (gameMode == 1) {
+            statsUI.SetActive(true);
+            statsText.text = $"Turns taken: {turnCount}\nActions taken: {actionCount}";
+        }
         AudioManager.Instance.Stop("BattleTheme");
         AudioManager.Instance.Play("Lose");
     }
 
     public void Win() {
         victoryUI.SetActive(true);
+        if (gameMode == 1) {
+            statsUI.SetActive(true);
+            statsText.text = $"Turns taken: {turnCount}\nActions taken: {actionCount}";
+        }
         AudioManager.Instance.Stop("BattleTheme");
         AudioManager.Instance.Play("Win");
     }
@@ -385,6 +420,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StartTurn()
     {
+        turnCount++;
         System.Array.ForEach(friendly, cm => cm.TurnPass());
         System.Array.ForEach(enemies, cm => cm.TurnPass());
         StartCoroutine(AppearForAWhile(yourTurnUI));
@@ -406,9 +442,16 @@ public class GameManager : MonoBehaviour
         System.Array.ForEach(friendly, cm => cm.TurnPass());
         System.Array.ForEach(enemies, cm => cm.TurnPass());
         
-        if (testing) {
-            foreach (CharacterMovement cm in enemies) {
-                MoveRandomly(cm);
+        if (gameMode == 1 || testing) {
+            if (autoMove) {
+                foreach (CharacterMovement cm in enemies) {
+                    if (cm.isAlive) {
+                        for (int i = 0; i < 3; i++) {
+                            MoveRandomly(cm);
+                            yield return new WaitForSeconds(0.15f);
+                        }
+                    }
+                }
             }
             yield return new WaitForSeconds(.5f);
             readyForTurn = true;
@@ -488,22 +531,20 @@ public class GameManager : MonoBehaviour
 
     public void MoveRandomly(CharacterMovement character)
     {
-        if (character.isAlive) {
-            switch (UnityEngine.Random.Range(0, 4))
-            {
-                case 0:
-                    character.Move("up");
-                    break;
-                case 1:
-                    character.Move("down");
-                    break;
-                case 2:
-                    character.Move("left");
-                    break;
-                case 3:
-                    character.Move("right");
-                    break;
-            }
+        switch (UnityEngine.Random.Range(0, 4))
+        {
+            case 0:
+                character.Move("up");
+                break;
+            case 1:
+                character.Move("down");
+                break;
+            case 2:
+                character.Move("left");
+                break;
+            case 3:
+                character.Move("right");
+                break;
         }
     }
 

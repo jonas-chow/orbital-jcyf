@@ -63,11 +63,8 @@ public class ScoutMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Deals {damage} damage to the first target in front of you. 
-
-            Cooldown: {cooldown}
-            Range: {range}";
+            return $"Deals {damage} damage to the first target in front of you.\n\n" +
+            $"Cooldown: {cooldown}\nRange: {range}";
         }
     }
 
@@ -129,14 +126,10 @@ public class ScoutMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Places a ward at the target position that grants vision.
-
-            If cast on an enemy, will deal {damage} to the target instead.
-            Will also grant vision of the target until the start of the next turn.
-
-            Cooldown: {cooldown}
-            Range: {range}";
+            return $"Places a ward at the target position that grants vision.\n" +
+            $"If cast on an enemy, will deal {damage} to the target instead.\n" +
+            $"Will also grant vision of the target until the start of the next turn.\n\n" +
+            $"Cooldown: {cooldown}\nRange: {range}";
         }
     }
 
@@ -187,13 +180,9 @@ public class ScoutMovement : CharacterMovement
 
         public override string GetDescription()
         {
-            return $@"
-            Deals {damage} to all enemies in an area of effect.
-
-            Also grants vision of every enemy hit for 4 turns.
-
-            Cooldown: {cooldown}
-            Range: {range}";
+            return $"Deals {damage} to all enemies in an area of effect.\n" +
+            $"Also grants vision of every enemy hit for 4 turns.\n\n" +
+            $"Cooldown: {cooldown}\nRange: {range}";
         }
     }
 

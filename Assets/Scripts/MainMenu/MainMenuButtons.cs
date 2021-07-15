@@ -9,6 +9,7 @@ public class MainMenuButtons : MonoBehaviourPunCallbacks
 {
     public GameObject multiplayerLobby;
     public GameObject multiplayerRoom;
+    public GameObject playMenu;
     public GameObject loadout;
     public GameObject controls;
 
@@ -29,9 +30,20 @@ public class MainMenuButtons : MonoBehaviourPunCallbacks
         controls.SetActive(true);
     }
 
+    public void OpenPlayMenu()
+    {
+        AudioManager.Instance.Play("Click");
+        if (PlayerPrefs.GetString("Username", "") != "") {
+            playMenu.SetActive(true);
+        } else {
+            Popup.Notify("Please enter name");
+        }
+    }
+
     void Start()
     {
         if (PhotonNetwork.IsConnected) {
+            playMenu.SetActive(true);
             multiplayerLobby.SetActive(true);
         }
         if (PhotonNetwork.CurrentRoom != null) {
@@ -40,26 +52,5 @@ public class MainMenuButtons : MonoBehaviourPunCallbacks
 
         AudioManager.Instance.SetBGMVolume(PlayerPrefs.GetFloat("BGM", 0.1f));
         AudioManager.Instance.SetSoundEffectVolume(PlayerPrefs.GetFloat("SE", 1f));
-    }
-
-    public void Connect()
-    {
-        AudioManager.Instance.Play("Click");
-        PhotonNetwork.NickName = PlayerPrefs.GetString("Username", "");
-        if (PhotonNetwork.NickName != "") {
-            PhotonNetwork.GameVersion = "v1";
-            Popup.StartPopup("Connecting...");
-            PhotonNetwork.ConnectUsingSettings();
-            PhotonNetwork.ConnectToRegion("asia");
-        } else {
-            Popup.Notify("Please enter name");
-        }
-    }
-
-    public override void OnConnectedToMaster()
-    {
-        PhotonNetwork.JoinLobby();
-        multiplayerLobby.SetActive(true);
-        Popup.StopPopup();
     }
 }
