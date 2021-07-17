@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DisabledDebuff : Buff
 {
+    public ParticleSystem disabledEffectClone;
+
     public DisabledDebuff(int turns)
     {
         this.turnsLeft = turns;
@@ -18,10 +20,13 @@ public class DisabledDebuff : Buff
         } else {
             character.Disable();
             character.buffs.Add(this);
+            disabledEffectClone = ParticleSystem.Instantiate(character.disabledEffect, 
+                GridManager.Instance.GetCoords(character.GetX(), character.GetY()), Quaternion.identity);
         }
     }
 
     public override void Remove() {
+        ParticleSystem.Destroy(disabledEffectClone.gameObject);
         character.disabled = false;
         // this can't happen unless end/start of turn, so no need to set isActive manually
     }

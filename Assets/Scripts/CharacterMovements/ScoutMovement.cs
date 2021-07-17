@@ -18,6 +18,7 @@ public class ScoutMovement : CharacterMovement
 
     public GameObject ward;
     public ParticleSystem arrowEffect;
+    public ParticleSystem arrowImpactEffect;
 
     public class Attack1 : LinearAttack
     {
@@ -163,6 +164,8 @@ public class ScoutMovement : CharacterMovement
                 cm.TakeDamage(self.GetAttack(), damage);
                 cm.AddBuff(new VisibleDebuff(4));
             });
+            ParticleSystem arrowImpactEffect = ParticleSystem.Instantiate(self.arrowImpactEffect, 
+                GridManager.Instance.GetCoords(self.GetX() + offsetX, self.GetY() + offsetY), Quaternion.identity);
             AudioManager.Instance.Play("Scout3");
         }
 
@@ -182,6 +185,8 @@ public class ScoutMovement : CharacterMovement
                 cm.TakeDamage(self.GetAttack(), damage);
                 cm.AddBuff(new VisibleDebuff(4));
             });
+            ParticleSystem arrowImpactEffect = ParticleSystem.Instantiate(self.arrowImpactEffect, 
+                GridManager.Instance.GetCoords(self.GetX() + offsetX, self.GetY() + offsetY), Quaternion.identity);
             AudioManager.Instance.Play("Scout3");
         }
 
