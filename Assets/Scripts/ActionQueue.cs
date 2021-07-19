@@ -17,6 +17,8 @@ public class ActionQueue : MonoBehaviour
     }
 
     private Queue<Action> actions = new Queue<Action>();
+    // stores all the executed actions to be used for replays
+    public Queue<Action> actionCache = new Queue<Action>();
     private bool isEnabled = true;
 
     public void EnqueueAction(Action action)
@@ -30,8 +32,9 @@ public class ActionQueue : MonoBehaviour
         if (isEnabled) {
             Action next = actions.Dequeue();
             // only execute the action if the char didnt manage to die
-            if (next.character.isAlive && !next.character.disabled) {
+            if (next.GetCharacter().isAlive && !next.GetCharacter().disabled) {
                 next.Execute();
+                actionCache.Enqueue(next);
             }
         }
     }
@@ -49,6 +52,23 @@ public class ActionQueue : MonoBehaviour
     public void Enable()
     {
         this.isEnabled = true;
+    }
+
+    private class TurnEndAction : Action
+    {
+        public override void Execute() {}
+        public override void SendEvent() {}
+
+        public TurnEndAction()
+        {
+            this.name = "turnEnd";
+            this.charID = -1;
+        }
+    }
+
+    public void TurnEnd()
+    {
+        actionCache.Enqueue(new TurnEndAction());
     }
 }
 

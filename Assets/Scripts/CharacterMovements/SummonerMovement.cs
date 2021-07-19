@@ -25,7 +25,7 @@ public class SummonerMovement : CharacterMovement
 
     public class Attack1 : LinearAttack
     {
-        public SummonerMovement self;
+        private SummonerMovement self;
 
         public Attack1(SummonerMovement cm)
         {
@@ -35,6 +35,7 @@ public class SummonerMovement : CharacterMovement
             this.damage = 15;
             this.cooldown = 2;
             this.type = "attack";
+            this.name = "attack1";
         }
 
         // basic melee attack
@@ -79,7 +80,7 @@ public class SummonerMovement : CharacterMovement
 
     public class Attack2 : RangedTargetAttack
     {
-        public SummonerMovement self;
+        private SummonerMovement self;
 
         public Attack2(SummonerMovement cm)
         {
@@ -89,6 +90,7 @@ public class SummonerMovement : CharacterMovement
             this.cooldown = 5;
             this.damage = 30;
             this.type = "other";
+            this.name = "attack2";
         }
 
         public override void Execute()
@@ -164,7 +166,7 @@ public class SummonerMovement : CharacterMovement
 
     public class Attack3 : SelfAttack
     {
-        public SummonerMovement self;
+        private SummonerMovement self;
 
         public Attack3(SummonerMovement cm)
         {
@@ -172,6 +174,7 @@ public class SummonerMovement : CharacterMovement
             this.self = cm;
             this.cooldown = 5;
             this.type = "other";
+            this.name = "attack3";
         }
 
         public override void Execute()

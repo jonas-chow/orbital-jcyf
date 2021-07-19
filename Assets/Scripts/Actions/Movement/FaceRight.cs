@@ -7,6 +7,7 @@ public class FaceRight : Action
     public FaceRight(CharacterMovement character)
     {
         this.character = character;
+        this.charID = character.charID;
         this.name = "FaceRight";
     }
 

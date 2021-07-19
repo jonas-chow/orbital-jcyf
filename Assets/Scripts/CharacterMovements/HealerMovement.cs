@@ -20,7 +20,7 @@ public class HealerMovement : CharacterMovement
 
     public class Attack1 : LinearAttack
     {
-        public HealerMovement self;
+        private HealerMovement self;
 
         public Attack1(HealerMovement cm)
         {
@@ -30,6 +30,7 @@ public class HealerMovement : CharacterMovement
             this.damage = 15;
             this.cooldown = 2;
             this.type = "attack";
+            this.name = "attack1";
         }
 
         public override void Execute()
@@ -73,7 +74,7 @@ public class HealerMovement : CharacterMovement
 
     public class Attack2 : RangedAOEAttack
     {
-        public HealerMovement self;
+        private HealerMovement self;
 
         public Attack2(HealerMovement cm)
         {
@@ -83,6 +84,7 @@ public class HealerMovement : CharacterMovement
             this.damage = 40;
             this.cooldown = 20;
             this.type = "heal";
+            this.name = "attack2";
         }
 
         public override void Execute()
@@ -123,16 +125,17 @@ public class HealerMovement : CharacterMovement
 
     public class Attack3 : RangedAOEAttack
     {
-        public HealerMovement self;
+        private HealerMovement self;
 
         public Attack3(HealerMovement cm)
         {
             this.character = cm;
             this.self = cm;
             this.range = 5;
-            this.cooldown = 0;
+            this.cooldown = 20;
             this.damage = 10;
             this.type = "buff";
+            this.name = "attack3";
         }
 
         public override void Execute()

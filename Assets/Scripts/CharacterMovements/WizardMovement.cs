@@ -21,7 +21,7 @@ public class WizardMovement : CharacterMovement
 
     public class Attack1 : LinearAttack
     {
-        public WizardMovement self;
+        private WizardMovement self;
 
         public Attack1(WizardMovement cm)
         {
@@ -31,6 +31,7 @@ public class WizardMovement : CharacterMovement
             this.damage = 15;
             this.cooldown = 2;
             this.type = "attack";
+            this.name = "attack1";
         }
 
         public override void Execute()
@@ -74,7 +75,7 @@ public class WizardMovement : CharacterMovement
 
     public class Attack2 : RangedAOEAttack
     {
-        public WizardMovement self;
+        private WizardMovement self;
 
         public Attack2(WizardMovement cm)
         {
@@ -84,6 +85,7 @@ public class WizardMovement : CharacterMovement
             this.damage = 20;
             this.cooldown = 10;
             this.type = "attack";
+            this.name = "attack2";
         }
 
         public override void Execute()
@@ -129,7 +131,7 @@ public class WizardMovement : CharacterMovement
 
     public class Attack3 : SelfAttack
     {
-        public WizardMovement self;
+        private WizardMovement self;
 
         public Attack3(WizardMovement cm)
         {
@@ -137,6 +139,7 @@ public class WizardMovement : CharacterMovement
             this.self = cm;
             this.cooldown = 50;
             this.type = "other";
+            this.name = "attack3";
         }
 
         public override void Execute()

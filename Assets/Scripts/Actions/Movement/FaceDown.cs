@@ -7,6 +7,7 @@ public class FaceDown : Action
     public FaceDown(CharacterMovement character)
     {
         this.character = character;
+        this.charID = character.charID;
         this.name = "FaceDown";
     }
 

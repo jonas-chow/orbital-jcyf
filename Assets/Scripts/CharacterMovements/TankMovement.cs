@@ -12,7 +12,7 @@ public class TankMovement : CharacterMovement
 
     public class Attack1 : LinearAttack
     {
-        public TankMovement self;
+        private TankMovement self;
 
         public Attack1(TankMovement cm)
         {
@@ -22,6 +22,7 @@ public class TankMovement : CharacterMovement
             this.damage = 10;
             this.cooldown = 2;
             this.type = "attack";
+            this.name = "attack1";
         }
 
         // basic melee attack with low damage
@@ -66,7 +67,7 @@ public class TankMovement : CharacterMovement
 
     public class Attack2 : SelfAttack
     {
-        public TankMovement self;
+        private TankMovement self;
 
         public Attack2(TankMovement cm)
         {
@@ -75,6 +76,7 @@ public class TankMovement : CharacterMovement
             this.damage = 30;
             this.cooldown = 15;
             this.type = "heal";
+            this.name = "attack2";
         }
 
         // self heal
@@ -104,7 +106,7 @@ public class TankMovement : CharacterMovement
 
     public class Attack3 : MeleeAOEAttack
     {
-        public TankMovement self;
+        private TankMovement self;
         private int debuffStrength;
 
         public Attack3(TankMovement cm)
@@ -116,6 +118,7 @@ public class TankMovement : CharacterMovement
             this.cooldown = 10;
             this.debuffStrength = 10;
             this.type = "buff";
+            this.name = "attack3";
         }
 
         // aoe invincible, self def debuff

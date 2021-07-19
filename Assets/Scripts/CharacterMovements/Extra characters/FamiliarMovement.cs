@@ -19,7 +19,7 @@ public class FamiliarMovement : CharacterMovement
 
     public class Attack1 : LinearAttack
     {
-        public FamiliarMovement self;
+        private FamiliarMovement self;
 
         public Attack1(FamiliarMovement cm)
         {
@@ -29,6 +29,7 @@ public class FamiliarMovement : CharacterMovement
             this.damage = 20;
             this.cooldown = 2;
             this.type = "attack";
+            this.name = "attack1";
         }
 
         // basic melee attack
@@ -71,7 +72,7 @@ public class FamiliarMovement : CharacterMovement
 
     public class Attack2 : MeleeAOEAttack
     {
-        public FamiliarMovement self;
+        private FamiliarMovement self;
 
         public Attack2(FamiliarMovement cm)
         {
@@ -81,6 +82,7 @@ public class FamiliarMovement : CharacterMovement
             this.damage = 30;
             this.cooldown = 99;
             this.type = "other";
+            this.name = "attack2";
         }
 
         // explode and die
@@ -113,7 +115,7 @@ public class FamiliarMovement : CharacterMovement
 
     public class Attack3 : SelfAttack
     {
-        public FamiliarMovement self;
+        private FamiliarMovement self;
 
         public Attack3(FamiliarMovement cm)
         {
@@ -121,6 +123,7 @@ public class FamiliarMovement : CharacterMovement
             this.self = cm;
             this.cooldown = 5;
             this.type = "other";
+            this.name = "attack3";
         }
 
         public override void Execute()
@@ -213,7 +216,7 @@ public class FamiliarMovement : CharacterMovement
             .GetAllCharactersInAOE(GetX(), GetY())
             .FindAll(cm => cm.IsEnemyOf(this));
         // explode
-        enemies.ForEach(cm => cm.TakeDamage(GetAttack(), attack2.damage));
+        enemies.ForEach(cm => cm.TakeDamage(GetAttack(), attack2.GetDamage()));
         summoner.FamiliarDied();
         base.Die();
         ParticleSystem explosionEffect = ParticleSystem.Instantiate(this.explosionEffect, 

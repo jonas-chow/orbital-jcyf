@@ -22,8 +22,8 @@ public class AssassinMovement : CharacterMovement
 
     public class Attack1 : LinearAttack
     {
-        public AssassinMovement self;
-        public int backstabBonus;
+        private AssassinMovement self;
+        private int backstabBonus;
 
         public Attack1(AssassinMovement cm)
         {
@@ -34,6 +34,7 @@ public class AssassinMovement : CharacterMovement
             this.backstabBonus = 10;
             this.cooldown = 2;
             this.type = "attack";
+            this.name = "attack1";
         }
 
         public override void Execute()
@@ -90,7 +91,7 @@ public class AssassinMovement : CharacterMovement
 
     public class Attack2 : LinearAttack
     {
-        public AssassinMovement self;
+        private AssassinMovement self;
 
         public Attack2(AssassinMovement cm)
         {
@@ -100,6 +101,7 @@ public class AssassinMovement : CharacterMovement
             this.damage = 10;
             this.cooldown = 10;
             this.type = "attack";
+            this.name = "attack2";
         }
 
         public override void Execute()
@@ -142,7 +144,7 @@ public class AssassinMovement : CharacterMovement
 
     public class Attack3 : SelfAttack
     {
-        public AssassinMovement self;
+        private AssassinMovement self;
 
         public Attack3(AssassinMovement cm)
         {
@@ -150,6 +152,7 @@ public class AssassinMovement : CharacterMovement
             this.self = cm;
             this.cooldown = 40;
             this.type = "buff";
+            this.name = "attack3";
         }
 
         public override void Execute()

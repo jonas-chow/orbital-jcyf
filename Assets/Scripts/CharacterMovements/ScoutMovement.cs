@@ -21,7 +21,7 @@ public class ScoutMovement : CharacterMovement
 
     public class Attack1 : LinearAttack
     {
-        public ScoutMovement self;
+        private ScoutMovement self;
 
         public Attack1(ScoutMovement cm)
         {
@@ -31,6 +31,7 @@ public class ScoutMovement : CharacterMovement
             this.damage = 15;
             this.cooldown = 2;
             this.type = "attack";
+            this.name = "attack1";
         }
 
         public override void Execute()
@@ -77,7 +78,7 @@ public class ScoutMovement : CharacterMovement
 
     public class Attack2 : RangedTargetAttack
     {
-        public ScoutMovement self;
+        private ScoutMovement self;
 
         public Attack2(ScoutMovement cm)
         {
@@ -87,6 +88,7 @@ public class ScoutMovement : CharacterMovement
             this.cooldown = 10;
             this.damage = 10;
             this.type = "other";
+            this.name = "attack2";
         }
 
         public override void Execute()
@@ -142,7 +144,7 @@ public class ScoutMovement : CharacterMovement
 
     public class Attack3 : RangedAOEAttack
     {
-        public ScoutMovement self;
+        private ScoutMovement self;
 
         public Attack3(ScoutMovement cm)
         {
@@ -152,6 +154,7 @@ public class ScoutMovement : CharacterMovement
             this.damage = 20;
             this.cooldown = 10;
             this.type = "attack";
+            this.name = "attack3";
         }
 
         public override void Execute()

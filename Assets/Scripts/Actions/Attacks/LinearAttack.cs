@@ -9,7 +9,7 @@ using UnityEngine;
 public abstract class LinearAttack : Attack
 {
     protected int globalRange = 15;
-    protected string direction = "none";
+    public string direction = "none";
     private bool global = false;
 
     public CharacterMovement FindTarget(string direction)

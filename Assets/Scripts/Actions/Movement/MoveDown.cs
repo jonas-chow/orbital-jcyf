@@ -7,6 +7,7 @@ public class MoveDown : Action
     public MoveDown(CharacterMovement character)
     {
         this.character = character;
+        this.charID = character.charID;
         this.name = "MoveDown";
     }
 

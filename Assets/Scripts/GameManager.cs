@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour
             readyForTurn = true;
             CharacterMenu.Instance.Init(new CharacterMovement[] {friendly[0], friendly[3], friendly[6]});
         } else {
+            replay = new Replay();
             InstantiateSelf();
         }
     }
@@ -125,19 +126,23 @@ public class GameManager : MonoBehaviour
 
     private int turnCount = 0;
     private bool autoMove = false;
+    public Replay replay;
 
     public void InstantiateSelf()
     {
+        string meleeChar = ((Melees)PlayerPrefs.GetInt("Melee", 0)).ToString();
+        string rangedChar = ((Rangeds)PlayerPrefs.GetInt("Ranged", 0)).ToString();
+        string mageChar = ((Mages)PlayerPrefs.GetInt("Mage", 0)).ToString();
         // instantiate melee character
-        GameObject melee = BuildChar(((Melees)PlayerPrefs.GetInt("Melee", 0)).ToString(), false);
+        GameObject melee = BuildChar(meleeChar, false);
         GridManager.Instance.MoveToAndInsert(melee, 0, 0);
 
         // instantiate ranged character
-        GameObject ranged = BuildChar(((Rangeds)PlayerPrefs.GetInt("Ranged", 0)).ToString(), false);
+        GameObject ranged = BuildChar(rangedChar, false);
         GridManager.Instance.MoveToAndInsert(ranged, 1, 0);
 
         // instantiate mage character
-        GameObject mage = BuildChar(((Mages)PlayerPrefs.GetInt("Mage", 0)).ToString(), false);
+        GameObject mage = BuildChar(mageChar, false);
         GridManager.Instance.MoveToAndInsert(mage, 2, 0);
 
         // set those characterMovements into the friendly array
@@ -149,12 +154,12 @@ public class GameManager : MonoBehaviour
         CharacterMenu.Instance.Init(friendly);
 
         CharacterMenu.Instance.SelectChar(0);
+        replay.SetFriendlies(new string[3] {meleeChar, rangedChar, mageChar});
 
         friendlyLoaded = true;
         CheckLoading();
         CheckBothReady();
 
-        Debug.Log(gameMode);
         // For single player mode
         if (gameMode == 1) {
             // Instantiate dummy
@@ -175,18 +180,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void InstantiateEnemies(int meleeChar, int rangedChar, int mageChar)
+    public void InstantiateEnemies(int meleeId, int rangedId, int mageId)
     {
+        string meleeChar = ((Melees)meleeId).ToString();
+        string rangedChar = ((Rangeds)rangedId).ToString();
+        string mageChar = ((Mages)mageId).ToString();
+
         // instantiate melee character
-        GameObject melee = BuildChar(((Melees)meleeChar).ToString(), true);
+        GameObject melee = BuildChar(meleeChar, true);
         GridManager.Instance.MoveToAndInsert(melee, 15, 15);
 
         // instantiate ranged character
-        GameObject ranged = BuildChar(((Rangeds)rangedChar).ToString(), true);
+        GameObject ranged = BuildChar(rangedChar, true);
         GridManager.Instance.MoveToAndInsert(ranged, 14, 15);
 
         // instantiate mage character
-        GameObject mage = BuildChar(((Mages)mageChar).ToString(), true);
+        GameObject mage = BuildChar(mageChar, true);
         GridManager.Instance.MoveToAndInsert(mage, 13, 15);
 
         // set those characterMovements into the friendly array
@@ -199,6 +208,8 @@ public class GameManager : MonoBehaviour
         foreach (CharacterMovement enemy in enemies) {
             enemy.Face("down");
         }
+
+        replay.SetEnemies(new string[3] {meleeChar, rangedChar, mageChar});
 
         enemyLoaded = true;
 
@@ -418,6 +429,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StartTurn()
     {
+        ActionQueue.Instance.TurnEnd();
         turnCount++;
         System.Array.ForEach(friendly, cm => cm.TurnPass());
         System.Array.ForEach(enemies, cm => cm.TurnPass());
@@ -435,6 +447,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(.1f);
         }
 
+        ActionQueue.Instance.TurnEnd();
         EventHandler.Instance.SendTurnEndEvent();
         EnemyTurn();
         System.Array.ForEach(friendly, cm => cm.TurnPass());
@@ -529,25 +542,33 @@ public class GameManager : MonoBehaviour
 
     public void MoveRandomly(CharacterMovement character)
     {
-        switch (UnityEngine.Random.Range(0, 4))
+        if (!character.disabled)
         {
-            case 0:
-                character.Move("up");
-                break;
-            case 1:
-                character.Move("down");
-                break;
-            case 2:
-                character.Move("left");
-                break;
-            case 3:
-                character.Move("right");
-                break;
+            switch (UnityEngine.Random.Range(0, 4))
+            {
+                case 0:
+                    character.Move("up");
+                    break;
+                case 1:
+                    character.Move("down");
+                    break;
+                case 2:
+                    character.Move("left");
+                    break;
+                case 3:
+                    character.Move("right");
+                    break;
+            }
         }
     }
 
     public void SetTooltip(string text)
     {
         tooltipText.text = text;
+    }
+
+    public void SaveReplay()
+    {
+        replay.SaveReplay(ActionQueue.Instance.actionCache);
     }
 }

@@ -10,8 +10,8 @@ using UnityEngine;
 public abstract class RangedAOEAttack : Attack
 { 
     protected const int globalRange = 30;
-    protected int offsetX = 0;
-    protected int offsetY = 0;
+    public int offsetX = 0;
+    public int offsetY = 0;
 
     public List<CharacterMovement> FindTargets(int offsetX, int offsetY)
     {

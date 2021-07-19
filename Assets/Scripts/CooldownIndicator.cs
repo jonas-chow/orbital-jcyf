@@ -14,10 +14,10 @@ public class CooldownIndicator : MonoBehaviour
 
     public void Init(Attack attack)
     {
-        this.cooldown = attack.cooldown;
+        this.cooldown = attack.GetCooldown();
         this.description = attack.GetDescription();
         this.counter = 0;
-        switch (attack.type)
+        switch (attack.GetAttackType())
         {
             case "attack":
                 icon.sprite = CharacterMenu.Instance.attack;

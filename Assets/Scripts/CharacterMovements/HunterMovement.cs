@@ -22,7 +22,7 @@ public class HunterMovement : CharacterMovement
 
     public class Attack1 : LinearAttack
     {
-        public HunterMovement self;
+        private HunterMovement self;
 
         public Attack1(HunterMovement cm)
         {
@@ -32,6 +32,7 @@ public class HunterMovement : CharacterMovement
             this.damage = 15;
             this.cooldown = 2;
             this.type = "attack";
+            this.name = "attack1";
         }
 
         public override void Execute()
@@ -77,8 +78,8 @@ public class HunterMovement : CharacterMovement
 
     public class Attack2 : LinearAttack
     {
-        public HunterMovement self;
-        public int distanceScaling;
+        private HunterMovement self;
+        private int distanceScaling;
 
         public Attack2(HunterMovement cm)
         {
@@ -89,6 +90,7 @@ public class HunterMovement : CharacterMovement
             this.distanceScaling = 3;
             this.cooldown = 10;
             this.type = "attack";
+            this.name = "attack2";
         }
 
         public override void Execute()
@@ -139,8 +141,8 @@ public class HunterMovement : CharacterMovement
 
     public class Attack3 : LinearAttack
     {
-        public HunterMovement self;
-        public int knockback;
+        private HunterMovement self;
+        private int knockback;
 
         public Attack3(HunterMovement cm)
         {
@@ -151,6 +153,7 @@ public class HunterMovement : CharacterMovement
             this.knockback = 2;
             this.cooldown = 5;
             this.type = "attack";
+            this.name = "attack3";
         }
 
         public override void Execute()

@@ -22,7 +22,7 @@ public class BruiserMovement : CharacterMovement
 
     public class Attack1 : LinearAttack
     {
-        public BruiserMovement self;
+        private BruiserMovement self;
 
         public Attack1(BruiserMovement cm)
         {
@@ -32,6 +32,7 @@ public class BruiserMovement : CharacterMovement
             this.damage = 15;
             this.cooldown = 2;
             this.type = "attack";
+            this.name = "attack1";
         }
 
         // basic melee attack with med damage
@@ -76,7 +77,7 @@ public class BruiserMovement : CharacterMovement
 
     public class Attack2 : MeleeAOEAttack
     {
-        public BruiserMovement self;
+        private BruiserMovement self;
 
         public Attack2(BruiserMovement cm)
         {
@@ -86,6 +87,7 @@ public class BruiserMovement : CharacterMovement
             this.damage = 25;
             this.cooldown = 5;
             this.type = "attack";
+            this.name = "attack2";
         }
 
         public override void Execute()
@@ -130,7 +132,7 @@ public class BruiserMovement : CharacterMovement
 
     public class Attack3 : SelfAttack
     {
-        public BruiserMovement self;
+        private BruiserMovement self;
 
         public Attack3(BruiserMovement cm)
         {
@@ -138,6 +140,7 @@ public class BruiserMovement : CharacterMovement
             this.self = cm;
             this.cooldown = 40;
             this.type = "buff";
+            this.name = "attack3";
         }
 
         public override void Execute()

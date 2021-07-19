@@ -9,6 +9,7 @@ public class PlayMenu : MonoBehaviourPunCallbacks
 {
     public GameObject multiplayerLobby;
     public GameObject practiceSetup;
+    public GameObject replaysScreen;
 
     public void Back()
     {
@@ -41,5 +42,11 @@ public class PlayMenu : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinLobby();
         multiplayerLobby.SetActive(true);
         Popup.StopPopup();
+    }
+
+    public void ViewReplays()
+    {
+        AudioManager.Instance.Play("Click");
+        replaysScreen.SetActive(true);
     }
 }

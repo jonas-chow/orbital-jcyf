@@ -84,13 +84,13 @@ public abstract class CharacterMovement : MonoBehaviour
                         ActionQueue.Instance.EnqueueAction(new MoveRight(this));
                     }
                 } else if (Input.GetButtonDown("Attack1") && 
-                    GameManager.Instance.actionCount - attack1Turn > attack1.cooldown) {
+                    GameManager.Instance.actionCount - attack1Turn > attack1.GetCooldown()) {
                     AimingMode(1);
                 } else if (Input.GetButtonDown("Attack2") && 
-                    GameManager.Instance.actionCount - attack2Turn > attack2.cooldown) {
+                    GameManager.Instance.actionCount - attack2Turn > attack2.GetCooldown()) {
                     AimingMode(2);
                 } else if (Input.GetButtonDown("Attack3") && 
-                    GameManager.Instance.actionCount - attack3Turn > attack3.cooldown) {
+                    GameManager.Instance.actionCount - attack3Turn > attack3.GetCooldown()) {
                     AimingMode(3);
                 }
             } else {

@@ -22,7 +22,7 @@ public class TrapperMovement : CharacterMovement
 
     public class Attack1 : LinearAttack
     {
-        public TrapperMovement self;
+        private TrapperMovement self;
 
         public Attack1(TrapperMovement cm)
         {
@@ -32,6 +32,7 @@ public class TrapperMovement : CharacterMovement
             this.damage = 20;
             this.cooldown = 2;
             this.type = "attack";
+            this.name = "attack1";
         }
 
         public override void Execute()
@@ -77,7 +78,7 @@ public class TrapperMovement : CharacterMovement
 
     public class Attack2 : SelfAttack
     {
-        public TrapperMovement self;
+        private TrapperMovement self;
 
         public Attack2(TrapperMovement cm)
         {
@@ -87,6 +88,7 @@ public class TrapperMovement : CharacterMovement
             this.cooldown = 10;
             this.damage = 10;
             this.type = "other";
+            this.name = "attack2";
         }
 
         public override void Execute()
@@ -131,7 +133,7 @@ public class TrapperMovement : CharacterMovement
 
     public class Attack3 : SelfAttack
     {
-        public TrapperMovement self;
+        private TrapperMovement self;
 
         public Attack3(TrapperMovement cm)
         {
@@ -141,6 +143,7 @@ public class TrapperMovement : CharacterMovement
             this.damage = 30;
             this.cooldown = 20;
             this.type = "attack";
+            this.name = "attack3";
         }
 
         public override void Execute()

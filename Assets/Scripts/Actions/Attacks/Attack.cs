@@ -4,10 +4,10 @@ using UnityEngine;
 
 public abstract class Attack : Action
 { 
-  public int cooldown;
-  public int range;
-  public int damage;
-  public string type;
+  protected int cooldown;
+  protected int range;
+  protected int damage;
+  protected string type;
 
   private static GameObject[] rangeIndicators = new GameObject[] {};
   private static GameObject[] rangeLimits = new GameObject[] {};
@@ -57,6 +57,21 @@ public abstract class Attack : Action
   public int GetY()
   {
     return character.GetY();
+  }
+
+  public string GetAttackType()
+  {
+    return type;
+  }
+
+  public int GetCooldown()
+  {
+    return cooldown;
+  }
+
+  public int GetDamage()
+  {
+    return damage;
   }
 }
 

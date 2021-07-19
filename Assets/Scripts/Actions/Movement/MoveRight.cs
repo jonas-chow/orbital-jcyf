@@ -7,6 +7,7 @@ public class MoveRight : Action
     public MoveRight(CharacterMovement character)
     {
         this.character = character;
+        this.charID = character.charID;
         this.name = "MoveRight";
     }
 

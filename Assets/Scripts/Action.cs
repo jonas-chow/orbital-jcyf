@@ -4,8 +4,9 @@ using UnityEngine;
 
 public abstract class Action
 {
-    public CharacterMovement character;
+    protected CharacterMovement character;
     public string name;
+    public int charID;
     
     public abstract void Execute();
     public abstract void SendEvent();
@@ -18,5 +19,10 @@ public abstract class Action
     protected int getY()
     {
         return GridManager.Instance.GetY(character.transform.position.y);
+    }
+
+    public CharacterMovement GetCharacter()
+    {
+        return character;
     }
 }
