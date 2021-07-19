@@ -18,6 +18,7 @@ MonoBehaviour:
   healEffect: {fileID: 19800000, guid: ada5d62ffe762ce4fbccc70dcdbc9022, type: 3}
   buffEffect: {fileID: 19800000, guid: e393400376528bf4d96ed9178316933a, type: 3}
   debuffEffect: {fileID: 19800000, guid: aa3fed151f536ee49b583c6a3ac4a2e1, type: 3}
+  disabledEffect: {fileID: 335479046270626310, guid: c82dc7ebb5561524dae6538a045a9e0c, type: 3}
   spriteRenderer: {fileID: 5716813856575147021}
   friendlySprites:
   - {fileID: 8468408881239380914, guid: 4b998885e1e4540fe80f82a6237c8ff6, type: 3}

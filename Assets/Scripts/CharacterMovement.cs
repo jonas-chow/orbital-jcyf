@@ -10,6 +10,7 @@ public abstract class CharacterMovement : MonoBehaviour
     public ParticleSystem healEffect;
     public ParticleSystem buffEffect;
     public ParticleSystem debuffEffect;
+    public ParticleSystem disabledEffect;
 
     public SpriteRenderer spriteRenderer;
     public Sprite[] friendlySprites = new Sprite[4];
