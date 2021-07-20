@@ -19,14 +19,19 @@ public class Replay
     public string[] actions;
 
     public string[] friendlyChars;
-    public string[] enemyChars;
+    public string[] opponentChars;
 
     public Replay()
     {
-        datetime = DateTime.Now.ToString("ddMMyyHHmm");
-        // or something
+        datetime = DateTime.Now.ToString("dd/MM/yy\nHH:mm:ss");
+
         friendlyName = PlayerPrefs.GetString("Username", "");
-        opponentName = PlayerPrefs.GetString("Username", ""); // photon network thing, fill later
+        
+        if (EventHandler.Instance != null) {
+            opponentName = EventHandler.Instance.enemyName;
+        } else {
+            opponentName = "unknown";
+        }
     }
 
     public void SetFriendlies(string[] friendlyChars)
@@ -34,9 +39,9 @@ public class Replay
         this.friendlyChars = friendlyChars;
     }
 
-    public void SetEnemies(string[] enemyChars)
+    public void SetEnemies(string[] opponentChars)
     {
-        this.enemyChars = enemyChars;
+        this.opponentChars = opponentChars;
     }
 
     public void SaveReplay(Queue<Action> actions)
@@ -61,5 +66,16 @@ public class Replay
             str += " ";
         }
         return str;
+    }
+
+    public string GetNumericDatetime()
+    {
+        string[] split = datetime.Split('/', '\n', ':');
+        string output = "";
+        foreach (string substr in split)
+        {
+            output += substr;
+        }
+        return output;
     }
 }

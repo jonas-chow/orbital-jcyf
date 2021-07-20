@@ -127,6 +127,7 @@ public class GameManager : MonoBehaviour
     private int turnCount = 0;
     private bool autoMove = false;
     public Replay replay;
+    public GameObject popup;
 
     public void InstantiateSelf()
     {
@@ -569,6 +570,9 @@ public class GameManager : MonoBehaviour
 
     public void SaveReplay()
     {
+        AudioManager.Instance.Play("Click");
+        popup.SetActive(true);
         replay.SaveReplay(ActionQueue.Instance.actionCache);
+        popup.SetActive(false);
     }
 }

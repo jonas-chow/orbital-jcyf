@@ -20,7 +20,7 @@ public static class SaveSystem
     {
         Init();
         File.WriteAllText(SAVE_FOLDER + saveReplay.friendlyName + "_vs_" + 
-            saveReplay.opponentName + "_" + saveReplay.datetime + ".json", 
+            saveReplay.opponentName + "_" + saveReplay.GetNumericDatetime() + ".json", 
             JsonUtility.ToJson(saveReplay));
     }
 

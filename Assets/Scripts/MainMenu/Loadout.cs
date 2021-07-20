@@ -1,19 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class Loadout : MonoBehaviour
 {
-    public MeleeSelect meleeSelect;
-    public RangedSelect rangedSelect;
-    public MageSelect mageSelect;
-
     public TMP_Dropdown meleeDropdown;
     public TMP_Dropdown rangedDropdown;
     public TMP_Dropdown mageDropdown;
 
     public GameObject characterDetails;
+
+    public Image meleeIcon;
+    public Image rangedIcon;
+    public Image mageIcon;
 
     void OnEnable()
     {
@@ -21,27 +22,24 @@ public class Loadout : MonoBehaviour
         rangedDropdown.value = PlayerPrefs.GetInt("Ranged", (int)Rangeds.Hunter);
         mageDropdown.value = PlayerPrefs.GetInt("Mage", (int)Mages.Wizard);
 
-        SelectMelee();
-        SelectRanged();
-        SelectMage();
+        SelectMelee(meleeDropdown.value);
+        SelectRanged(rangedDropdown.value);
+        SelectMage(mageDropdown.value);
     }
 
-    public void SelectMelee()
+    public void SelectMelee(int value)
     {
-        AudioManager.Instance.Play("Click");
-        meleeSelect.ChangeIcon((Melees)meleeDropdown.value);
+        meleeIcon.sprite = SpriteManager.Instance.GetSprite(((Melees)value).ToString(), true);
     }
 
-    public void SelectRanged()
+    public void SelectRanged(int value)
     {
-        AudioManager.Instance.Play("Click");
-        rangedSelect.ChangeIcon((Rangeds)rangedDropdown.value);
+        rangedIcon.sprite = SpriteManager.Instance.GetSprite(((Rangeds)value).ToString(), true);
     }
 
-    public void SelectMage()
+    public void SelectMage(int value)
     {
-        AudioManager.Instance.Play("Click");
-        mageSelect.ChangeIcon((Mages)mageDropdown.value);
+        mageIcon.sprite = SpriteManager.Instance.GetSprite(((Mages)value).ToString(), true);
     }
 
     public void Save()

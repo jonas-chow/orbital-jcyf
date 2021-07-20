@@ -18,12 +18,7 @@ public class EventHandler : MonoBehaviourPunCallbacks
     private const byte FirstTurnEvent = 5;
     private const byte ReadyEvent = 6;
     private const byte ConcedeEvent = 7;
-
-    public void MainMenu()
-    {
-        AudioManager.Instance.Play("Click");
-        PhotonNetwork.LeaveRoom();
-    }
+    public string enemyName;
 
     public override void OnLeftRoom()
     {
@@ -56,19 +51,33 @@ public class EventHandler : MonoBehaviourPunCallbacks
         } else {
             instance = this;
         }
+
+        if (PhotonNetwork.IsConnected)
+        {
+            foreach (KeyValuePair<int, Player> kvp in PhotonNetwork.CurrentRoom.Players)
+            {
+                Player player = kvp.Value;
+                if (!player.Equals(PhotonNetwork.LocalPlayer)) {
+                    enemyName = player.NickName;
+                }
+            }
+        }
     }
 
     void Start()
     {
         AudioManager.Instance.Stop("MenuTheme");
         AudioManager.Instance.Play("BattleTheme");
-        object[] data = new object[] {
-            PlayerPrefs.GetInt("Melee", 0),
-            PlayerPrefs.GetInt("Ranged", 0),
-            PlayerPrefs.GetInt("Mage", 0),
-        };
-        
-        PhotonNetwork.RaiseEvent(InstantiateEvent, data, RaiseEventOptions.Default,SendOptions.SendReliable);
+        if (PhotonNetwork.IsConnected)
+        {
+            object[] data = new object[] {
+                PlayerPrefs.GetInt("Melee", 0),
+                PlayerPrefs.GetInt("Ranged", 0),
+                PlayerPrefs.GetInt("Mage", 0),
+            };
+            
+            PhotonNetwork.RaiseEvent(InstantiateEvent, data, RaiseEventOptions.Default,SendOptions.SendReliable);
+        }
     }
 
     public void FlipCoin()
@@ -156,28 +165,43 @@ public class EventHandler : MonoBehaviourPunCallbacks
 
     public void SendMovementEvent(int charId, string direction, bool isMove)
     {
-        object[] data = new object[] {charId, direction, isMove};
-        PhotonNetwork.RaiseEvent(MovementEvent, data, RaiseEventOptions.Default, SendOptions.SendReliable);
+        if (PhotonNetwork.IsConnected)
+        {
+            object[] data = new object[] {charId, direction, isMove};
+            PhotonNetwork.RaiseEvent(MovementEvent, data, RaiseEventOptions.Default, SendOptions.SendReliable);
+        }
     }
 
     public void SendAttackEvent(int charId, int attackId, object[] extraData)
     {
-        object[] data = new object[] {charId, attackId, extraData};
-        PhotonNetwork.RaiseEvent(AttackEvent, data, RaiseEventOptions.Default, SendOptions.SendReliable);
+        if (PhotonNetwork.IsConnected)
+        {
+            object[] data = new object[] {charId, attackId, extraData};
+            PhotonNetwork.RaiseEvent(AttackEvent, data, RaiseEventOptions.Default, SendOptions.SendReliable);
+        }
     }
 
     public void SendTurnEndEvent()
     {
-        PhotonNetwork.RaiseEvent(TurnEndEvent, null, RaiseEventOptions.Default, SendOptions.SendReliable);
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.RaiseEvent(TurnEndEvent, null, RaiseEventOptions.Default, SendOptions.SendReliable);
+        }
     }
 
     public void SendReady()
     {
-        PhotonNetwork.RaiseEvent(ReadyEvent, null, RaiseEventOptions.Default, SendOptions.SendReliable);
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.RaiseEvent(ReadyEvent, null, RaiseEventOptions.Default, SendOptions.SendReliable);
+        }
     }
 
     public void SendConcedeEvent()
     {
-        PhotonNetwork.RaiseEvent(ConcedeEvent, null, RaiseEventOptions.Default, SendOptions.SendReliable);
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.RaiseEvent(ConcedeEvent, null, RaiseEventOptions.Default, SendOptions.SendReliable);
+        }
     }
 }
