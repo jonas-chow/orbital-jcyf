@@ -12,6 +12,7 @@ public class MainMenuButtons : MonoBehaviourPunCallbacks
     public GameObject playMenu;
     public GameObject loadout;
     public GameObject controls;
+    public GameObject playerStats;
 
     public void Quit()
     {
@@ -38,6 +39,12 @@ public class MainMenuButtons : MonoBehaviourPunCallbacks
         } else {
             Popup.Notify("Please enter name");
         }
+    }
+
+    public void OpenPlayerStatistics()
+    {
+        AudioManager.Instance.Play("Click");
+        playerStats.SetActive(true);
     }
 
     void Start()

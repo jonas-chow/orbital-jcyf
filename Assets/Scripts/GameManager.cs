@@ -405,22 +405,30 @@ public class GameManager : MonoBehaviour
 
     public void Lose() {
         defeatUI.SetActive(true);
+        AudioManager.Instance.Stop("BattleTheme");
+        AudioManager.Instance.Play("Lose");
         if (gameMode == 1) {
             statsUI.SetActive(true);
             statsText.text = $"Turns taken: {turnCount}\nActions taken: {actionCount}";
+        } else {
+            PlayerPrefs.SetFloat("loseCount", PlayerPrefs.GetFloat("loseCount", 0) + 1);
+            PlayerPrefs.SetFloat("totalGames", PlayerPrefs.GetFloat("winCount") + PlayerPrefs.GetFloat("loseCount"));
+            PlayerPrefs.SetFloat("winPercent", PlayerPrefs.GetFloat("winCount") / PlayerPrefs.GetFloat("totalGames"));
         }
-        AudioManager.Instance.Stop("BattleTheme");
-        AudioManager.Instance.Play("Lose");
     }
 
     public void Win() {
         victoryUI.SetActive(true);
+        AudioManager.Instance.Stop("BattleTheme");
+        AudioManager.Instance.Play("Win");
         if (gameMode == 1) {
             statsUI.SetActive(true);
             statsText.text = $"Turns taken: {turnCount}\nActions taken: {actionCount}";
+        } else {
+            PlayerPrefs.SetFloat("winCount", PlayerPrefs.GetFloat("winCount", 0) + 1);
+            PlayerPrefs.SetFloat("totalGames", PlayerPrefs.GetFloat("winCount") + PlayerPrefs.GetFloat("loseCount"));
+            PlayerPrefs.SetFloat("winPercent", PlayerPrefs.GetFloat("winCount") / PlayerPrefs.GetFloat("totalGames"));
         }
-        AudioManager.Instance.Stop("BattleTheme");
-        AudioManager.Instance.Play("Win");
     }
     
 
