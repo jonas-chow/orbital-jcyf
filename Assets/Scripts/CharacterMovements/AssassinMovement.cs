@@ -35,6 +35,7 @@ public class AssassinMovement : CharacterMovement
             this.cooldown = 2;
             this.type = "attack";
             this.name = "attack1";
+            this.charID = cm.charID;
         }
 
         public override Attack Copy()
@@ -96,6 +97,7 @@ public class AssassinMovement : CharacterMovement
             this.cooldown = 10;
             this.type = "attack";
             this.name = "attack2";
+            this.charID = cm.charID;
         }
 
         public override Attack Copy()
@@ -148,6 +150,7 @@ public class AssassinMovement : CharacterMovement
             this.cooldown = 40;
             this.type = "buff";
             this.name = "attack3";
+            this.charID = cm.charID;
         }
 
         public override Attack Copy()
