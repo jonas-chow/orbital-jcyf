@@ -412,7 +412,7 @@ public class GameManager : MonoBehaviour
             statsText.text = $"Turns taken: {turnCount}\nActions taken: {actionCount}";
         } else {
             PlayerPrefs.SetFloat("loseCount", PlayerPrefs.GetFloat("loseCount", 0) + 1);
-            PlayerPrefs.SetFloat("totalGames", PlayerPrefs.GetFloat("winCount") + PlayerPrefs.GetFloat("loseCount"));
+            PlayerPrefs.SetFloat("totalGames", PlayerPrefs.GetFloat("winCount", 0) + PlayerPrefs.GetFloat("loseCount", 0));
             PlayerPrefs.SetFloat("winPercent", PlayerPrefs.GetFloat("winCount") / PlayerPrefs.GetFloat("totalGames"));
         }
     }
@@ -426,8 +426,8 @@ public class GameManager : MonoBehaviour
             statsText.text = $"Turns taken: {turnCount}\nActions taken: {actionCount}";
         } else {
             PlayerPrefs.SetFloat("winCount", PlayerPrefs.GetFloat("winCount", 0) + 1);
-            PlayerPrefs.SetFloat("totalGames", PlayerPrefs.GetFloat("winCount") + PlayerPrefs.GetFloat("loseCount"));
-            PlayerPrefs.SetFloat("winPercent", PlayerPrefs.GetFloat("winCount") / PlayerPrefs.GetFloat("totalGames"));
+            PlayerPrefs.SetFloat("totalGames", PlayerPrefs.GetFloat("winCount", 0) + PlayerPrefs.GetFloat("loseCount", 0));
+            PlayerPrefs.SetFloat("winPercent", PlayerPrefs.GetFloat("winCount") / PlayerPrefs.GetFloat("totalGames") * 100);
         }
     }
     
