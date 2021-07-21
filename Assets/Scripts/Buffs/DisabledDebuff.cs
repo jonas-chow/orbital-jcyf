@@ -22,6 +22,7 @@ public class DisabledDebuff : Buff
             character.buffs.Add(this);
             disabledEffectClone = ParticleSystem.Instantiate(character.disabledEffect, 
                 GridManager.Instance.GetCoords(character.GetX(), character.GetY()), Quaternion.identity);
+            disabledEffectClone.transform.parent = character.transform;
         }
     }
 
