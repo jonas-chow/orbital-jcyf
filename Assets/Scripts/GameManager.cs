@@ -136,6 +136,7 @@ public class GameManager : MonoBehaviour
     public Replay replay;
     public GameObject popup;
     public GameObject tooltipUI;
+    public GameObject replayEndUI;
 
     public void InstantiateSelf()
     {
@@ -712,5 +713,6 @@ public class GameManager : MonoBehaviour
             ActionQueue.Instance.ExecuteNext();
             yield return new WaitForSeconds(0.15f);
         }
+        replayEndUI.SetActive(true);
     }
 }
