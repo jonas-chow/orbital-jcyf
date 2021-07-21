@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
         AudioManager.Instance.SetBGMVolume(PlayerPrefs.GetFloat("BGM", 0.1f));
         AudioManager.Instance.SetSoundEffectVolume(PlayerPrefs.GetFloat("SE", 1f));
         
+        // 0: multiplayer, 1: practice, 2: replay
         gameMode = PlayerPrefs.GetInt("Mode", 0);
         autoMove = PlayerPrefs.GetInt("Movement", 0) == 1;
 
@@ -85,6 +86,12 @@ public class GameManager : MonoBehaviour
             loadingUI.SetActive(false);
             readyForTurn = true;
             CharacterMenu.Instance.Init(new CharacterMovement[] {friendly[0], friendly[3], friendly[6]});
+        } else if (gameMode == 2) {
+            string replayPath = PlayerPrefs.GetString("ReplayPath", "");
+            replay = SaveSystem.LoadReplay(replayPath);
+            CharacterMenu.Instance.gameObject.SetActive(false);
+            tooltipUI.SetActive(false);
+            StartCoroutine(LoadReplay());
         } else {
             replay = new Replay();
             InstantiateSelf();
@@ -128,6 +135,7 @@ public class GameManager : MonoBehaviour
     private bool autoMove = false;
     public Replay replay;
     public GameObject popup;
+    public GameObject tooltipUI;
 
     public void InstantiateSelf()
     {
@@ -279,36 +287,37 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (numEnemy > 0 && numFriendly > 0) {
-            if (readyForTurn) {
-                readyForTurn = false;
-                StartCoroutine(StartTurn());
-            }
-
-            if (TimeBar.Instance.IsTurn() && !paused) {
-                if (Input.GetButtonDown("Next Character")) {
-                    DeactivateCurrent();
-                    currentChar = (currentChar + 1) % numFriendly;
-                    ActivateCurrent();
-                    AudioManager.Instance.Play("SwitchCharacters");
+        if (gameMode != 2) {
+            if (numEnemy > 0 && numFriendly > 0) {
+                if (readyForTurn) {
+                    readyForTurn = false;
+                    StartCoroutine(StartTurn());
                 }
 
-                if (Input.GetButtonDown("Previous Character")) {
-                    DeactivateCurrent();
-                    currentChar = (currentChar + numFriendly - 1) % numFriendly;
-                    ActivateCurrent();
-                    AudioManager.Instance.Play("SwitchCharacters");
+                if (TimeBar.Instance.IsTurn() && !paused) {
+                    if (Input.GetButtonDown("Next Character")) {
+                        DeactivateCurrent();
+                        currentChar = (currentChar + 1) % numFriendly;
+                        ActivateCurrent();
+                        AudioManager.Instance.Play("SwitchCharacters");
+                    }
+
+                    if (Input.GetButtonDown("Previous Character")) {
+                        DeactivateCurrent();
+                        currentChar = (currentChar + numFriendly - 1) % numFriendly;
+                        ActivateCurrent();
+                        AudioManager.Instance.Play("SwitchCharacters");
+                    }
+                }
+
+                if (animationPhase && !animating) {
+                    animating = true;
+                    StartCoroutine(AnimateActions());
                 }
             }
-
-            if (Input.GetButtonDown("Pause") && !conceded) {
-                Pause();
-            }
-
-            if (animationPhase && !animating) {
-                animating = true;
-                StartCoroutine(AnimateActions());
-            }
+        }
+        if (Input.GetButtonDown("Pause") && !conceded) {
+                    Pause();
         }
     }
     
@@ -574,5 +583,134 @@ public class GameManager : MonoBehaviour
         popup.SetActive(true);
         replay.SaveReplay(ActionQueue.Instance.actionCache);
         popup.SetActive(false);
+    }
+
+    IEnumerator LoadReplay()
+    {
+        bool enemyTurn = true;
+        friendly = new CharacterMovement[3];
+        enemies = new CharacterMovement[3];
+
+        for (int i = 0; i < 3; i++)
+        {
+            // instantiate friendlies
+            GameObject character = BuildChar(replay.friendlyChars[i], false);
+            GridManager.Instance.MoveToAndInsert(character, i, 0);
+            friendly[i] = character.GetComponent<CharacterMovement>();
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            // instantiate enemies
+            GameObject character = BuildChar(replay.opponentChars[i], true);
+            GridManager.Instance.MoveToAndInsert(character, 15 - i, 15);
+            enemies[i] = character.GetComponent<CharacterMovement>();
+            enemies[i].Face("down");
+        }
+
+        loadingUI.SetActive(false);
+
+        foreach (string actionJson in replay.actions)
+        {
+            while (paused)
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
+            // use json to find the action from the character
+            // insert the action in the action queue
+
+            // should be - if not a char, else is a char
+            char charIDchar = actionJson[actionJson.IndexOf("charID") + 8];
+            // charID -1 only happens for turnEnd events
+            int charID = charIDchar == '-' ? -1 : charIDchar - '0';
+
+            int nameIdxStart = actionJson.IndexOf("name") + 7;
+            int nameIdxEnd = actionJson.IndexOf('"', nameIdxStart);
+            string actionName = actionJson.Substring(nameIdxStart, nameIdxEnd - nameIdxStart);
+
+            if (charID != -1) {
+                Action action;
+                CharacterMovement character = enemyTurn ? enemies[charID] : friendly[charID];
+                switch (actionName)
+                {
+                    case "attack1":
+                        action = character.attack1;
+                        break;
+                    case "attack2":
+                        action = character.attack2;
+                        break;
+                    case "attack3":
+                        action = character.attack3;
+                        break;
+                    case "MoveUp":
+                        action = new MoveUp(character);
+                        break;
+                    case "MoveDown":
+                        action = new MoveDown(character);
+                        break;
+                    case "MoveLeft":
+                        action = new MoveLeft(character);
+                        break;
+                    case "MoveRight":
+                        action = new MoveRight(character);
+                        break;
+                    case "FaceUp":
+                        action = new FaceUp(character);
+                        break;
+                    case "FaceDown":
+                        action = new FaceDown(character);
+                        break;
+                    case "FaceLeft":
+                        action = new FaceLeft(character);
+                        break;
+                    case "FaceRight":
+                        action = new FaceRight(character);
+                        break;
+                    default:
+                        action = null;
+                        break;
+                }
+                if (action is RangedAOEAttack || action is RangedTargetAttack)
+                {
+                    // offsetX int
+                    int offsetXIdxStart = actionJson.IndexOf("offsetX") + 9;
+                    int offsetXIdxEnd = actionJson.IndexOf(',', offsetXIdxStart);
+                    int offsetX = int.Parse(actionJson.Substring(offsetXIdxStart, offsetXIdxEnd - offsetXIdxStart));
+
+                    // offsetY int
+                    int offsetYIdxStart = actionJson.IndexOf("offsetY") + 9;
+                    int offsetYIdxEnd = actionJson.IndexOf('}', offsetYIdxStart);
+                    int offsetY = int.Parse(actionJson.Substring(offsetYIdxStart, offsetYIdxEnd - offsetYIdxStart));
+
+                    if (action is RangedAOEAttack)
+                    {
+                        ((RangedAOEAttack)action).offsetX = offsetX;
+                        ((RangedAOEAttack)action).offsetY = offsetY;
+                    }
+
+                    if (action is RangedTargetAttack)
+                    {
+                        ((RangedTargetAttack)action).offsetX = offsetX;
+                        ((RangedTargetAttack)action).offsetY = offsetY;
+                    }
+                }
+                if (action is LinearAttack)
+                {
+                    // direction string
+                    int dirIdxStart = actionJson.IndexOf("direction") + 12;
+                    int dirIdxEnd = actionJson.IndexOf('\"', dirIdxStart);
+                    string direction = actionJson.Substring(dirIdxStart, dirIdxEnd - dirIdxStart);
+                    ((LinearAttack)action).direction = direction;
+                }
+
+                ActionQueue.Instance.EnqueueAction(action);
+            } else {
+                ActionQueue.Instance.EnqueueAction(new ActionQueue.TurnEndAction());
+                enemyTurn = !enemyTurn;
+            }
+
+            ActionQueue.Instance.ExecuteNext();
+            yield return new WaitForSeconds(0.15f);
+        }
     }
 }

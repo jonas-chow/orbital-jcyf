@@ -33,11 +33,19 @@ public class HunterMovement : CharacterMovement
             this.cooldown = 2;
             this.type = "attack";
             this.name = "attack1";
+            this.charID = cm.charID;
+        }
+
+        public override Attack Copy()
+        {
+            return new Attack1(self);
         }
 
         public override void Execute()
         {
-            SendEvent();
+            if (!self.isEnemy) {
+                SendEvent();
+            }
             CharacterMovement target = FindTarget(direction);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
@@ -57,16 +65,8 @@ public class HunterMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            string dir = (string)extraData[0];
-            CharacterMovement target = FindTarget(dir);
-            if (target != null && target.IsEnemyOf(self)) {
-                target.TakeDamage(self.GetAttack(), damage);
-                AudioManager.Instance.Play("ArrowHit");
-            }
-            ParticleSystem arrowEffect = ParticleSystem.Instantiate(self.arrowEffect, 
-                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
-            self.RotateProjectileEffect(self.faceDirection, arrowEffect);
-            AudioManager.Instance.Play("ArrowMiss");
+            this.direction = (string)extraData[0];
+            Execute();
         }
 
         public override string GetDescription()
@@ -91,11 +91,19 @@ public class HunterMovement : CharacterMovement
             this.cooldown = 10;
             this.type = "attack";
             this.name = "attack2";
+            this.charID = cm.charID;
+        }
+
+        public override Attack Copy()
+        {
+            return new Attack2(self);
         }
 
         public override void Execute()
         {
-            SendEvent();
+            if (!self.isEnemy) {
+                SendEvent();
+            }
             CharacterMovement target = FindTarget(direction);
             if (target != null && target.IsEnemyOf(self)) {
                 int distance = GridManager.Instance.DistanceFromChar(self, target);
@@ -117,18 +125,8 @@ public class HunterMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            string dir = (string)extraData[0];
-            CharacterMovement target = FindTarget(dir);
-            if (target != null && target.IsEnemyOf(self)) {
-                int distance = GridManager.Instance.DistanceFromChar(self, target);
-                int dmg = damage + distance * distanceScaling;
-                target.TakeDamage(self.GetAttack(), dmg);
-                AudioManager.Instance.Play("ArrowHit");
-            }
-            ParticleSystem arrowinfEffect = ParticleSystem.Instantiate(self.arrowinfEffect, 
-                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
-            self.RotateProjectileEffect(self.faceDirection, arrowinfEffect);
-            AudioManager.Instance.Play("ArrowMiss");
+            this.direction = (string)extraData[0];
+            Execute();
         }
 
         public override string GetDescription()
@@ -154,11 +152,19 @@ public class HunterMovement : CharacterMovement
             this.cooldown = 5;
             this.type = "attack";
             this.name = "attack3";
+            this.charID = cm.charID;
+        }
+
+        public override Attack Copy()
+        {
+            return new Attack3(self);
         }
 
         public override void Execute()
         {
-            SendEvent();
+            if (!self.isEnemy) {
+                SendEvent();
+            }
             CharacterMovement target = FindTarget(direction);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
@@ -184,22 +190,8 @@ public class HunterMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            string dir = (string)extraData[0];
-            CharacterMovement target = FindTarget(dir);
-            if (target != null && target.IsEnemyOf(self)) {
-                target.TakeDamage(self.GetAttack(), damage);
-
-                if (target.isAlive) {
-                    string targetDir = target.faceDirection;
-                    for (int i = 0; i < knockback; i++) {
-                        target.Move(self.faceDirection);
-                    }
-                    target.Face(targetDir);
-                }
-                ParticleSystem knockbackEffect = ParticleSystem.Instantiate(self.knockbackEffect, 
-                    GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
-                AudioManager.Instance.Play("Knockback");
-            }
+            this.direction = (string)extraData[0];
+            Execute();
         }
 
         public override string GetDescription()

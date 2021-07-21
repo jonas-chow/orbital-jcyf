@@ -30,12 +30,20 @@ public class FamiliarMovement : CharacterMovement
             this.cooldown = 2;
             this.type = "attack";
             this.name = "attack1";
+            this.charID = cm.charID;
+        }
+
+        public override Attack Copy()
+        {
+            return new Attack1(self);
         }
 
         // basic melee attack
         public override void Execute()
         {
-            SendEvent();
+            if (!self.isEnemy) {
+                SendEvent();
+            }
             CharacterMovement target = FindTarget(direction);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
@@ -53,14 +61,8 @@ public class FamiliarMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            string dir = (string)extraData[0];
-            CharacterMovement target = FindTarget(dir);
-            if (target != null && target.IsEnemyOf(self)) {
-                target.TakeDamage(self.GetAttack(), damage);
-                ParticleSystem familiarAttackEffect = ParticleSystem.Instantiate(self.familiarAttackEffect, 
-                    GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
-                AudioManager.Instance.Play("FamiliarAttack");
-            }
+            this.direction = (string)extraData[0];
+            Execute();
         }
 
         public override string GetDescription()
@@ -83,13 +85,23 @@ public class FamiliarMovement : CharacterMovement
             this.cooldown = 99;
             this.type = "other";
             this.name = "attack2";
+            this.charID = cm.charID;
+        }
+
+        public override Attack Copy()
+        {
+            return new Attack2(self);
         }
 
         // explode and die
         public override void Execute()
         {
-            SendEvent();
-            CharacterMenu.Instance.SetHealth(self.charID, 0f);
+            if (!self.isEnemy) {
+                SendEvent();
+            }
+            if (!self.isEnemy) {
+                CharacterMenu.Instance.SetHealth(self.charID, 0f);
+            }
             self.Die();
             self.hp.SetVisible(false);
             AudioManager.Instance.Play("TrapExplosion");
@@ -102,8 +114,7 @@ public class FamiliarMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            self.Die();
-            AudioManager.Instance.Play("TrapExplosion");
+            Execute();
         }
 
         public override string GetDescription()
@@ -124,11 +135,19 @@ public class FamiliarMovement : CharacterMovement
             this.cooldown = 5;
             this.type = "other";
             this.name = "attack3";
+            this.charID = cm.charID;
+        }
+
+        public override Attack Copy()
+        {
+            return new Attack3(self);
         }
 
         public override void Execute()
         {
-            SendEvent();
+            if (!self.isEnemy) {
+                SendEvent();
+            }
             Vector3 selfPos = self.transform.position;
             self.transform.position = self.summoner.transform.position;
             self.summoner.transform.position = selfPos;
@@ -155,23 +174,7 @@ public class FamiliarMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            Vector3 selfPos = self.transform.position;
-            self.transform.position = self.summoner.transform.position;
-            self.summoner.transform.position = selfPos;
-            GridManager.Instance.RemoveObject(self.GetX(), self.GetY());
-            GridManager.Instance.RemoveObject(self.summoner.GetX(), self.summoner.GetY());
-            GridManager.Instance.InsertObject(self.gameObject, self.GetX(), self.GetY());
-            GridManager.Instance.InsertObject(
-                self.summoner.gameObject, 
-                self.summoner.GetX(), 
-                self.summoner.GetY());
-            ParticleSystem swapEffect1 = ParticleSystem.Instantiate(self.swapEffect, 
-                GridManager.Instance.GetCoords(self.summoner.GetX(), self.summoner.GetY()), Quaternion.identity);
-            ParticleSystem swapEffect2 = ParticleSystem.Instantiate(self.swapEffect, 
-                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
-            swapEffect1.transform.parent = self.summoner.transform;
-            swapEffect2.transform.parent = self.transform;
-            AudioManager.Instance.Play("Swap");
+            Execute();
         }
 
         public override string GetDescription()

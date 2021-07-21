@@ -10,9 +10,9 @@ public class WardMovement : CharacterMovement
         GameObject.Destroy(gameObject);
     }
 
-    public void init(bool isEnemy)
+    public void Init(CharacterMovement self)
     {
-        this.isEnemy = isEnemy;
+        this.isEnemy = self.isEnemy;
         spriteRenderer.sprite = isEnemy ? enemySprites[0] : friendlySprites[0];
         fog.SetActive(!isEnemy);
     }

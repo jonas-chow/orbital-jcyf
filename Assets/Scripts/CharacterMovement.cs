@@ -322,18 +322,23 @@ public abstract class CharacterMovement : MonoBehaviour
 
     public void EventAttack(int attackId, object[] extraData)
     {
+        Attack attack = null;
         switch (attackId)
         {
             case 1:
-                attack1.EventExecute(extraData);
+                attack = attack1.Copy();
                 break;
             case 2:
-                attack2.EventExecute(extraData);
+                attack = attack2.Copy();
                 break;
             case 3:
-                attack3.EventExecute(extraData);
+                attack = attack3.Copy();
                 break;
         }
+        if (attack != null) {
+            attack.EventExecute(extraData);
+        }
+        ActionQueue.Instance.RecordEnemyEvent(attack);
     }
 
     public int GetAttack()
@@ -373,20 +378,22 @@ public abstract class CharacterMovement : MonoBehaviour
 
     public void ResetCD(int attackNum)
     {
-        switch (attackNum)
-        {
-            case 1:
-                attack1Turn = -999;
-                break;
-            case 2:
-                attack2Turn = -999;
-                break;
-            case 3:
-                attack3Turn = -999;
-                break;
-        }
+        if (!isEnemy) {
+            switch (attackNum)
+            {
+                case 1:
+                    attack1Turn = -999;
+                    break;
+                case 2:
+                    attack2Turn = -999;
+                    break;
+                case 3:
+                    attack3Turn = -999;
+                    break;
+            }
 
-        CharacterMenu.Instance.ResetCD(charID, attackNum - 1);
+            CharacterMenu.Instance.ResetCD(charID, attackNum - 1);
+        }
     }
 
     public void RotateProjectileEffect(string direction, ParticleSystem effect)
@@ -406,6 +413,5 @@ public abstract class CharacterMovement : MonoBehaviour
                 effect.transform.Rotate(0, 0, -90);
                 break;
         }
-        
     }
 }

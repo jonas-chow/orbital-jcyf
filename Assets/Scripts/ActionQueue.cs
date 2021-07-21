@@ -32,7 +32,9 @@ public class ActionQueue : MonoBehaviour
         if (isEnabled) {
             Action next = actions.Dequeue();
             // only execute the action if the char didnt manage to die
-            if (next.GetCharacter().isAlive && !next.GetCharacter().disabled) {
+            if (next.charID == -1 || (next.GetCharacter().isAlive && !next.GetCharacter().disabled)) {
+                Debug.Log(next.name);
+                Debug.Log(next.charID);
                 next.Execute();
                 actionCache.Enqueue(next);
             }
@@ -54,9 +56,12 @@ public class ActionQueue : MonoBehaviour
         this.isEnabled = true;
     }
 
-    private class TurnEndAction : Action
+    public class TurnEndAction : Action
     {
-        public override void Execute() {}
+        public override void Execute() {
+            System.Array.ForEach(GameManager.Instance.friendly, cm => cm.TurnPass());
+            System.Array.ForEach(GameManager.Instance.enemies, cm => cm.TurnPass());
+        }
         public override void SendEvent() {}
 
         public TurnEndAction()
@@ -69,6 +74,11 @@ public class ActionQueue : MonoBehaviour
     public void TurnEnd()
     {
         actionCache.Enqueue(new TurnEndAction());
+    }
+
+    public void RecordEnemyEvent(Action action)
+    {
+        actionCache.Enqueue(action);
     }
 }
 

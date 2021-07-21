@@ -37,9 +37,16 @@ public class AssassinMovement : CharacterMovement
             this.name = "attack1";
         }
 
+        public override Attack Copy()
+        {
+            return new Attack1(self);
+        }
+
         public override void Execute()
         {
-            SendEvent();
+            if (!self.isEnemy) {
+                SendEvent();
+            }
             CharacterMovement target = FindTarget(direction);
             if (target != null && target.IsEnemyOf(self)) {
                 if (target.faceDirection == self.faceDirection) {
@@ -64,21 +71,8 @@ public class AssassinMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            string dir = (string)extraData[0];
-            CharacterMovement target = FindTarget(dir);
-            if (target != null && target.IsEnemyOf(self)) {
-                if (target.faceDirection == self.faceDirection) {
-                    target.TakeDamage(self.GetAttack(), damage + backstabBonus);
-                    ParticleSystem heavySlashEffect = ParticleSystem.Instantiate(self.heavySlashEffect, 
-                        GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
-                } else {
-                    target.TakeDamage(self.GetAttack(), damage);
-                    ParticleSystem slashEffect = ParticleSystem.Instantiate(self.slashEffect, 
-                        GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
-                }
-                AudioManager.Instance.Play("MeleeHit");   
-            }
-            AudioManager.Instance.Play("MeleeMiss");
+            this.direction = (string)extraData[0];
+            Execute();
         }
 
         public override string GetDescription()
@@ -104,9 +98,16 @@ public class AssassinMovement : CharacterMovement
             this.name = "attack2";
         }
 
+        public override Attack Copy()
+        {
+            return new Attack2(self);
+        }
+
         public override void Execute()
         {
-            SendEvent();
+            if (!self.isEnemy) {
+                SendEvent();
+            }
             CharacterMovement target = FindTarget(direction);
             if (target != null && target.IsEnemyOf(self)) {
                 target.AddBuff(new PoisonDebuff(3));
@@ -124,14 +125,8 @@ public class AssassinMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            string dir = (string)extraData[0];
-            CharacterMovement target = FindTarget(dir);
-            if (target != null && target.IsEnemyOf(self)) {
-                target.AddBuff(new PoisonDebuff(3));
-                target.TakeDamage(self.GetAttack(), damage);
-                AudioManager.Instance.Play("Poison");
-            }
-            AudioManager.Instance.Play("MeleeMiss");
+            this.direction = (string)extraData[0];
+            Execute();
         }
 
         public override string GetDescription()
@@ -155,9 +150,16 @@ public class AssassinMovement : CharacterMovement
             this.name = "attack3";
         }
 
+        public override Attack Copy()
+        {
+            return new Attack3(self);
+        }
+
         public override void Execute()
         {
-            SendEvent();
+            if (!self.isEnemy) {
+                SendEvent();
+            }
             self.AddBuff(new StealthBuff(2));
             ParticleSystem smokeEffect = ParticleSystem.Instantiate(self.smokeEffect, 
                 GridManager.Instance.GetCoords(GetX(), GetY()), Quaternion.identity);
@@ -172,10 +174,7 @@ public class AssassinMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            self.AddBuff(new StealthBuff(2));
-            ParticleSystem smokeEffect = ParticleSystem.Instantiate(self.smokeEffect, 
-                GridManager.Instance.GetCoords(GetX(), GetY()), Quaternion.identity);
-            AudioManager.Instance.Play("Stealth");
+            Execute();
         }
 
         public override string GetDescription()

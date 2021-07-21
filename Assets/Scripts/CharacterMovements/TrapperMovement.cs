@@ -33,11 +33,19 @@ public class TrapperMovement : CharacterMovement
             this.cooldown = 2;
             this.type = "attack";
             this.name = "attack1";
+            this.charID = cm.charID;
+        }
+
+        public override Attack Copy()
+        {
+            return new Attack1(self);
         }
 
         public override void Execute()
         {
-            SendEvent();
+            if (!self.isEnemy) {
+                SendEvent();
+            }
             CharacterMovement target = FindTarget(direction);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
@@ -57,16 +65,8 @@ public class TrapperMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            string dir = (string)extraData[0];
-            CharacterMovement target = FindTarget(dir);
-            if (target != null && target.IsEnemyOf(self)) {
-                target.TakeDamage(self.GetAttack(), damage);
-                AudioManager.Instance.Play("ArrowHit");
-            }
-            ParticleSystem arrowEffect = ParticleSystem.Instantiate(self.arrowEffect, 
-                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
-            self.RotateProjectileEffect(self.faceDirection, arrowEffect);
-            AudioManager.Instance.Play("ArrowMiss");
+            this.direction = (string)extraData[0];
+            Execute();
         }
 
         public override string GetDescription()
@@ -89,11 +89,19 @@ public class TrapperMovement : CharacterMovement
             this.damage = 10;
             this.type = "other";
             this.name = "attack2";
+            this.charID = cm.charID;
+        }
+
+        public override Attack Copy()
+        {
+            return new Attack2(self);
         }
 
         public override void Execute()
         {
-            SendEvent();
+            if (!self.isEnemy) {
+                SendEvent();
+            }
             if (GridManager.Instance.traps[GetX(), GetY()] == null) {
                 GameObject trapObj = GameObject.Instantiate(self.trapPrefab, Vector3.zero, Quaternion.identity);
                 Trap trap = trapObj.GetComponent<Trap>();
@@ -113,13 +121,7 @@ public class TrapperMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            if (GridManager.Instance.traps[GetX(), GetY()] == null) {
-                GameObject trapObj = GameObject.Instantiate(self.trapPrefab, Vector3.zero, Quaternion.identity);
-                Trap trap = trapObj.GetComponent<Trap>();
-                self.traps.Add(trap);
-                trap.Init(self, damage);
-                AudioManager.Instance.Play("Trap");
-            }
+            Execute();
         }
 
         public override string GetDescription()
@@ -144,11 +146,19 @@ public class TrapperMovement : CharacterMovement
             this.cooldown = 20;
             this.type = "attack";
             this.name = "attack3";
+            this.charID = cm.charID;
+        }
+
+        public override Attack Copy()
+        {
+            return new Attack3(self);
         }
 
         public override void Execute()
         {
-            SendEvent();
+            if (!self.isEnemy) {
+                SendEvent();
+            }
             self.traps.ForEach(trap => trap.Explode(damage));
             self.traps = new List<Trap>();
             //AudioManager.Instance.Play("TrapExplosion");
@@ -162,9 +172,7 @@ public class TrapperMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            self.traps.ForEach(trap => trap.Explode(damage));
-            self.traps = new List<Trap>();
-            //AudioManager.Instance.Play("TrapExplosion");
+            Execute();
         }
 
         public override string GetDescription()

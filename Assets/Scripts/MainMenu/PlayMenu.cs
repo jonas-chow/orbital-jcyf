@@ -47,6 +47,8 @@ public class PlayMenu : MonoBehaviourPunCallbacks
     public void ViewReplays()
     {
         AudioManager.Instance.Play("Click");
+        // 2 for replay mode
+        PlayerPrefs.SetInt("Mode", 2);
         replaysScreen.SetActive(true);
     }
 }

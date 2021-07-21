@@ -45,6 +45,7 @@ public abstract class Attack : Action
   public abstract void AimDown();
   public abstract void AimLeft();
   public abstract void AimRight();
+  public abstract Attack Copy();
 
   public abstract void EventExecute(object[] extraData);
   public virtual string GetDescription() {return "";}

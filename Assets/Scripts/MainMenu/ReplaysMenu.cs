@@ -44,10 +44,12 @@ public class ReplaysMenu : MonoBehaviour
             selected.Deselect();
         }
         selected = listing;
+        PlayerPrefs.SetString("ReplayPath", selected.replayPath);
     }
 
     public void Delete()
     {
+        AudioManager.Instance.Play("Click");
         if (selected == null) { return; }
 
         SaveSystem.DeleteReplay(selected.replayPath);
@@ -63,7 +65,9 @@ public class ReplaysMenu : MonoBehaviour
 
     public void Play()
     {
+        AudioManager.Instance.Play("Click");
         if (selected == null) { return; }
-        // play selected replay
+
+        SceneManager.LoadScene(1);
     }
 }

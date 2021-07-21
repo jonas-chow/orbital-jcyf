@@ -33,12 +33,20 @@ public class BruiserMovement : CharacterMovement
             this.cooldown = 2;
             this.type = "attack";
             this.name = "attack1";
+            this.charID = cm.charID;
+        }
+
+        public override Attack Copy()
+        {
+            return new Attack1(self);
         }
 
         // basic melee attack with med damage
         public override void Execute()
         {
-            SendEvent();
+            if (!self.isEnemy) {
+                SendEvent();
+            }
             CharacterMovement target = FindTarget(direction);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
@@ -57,15 +65,8 @@ public class BruiserMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            string dir = (string)extraData[0];
-            CharacterMovement target = FindTarget(dir);
-            if (target != null && target.IsEnemyOf(self)) {
-                target.TakeDamage(self.GetAttack(), damage);
-                ParticleSystem slashEffect = ParticleSystem.Instantiate(self.slashEffect, 
-                    GridManager.Instance.GetCoords(target.GetX(), target.GetY()), Quaternion.identity);
-                AudioManager.Instance.Play("MeleeHit");  
-            }
-            AudioManager.Instance.Play("MeleeMiss");  
+            this.direction = (string)extraData[0];
+            Execute();
         }
 
         public override string GetDescription()
@@ -88,11 +89,19 @@ public class BruiserMovement : CharacterMovement
             this.cooldown = 5;
             this.type = "attack";
             this.name = "attack2";
+            this.charID = cm.charID;
+        }
+
+        public override Attack Copy()
+        {
+            return new Attack2(self);
         }
 
         public override void Execute()
         {
-            SendEvent();
+            if (!self.isEnemy) {
+                SendEvent();
+            }
             List<CharacterMovement> enemies = FindTargets().FindAll(cm => cm.IsEnemyOf(self));
             enemies.ForEach(cm => {
                 cm.TakeDamage(self.GetAttack(), damage);
@@ -112,15 +121,7 @@ public class BruiserMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            List<CharacterMovement> allies = FindTargets().FindAll(cm => cm.IsEnemyOf(self));
-            allies.ForEach(cm => {
-                cm.TakeDamage(self.GetAttack(), damage);
-            });
-            ParticleSystem aoeSlashEffect = ParticleSystem.Instantiate(self.aoeSlashEffect, 
-                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
-
-            self.TakeDamage(self.GetDefense(), 20);
-            AudioManager.Instance.Play("BruiserAOE");  
+            Execute();
         }
 
         public override string GetDescription()
@@ -141,11 +142,19 @@ public class BruiserMovement : CharacterMovement
             this.cooldown = 40;
             this.type = "buff";
             this.name = "attack3";
+            this.charID = cm.charID;
+        }
+
+        public override Attack Copy()
+        {
+            return new Attack3(self);
         }
 
         public override void Execute()
         {
-            SendEvent();
+            if (!self.isEnemy) {
+                SendEvent();
+            }
             self.AddBuff(new InvincibleBuff(2));
             ParticleSystem undyingEffect = ParticleSystem.Instantiate(self.undyingEffect, 
                 GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
@@ -160,11 +169,7 @@ public class BruiserMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            self.AddBuff(new InvincibleBuff(2));
-            ParticleSystem undyingEffect = ParticleSystem.Instantiate(self.undyingEffect, 
-                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
-            undyingEffect.transform.parent = self.transform; 
-            AudioManager.Instance.Play("BruiserInvincible");  
+            Execute();
         }
 
         public override string GetDescription()

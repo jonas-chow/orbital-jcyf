@@ -443,6 +443,7 @@ MonoBehaviour:
   tooltipText: {fileID: 2057920056}
   statsText: {fileID: 1587031847}
   popup: {fileID: 2071456296}
+  tooltipUI: {fileID: 1761485553}
 --- !u!4 &72328980
 Transform:
   m_ObjectHideFlags: 0

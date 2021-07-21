@@ -32,11 +32,19 @@ public class WizardMovement : CharacterMovement
             this.cooldown = 2;
             this.type = "attack";
             this.name = "attack1";
+            this.charID = cm.charID;
+        }
+
+        public override Attack Copy()
+        {
+            return new Attack1(self);
         }
 
         public override void Execute()
         {
-            SendEvent();
+            if (!self.isEnemy) {
+                SendEvent();
+            }
             CharacterMovement target = FindTarget(direction);
             if (target != null && target.IsEnemyOf(self)) {
                 target.TakeDamage(self.GetAttack(), damage);
@@ -55,15 +63,8 @@ public class WizardMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            string dir = (string)extraData[0];
-            CharacterMovement target = FindTarget(dir);
-            if (target != null && target.IsEnemyOf(self)) {
-                target.TakeDamage(self.GetAttack(), damage);
-            }
-            ParticleSystem magicAttackEffect = ParticleSystem.Instantiate(self.magicAttackEffect, 
-                GridManager.Instance.GetCoords(self.GetX(), self.GetY()), Quaternion.identity);
-            self.RotateProjectileEffect(self.faceDirection, magicAttackEffect);
-            AudioManager.Instance.Play("MagicAttack");
+            this.direction = (string)extraData[0];
+            Execute();
         }
 
         public override string GetDescription()
@@ -86,11 +87,19 @@ public class WizardMovement : CharacterMovement
             this.cooldown = 10;
             this.type = "attack";
             this.name = "attack2";
+            this.charID = cm.charID;
+        }
+
+        public override Attack Copy()
+        {
+            return new Attack2(self);
         }
 
         public override void Execute()
         {
-            SendEvent();
+            if (!self.isEnemy) {
+                SendEvent();
+            }
             List<CharacterMovement> enemies = FindTargets(offsetX, offsetY)
                 .FindAll(cm => cm.IsEnemyOf(self));
             enemies.ForEach(cm => {
@@ -109,17 +118,9 @@ public class WizardMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            int offsetX = (int)extraData[0];
-            int offsetY = (int)extraData[1];
-            List<CharacterMovement> allies = FindTargets(offsetX, offsetY)
-                .FindAll(cm => cm.IsEnemyOf(self));
-            allies.ForEach(cm => {
-                cm.TakeDamage(self.GetAttack(), damage);
-            });
-            ParticleSystem electricAttackEffect = ParticleSystem.Instantiate(self.electricAttackEffect, 
-                GridManager.Instance.GetCoords(self.GetX() + offsetX, self.GetY() + offsetY), Quaternion.identity);
-            FaceTargetDirection(offsetX, offsetY);
-            AudioManager.Instance.Play("AOEMagicAttack");
+            this.offsetX = (int)extraData[0];
+            this.offsetY = (int)extraData[1];
+            Execute();
         }
 
         public override string GetDescription()
@@ -140,11 +141,19 @@ public class WizardMovement : CharacterMovement
             this.cooldown = 50;
             this.type = "other";
             this.name = "attack3";
+            this.charID = cm.charID;
+        }
+
+        public override Attack Copy()
+        {
+            return new Attack3(self);
         }
 
         public override void Execute()
         {
-            SendEvent();
+            if (!self.isEnemy) {
+                SendEvent();
+            }
             self.ResetCD(1);
             self.ResetCD(2);
             AudioManager.Instance.Play("ResetCD");
@@ -158,7 +167,7 @@ public class WizardMovement : CharacterMovement
 
         public override void EventExecute(object[] extraData)
         {
-            AudioManager.Instance.Play("ResetCD");
+            Execute();
         }
 
         public override string GetDescription()

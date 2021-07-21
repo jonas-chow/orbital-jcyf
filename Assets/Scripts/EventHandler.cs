@@ -126,8 +126,42 @@ public class EventHandler : MonoBehaviourPunCallbacks
                 if (isMove)
                 {
                     cm.Move(direction);
+                    switch (direction)
+                    {
+                        case "up":
+                            ActionQueue.Instance.RecordEnemyEvent(new MoveUp(cm));
+                            break;
+                        case "down":
+                            ActionQueue.Instance.RecordEnemyEvent(new MoveDown(cm));
+                            break;
+                        case "left":
+                            ActionQueue.Instance.RecordEnemyEvent(new MoveLeft(cm));
+                            break;
+                        case "right":
+                            ActionQueue.Instance.RecordEnemyEvent(new MoveRight(cm));
+                            break;
+                        default:
+                            break;
+                    }
                 } else {
                     cm.Face(direction);
+                    switch (direction)
+                    {
+                        case "up":
+                            ActionQueue.Instance.RecordEnemyEvent(new FaceUp(cm));
+                            break;
+                        case "down":
+                            ActionQueue.Instance.RecordEnemyEvent(new FaceDown(cm));
+                            break;
+                        case "left":
+                            ActionQueue.Instance.RecordEnemyEvent(new FaceLeft(cm));
+                            break;
+                        case "right":
+                            ActionQueue.Instance.RecordEnemyEvent(new FaceRight(cm));
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 break;
             case AttackEvent:
