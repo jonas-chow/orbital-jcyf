@@ -330,45 +330,47 @@ public class GameManager : MonoBehaviour
     }
     
     public void RemoveFriendly(CharacterMovement dead) {
-        int deadIdx = Array.FindIndex(friendly, character => character.Equals(dead));
-        numFriendly--;
+        if (gameMode != 2) {
+            int deadIdx = Array.FindIndex(friendly, character => character.Equals(dead));
+            numFriendly--;
 
-        if (numFriendly > 0) {
-            if (deadIdx >= currentChar) {
-                CharacterMovement[] newFriendly = new CharacterMovement[numFriendly];
-                int i = 0;
-                foreach (CharacterMovement cm in friendly)
-                {
-                    if (!cm.Equals(dead))
+            if (numFriendly > 0) {
+                if (deadIdx >= currentChar) {
+                    CharacterMovement[] newFriendly = new CharacterMovement[numFriendly];
+                    int i = 0;
+                    foreach (CharacterMovement cm in friendly)
                     {
-                        newFriendly[i] = cm;
-                        i++;
+                        if (!cm.Equals(dead))
+                        {
+                            newFriendly[i] = cm;
+                            i++;
+                        }
                     }
+                    friendly = newFriendly;
+                    if (currentChar >= numFriendly) {
+                        currentChar = 0;
+                    }
+                } else {
+                    CharacterMovement[] newFriendly = new CharacterMovement[numFriendly];
+                    int i = 0;
+                    foreach (CharacterMovement cm in friendly)
+                    {
+                        if (!cm.Equals(dead))
+                        {
+                            newFriendly[i] = cm;
+                            i++;
+                        }
+                    }
+                    friendly = newFriendly;
+                    currentChar--;
                 }
-                friendly = newFriendly;
-                if (currentChar >= numFriendly) {
-                    currentChar = 0;
+
+                if (TimeBar.Instance.IsTurn()) {
+                    ActivateCurrent();
                 }
             } else {
-                CharacterMovement[] newFriendly = new CharacterMovement[numFriendly];
-                int i = 0;
-                foreach (CharacterMovement cm in friendly)
-                {
-                    if (!cm.Equals(dead))
-                    {
-                        newFriendly[i] = cm;
-                        i++;
-                    }
-                }
-                friendly = newFriendly;
-                currentChar--;
+                Lose();
             }
-
-            if (TimeBar.Instance.IsTurn()) {
-                ActivateCurrent();
-            }
-        } else {
-            Lose();
         }
     }
 
