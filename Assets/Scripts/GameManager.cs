@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
         autoMove = PlayerPrefs.GetInt("Movement", 0) == 1;
 
         if (testing) {
+            replayStartUI.gameObject.SetActive(false);
+
             GameObject tank = BuildChar("Tank", false);
             GridManager.Instance.MoveToAndInsert(tank, 3, 5);
             GameObject bruiser = BuildChar("Bruiser", false);
@@ -89,10 +91,11 @@ public class GameManager : MonoBehaviour
         } else if (gameMode == 2) {
             string replayPath = PlayerPrefs.GetString("ReplayPath", "");
             replay = SaveSystem.LoadReplay(replayPath);
+            replayStartUI.Init(replay.friendlyName, replay.opponentName);
             CharacterMenu.Instance.gameObject.SetActive(false);
             tooltipUI.SetActive(false);
-            StartCoroutine(LoadReplay());
         } else {
+            replayStartUI.gameObject.SetActive(false);
             replay = new Replay();
             InstantiateSelf();
         }
@@ -137,6 +140,8 @@ public class GameManager : MonoBehaviour
     public GameObject popup;
     public GameObject tooltipUI;
     public GameObject replayEndUI;
+    public ReplayChoice replayStartUI;
+    public bool reversedPov = false;
 
     public void InstantiateSelf()
     {
@@ -588,35 +593,50 @@ public class GameManager : MonoBehaviour
         tooltipText.text = text;
     }
 
-    public void SaveReplay()
+    public void SaveReplay(bool victory)
     {
         AudioManager.Instance.Play("Click");
         popup.SetActive(true);
+        replay.victory = victory;
         replay.SaveReplay(ActionQueue.Instance.actionCache);
         popup.SetActive(false);
     }
 
+    public void StartReplay()
+    {
+        StartCoroutine(LoadReplay());
+    }
+
     IEnumerator LoadReplay()
     {
-        bool enemyTurn = true;
+        bool enemyTurn = !reversedPov;
         friendly = new CharacterMovement[3];
         enemies = new CharacterMovement[3];
 
         for (int i = 0; i < 3; i++)
         {
             // instantiate friendlies
-            GameObject character = BuildChar(replay.friendlyChars[i], false);
+            GameObject character = BuildChar(replay.friendlyChars[i], reversedPov);
             GridManager.Instance.MoveToAndInsert(character, i, 0);
-            friendly[i] = character.GetComponent<CharacterMovement>();
+            if (reversedPov) {
+                enemies[i] = character.GetComponent<CharacterMovement>();
+            } else {
+                friendly[i] = character.GetComponent<CharacterMovement>();
+            }
         }
 
         for (int i = 0; i < 3; i++)
         {
             // instantiate enemies
-            GameObject character = BuildChar(replay.opponentChars[i], true);
+            GameObject character = BuildChar(replay.opponentChars[i], !reversedPov);
             GridManager.Instance.MoveToAndInsert(character, 15 - i, 15);
-            enemies[i] = character.GetComponent<CharacterMovement>();
-            enemies[i].Face("down");
+            if (reversedPov) {
+                friendly[i] = character.GetComponent<CharacterMovement>();
+                friendly[i].Face("down");
+            } else {
+                enemies[i] = character.GetComponent<CharacterMovement>();
+                enemies[i].Face("down");
+            }
         }
 
         loadingUI.SetActive(false);
@@ -641,6 +661,7 @@ public class GameManager : MonoBehaviour
 
             if (charID != -1) {
                 Action action;
+                Debug.Log(charID);
                 CharacterMovement character = enemyTurn ? enemies[charID] : friendly[charID];
                 switch (actionName)
                 {
@@ -721,6 +742,7 @@ public class GameManager : MonoBehaviour
             }
 
             ActionQueue.Instance.ExecuteNext();
+
             yield return new WaitForSeconds(0.15f);
         }
         replayEndUI.SetActive(true);

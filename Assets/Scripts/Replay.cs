@@ -17,6 +17,7 @@ public class Replay
     public string datetime;
     // actions transformed into JSON
     public string[] actions;
+    public bool victory;
 
     public string[] friendlyChars;
     public string[] opponentChars;

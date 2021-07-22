@@ -8,7 +8,8 @@ public class ReplayListing : MonoBehaviour
 {
     public Image[] friendlySprites = new Image[3];
     public Image[] opponentSprites = new Image[3];
-    public TextMeshProUGUI names;
+    public TextMeshProUGUI p1Name;
+    public TextMeshProUGUI p2Name;
     public TextMeshProUGUI datetime;
     public ReplaysMenu menu;
     public Replay replay;
@@ -20,7 +21,11 @@ public class ReplayListing : MonoBehaviour
     {
         Replay replay = SaveSystem.LoadReplay(replayPath);
 
-        names.text = replay.friendlyName + " vs " + replay.opponentName;
+        p1Name.text = replay.friendlyName;
+        p1Name.color = replay.victory ? Color.green : Color.red;
+        p2Name.text = replay.opponentName;
+        p2Name.color = replay.victory ? Color.red : Color.green;
+
         datetime.text = replay.datetime;
         for (int i = 0; i < 3; i++)
         {
