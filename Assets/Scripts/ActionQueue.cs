@@ -33,8 +33,6 @@ public class ActionQueue : MonoBehaviour
             Action next = actions.Dequeue();
             // only execute the action if the char didnt manage to die
             if (next.charID == -1 || (next.GetCharacter().isAlive && !next.GetCharacter().disabled)) {
-                Debug.Log(next.name);
-                Debug.Log(next.charID);
                 next.Execute();
                 actionCache.Enqueue(next);
             }

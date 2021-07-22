@@ -229,7 +229,7 @@ public class FamiliarMovement : CharacterMovement
     public void Init(SummonerMovement summoner)
     {
         SetEnemy(summoner.isEnemy);
-        if (summoner.isEnemy) {
+        if ((summoner.isEnemy && !GameManager.Instance.reversedPov) || (GameManager.Instance.reversedPov && !summoner.isEnemy)) {
             this.Face("down");
         }
         this.summoner = summoner;
