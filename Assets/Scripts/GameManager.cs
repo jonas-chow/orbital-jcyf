@@ -415,7 +415,7 @@ public class GameManager : MonoBehaviour
         } else {
             PlayerPrefs.SetFloat("loseCount", PlayerPrefs.GetFloat("loseCount", 0) + 1);
             PlayerPrefs.SetFloat("totalGames", PlayerPrefs.GetFloat("winCount", 0) + PlayerPrefs.GetFloat("loseCount", 0));
-            PlayerPrefs.SetFloat("winPercent", PlayerPrefs.GetFloat("winCount") / PlayerPrefs.GetFloat("totalGames"));
+            PlayerPrefs.SetFloat("winPercent", PlayerPrefs.GetFloat("winCount") / PlayerPrefs.GetFloat("totalGames") * 100);
         }
     }
 

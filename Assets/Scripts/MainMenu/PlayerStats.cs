@@ -23,6 +23,9 @@ public class PlayerStats : MonoBehaviour
         PlayerPrefs.DeleteKey("winCount");
         PlayerPrefs.DeleteKey("loseCount");
         PlayerPrefs.DeleteKey("winPercent");
+        wins.text = "0";
+        losses.text = "0";
+        winPercentage.text = "0.0";
     }
 
     void Start()
