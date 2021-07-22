@@ -148,6 +148,14 @@ public class GameManager : MonoBehaviour
         string meleeChar = ((Melees)PlayerPrefs.GetInt("Melee", 0)).ToString();
         string rangedChar = ((Rangeds)PlayerPrefs.GetInt("Ranged", 0)).ToString();
         string mageChar = ((Mages)PlayerPrefs.GetInt("Mage", 0)).ToString();
+
+        // tracking characters played for player stats
+        if (gameMode != 1) {
+            PlayerPrefs.SetInt(meleeChar, PlayerPrefs.GetInt(meleeChar, 0) + 1);
+            PlayerPrefs.SetInt(rangedChar, PlayerPrefs.GetInt(rangedChar, 0) + 1);
+            PlayerPrefs.SetInt(mageChar, PlayerPrefs.GetInt(mageChar, 0) + 1);
+        }
+
         // instantiate melee character
         GameObject melee = BuildChar(meleeChar, false);
         GridManager.Instance.MoveToAndInsert(melee, 0, 0);
