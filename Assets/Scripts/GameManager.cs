@@ -402,7 +402,11 @@ public class GameManager : MonoBehaviour
         EventHandler.Instance.SendConcedeEvent();
         StopGame();
         conceded = true;
-        Lose();
+        if (gameMode != 2) {
+            Lose();
+        } else {
+            replayEndUI.SetActive(true);
+        }
     }
     
     public void OpponentConcede() {
@@ -420,6 +424,7 @@ public class GameManager : MonoBehaviour
 
     public void Lose() {
         defeatUI.SetActive(true);
+        ActionQueue.Instance.Disable();
         AudioManager.Instance.Stop("BattleTheme");
         AudioManager.Instance.Play("Lose");
         if (gameMode == 1) {
@@ -434,6 +439,7 @@ public class GameManager : MonoBehaviour
 
     public void Win() {
         victoryUI.SetActive(true);
+        ActionQueue.Instance.Disable();
         AudioManager.Instance.Stop("BattleTheme");
         AudioManager.Instance.Play("Win");
         if (gameMode == 1) {

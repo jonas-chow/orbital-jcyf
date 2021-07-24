@@ -233,28 +233,30 @@ public abstract class CharacterMovement : MonoBehaviour
 
     public virtual void Die()
     {
-        foreach (Buff x in buffs) {
-            x.Remove();
-        }
-        // reset buffs so none try to remove themselves
-        buffs = new List<Buff>();
-        GridManager.Instance.RemoveObject(GetX(), GetY());
-        isAlive = false;
-        isActive = false;
-        if (isEnemy) {
-            GameManager.Instance.RemoveEnemy();
-        } else {
-            GameManager.Instance.RemoveFriendly(this);
-        }
-        AudioManager.Instance.Play("Death");
-        // become invisible, nothing will interact with you
-        spriteRenderer.enabled = false;
-        fog.SetActive(false);
-        hp.SetVisible(false);
-        selection.SetActive(false);
+        if (isAlive) {
+            foreach (Buff x in buffs) {
+                x.Remove();
+            }
+            // reset buffs so none try to remove themselves
+            buffs = new List<Buff>();
+            GridManager.Instance.RemoveObject(GetX(), GetY());
+            isAlive = false;
+            isActive = false;
+            if (isEnemy) {
+                GameManager.Instance.RemoveEnemy();
+            } else {
+                GameManager.Instance.RemoveFriendly(this);
+            }
+            AudioManager.Instance.Play("Death");
+            // become invisible, nothing will interact with you
+            spriteRenderer.enabled = false;
+            fog.SetActive(false);
+            hp.SetVisible(false);
+            selection.SetActive(false);
 
-        Destroy(gameObject.GetComponent<BoxCollider2D>());
-        // GameObject.Destroy(gameObject);
+            Destroy(gameObject.GetComponent<BoxCollider2D>());
+            // GameObject.Destroy(gameObject);
+        }
     }
 
     public void Move(string direction)
