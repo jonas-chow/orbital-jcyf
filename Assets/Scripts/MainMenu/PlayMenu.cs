@@ -29,7 +29,7 @@ public class PlayMenu : MonoBehaviourPunCallbacks
     {
         AudioManager.Instance.Play("Click");
         PhotonNetwork.NickName = PlayerPrefs.GetString("Username", "");
-        PhotonNetwork.GameVersion = "v1";
+        PhotonNetwork.GameVersion = "v2";
         Popup.StartPopup("Connecting...");
         // 0 for multiplayer mode
         PlayerPrefs.SetInt("Mode", 0);
