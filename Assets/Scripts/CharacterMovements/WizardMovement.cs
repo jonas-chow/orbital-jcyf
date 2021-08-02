@@ -32,7 +32,7 @@ public class WizardMovement : CharacterMovement
             this.cooldown = 2;
             this.type = "attack";
             this.name = "attack1";
-            this.charID = cm.charID;
+            this.charID = cm ? cm.charID : -1;
         }
 
         public override Attack Copy()
@@ -87,7 +87,7 @@ public class WizardMovement : CharacterMovement
             this.cooldown = 10;
             this.type = "attack";
             this.name = "attack2";
-            this.charID = cm.charID;
+            this.charID = cm ? cm.charID : -1;
         }
 
         public override Attack Copy()
@@ -141,7 +141,7 @@ public class WizardMovement : CharacterMovement
             this.cooldown = 50;
             this.type = "other";
             this.name = "attack3";
-            this.charID = cm.charID;
+            this.charID = cm ? cm.charID : -1;
         }
 
         public override Attack Copy()

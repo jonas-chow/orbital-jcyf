@@ -33,7 +33,7 @@ public class BruiserMovement : CharacterMovement
             this.cooldown = 2;
             this.type = "attack";
             this.name = "attack1";
-            this.charID = cm.charID;
+            this.charID = cm ? cm.charID : -1;
         }
 
         public override Attack Copy()
@@ -89,7 +89,7 @@ public class BruiserMovement : CharacterMovement
             this.cooldown = 5;
             this.type = "attack";
             this.name = "attack2";
-            this.charID = cm.charID;
+            this.charID = cm ? cm.charID : -1;
         }
 
         public override Attack Copy()
@@ -142,7 +142,7 @@ public class BruiserMovement : CharacterMovement
             this.cooldown = 40;
             this.type = "buff";
             this.name = "attack3";
-            this.charID = cm.charID;
+            this.charID = cm ? cm.charID : -1;
         }
 
         public override Attack Copy()

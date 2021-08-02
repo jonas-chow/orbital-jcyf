@@ -31,7 +31,7 @@ public class HealerMovement : CharacterMovement
             this.cooldown = 2;
             this.type = "attack";
             this.name = "attack1";
-            this.charID = cm.charID;
+            this.charID = cm ? cm.charID : -1;
         }
 
         public override Attack Copy()
@@ -86,7 +86,7 @@ public class HealerMovement : CharacterMovement
             this.cooldown = 20;
             this.type = "heal";
             this.name = "attack2";
-            this.charID = cm.charID;
+            this.charID = cm ? cm.charID : -1;
         }
 
         public override Attack Copy()
@@ -140,7 +140,7 @@ public class HealerMovement : CharacterMovement
             this.damage = 10;
             this.type = "buff";
             this.name = "attack3";
-            this.charID = cm.charID;
+            this.charID = cm ? cm.charID : -1;
         }
 
         public override Attack Copy()
